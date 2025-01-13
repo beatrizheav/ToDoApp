@@ -1,0 +1,18 @@
+
+expo-env.d.ts
+# @end expo-cli
+
+
+#macOS
+.DS_Store
+
+#develope
+node_modules/
+*.log
+*.env
+*.bak
+*.swp
+*.tmp
+*.idea/
+.vscode/
+*.bundle
