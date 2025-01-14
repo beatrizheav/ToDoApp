@@ -17,7 +17,7 @@ export const customButton = StyleSheet.create({
   },
   big: {
     height: 54,
-    width: 328,
+    width: "100%",
     borderRadius: 17,
   },
   small: {

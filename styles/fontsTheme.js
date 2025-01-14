@@ -5,13 +5,16 @@ export const fontsTheme = StyleSheet.create({
   title: {
     color: colorsTheme.darkBlue,
     fontFamily: "OpenSans_600SemiBold",
-    textAlign: "left",
   },
   buttons: {
     color: colorsTheme.darkBlue,
     fontFamily: "Manrope_700Bold",
-    textAlign: "left",
     fontSize: 16,
+  },
+  regular: {
+    color: colorsTheme.darkBlue,
+    fontFamily: "Inter_400Regular",
+    fontSize: 14,
   },
   opacity50: {
     opacity: 0.5,

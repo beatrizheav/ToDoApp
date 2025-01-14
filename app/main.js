@@ -1,13 +1,19 @@
 import React from "react";
 import { View } from "react-native";
-import CustomButton from "../components/CustomButton";
 import { containers } from "../styles/containers";
+import CustomInput from "../components/CustomInput";
 
 const Main = () => {
+  const [name, onChangeName] = React.useState("");
+
   return (
     <View style={containers.main}>
-      <CustomButton text={"Sign up"} type={"big"} />
-      <CustomButton text={"Add"} type={"small"} />
+      <CustomInput
+        label={"Name"}
+        placeholder={"Ingresa tu nombre"}
+        value={name}
+        onChangeValue={onChangeName}
+      />
     </View>
   );
 };
