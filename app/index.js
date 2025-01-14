@@ -1,10 +1,9 @@
 import { useEffect } from "react";
-import AppLoading from "expo-app-loading";
 import { useRouter } from "expo-router";
 import { LogBox } from "react-native";
 import { useFonts, Inter_400Regular } from "@expo-google-fonts/inter";
-
 import { OpenSans_600SemiBold } from "@expo-google-fonts/open-sans";
+import { Manrope_700Bold } from "@expo-google-fonts/manrope";
 
 LogBox.ignoreAllLogs(true);
 
@@ -14,6 +13,7 @@ export default function Index() {
   let [fontsLoaded] = useFonts({
     Inter_400Regular,
     OpenSans_600SemiBold,
+    Manrope_700Bold,
   });
 
   useEffect(() => {
