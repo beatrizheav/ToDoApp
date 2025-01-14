@@ -7,4 +7,5 @@ export const colorsTheme = {
   Yellow: "#FFD928", // Medium priority
   Green: "#4CAF50", // Low priority
   darkBlue: "#30304A", //Titles
+  white: "#FFFFFF", // Background
 };

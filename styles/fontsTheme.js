@@ -7,6 +7,12 @@ export const fontsTheme = StyleSheet.create({
     fontFamily: "OpenSans_600SemiBold",
     textAlign: "left",
   },
+  buttons: {
+    color: colorsTheme.darkBlue,
+    fontFamily: "Manrope_700Bold",
+    textAlign: "left",
+    fontSize: 16,
+  },
   opacity50: {
     opacity: 0.5,
   },
