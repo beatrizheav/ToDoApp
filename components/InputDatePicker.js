@@ -18,6 +18,7 @@ const DatePickerModal = ({ show, setShow, date, onChange }) => (
           display="spinner"
           onChange={onChange}
           themeVariant="light"
+          minimumDate={new Date()}
         />
         <TouchableOpacity onPress={() => setShow(false)}>
           <Text style={fontsTheme.regular}>Select Date</Text>
