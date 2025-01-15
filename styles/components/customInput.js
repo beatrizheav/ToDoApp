@@ -5,10 +5,6 @@ export const customInput = StyleSheet.create({
   container: {
     marginTop: 15,
   },
-  passwordContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
   inputContainer: {
     height: 56,
     width: "100%",
@@ -19,9 +15,12 @@ export const customInput = StyleSheet.create({
     borderRadius: 10,
     marginTop: 5,
   },
-  inputParagraph: {
-    height: 200,
-    backgroundColor: "red",
+  paragraphContainer: {
+    height: 80,
+  },
+  passwordContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   inputPassword: {
     width: "90%",
@@ -30,6 +29,12 @@ export const customInput = StyleSheet.create({
   inputText: {
     width: "100%",
     height: "100%",
+  },
+  inputParagraph: {
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
   iconPassword: {
     height: "100%",

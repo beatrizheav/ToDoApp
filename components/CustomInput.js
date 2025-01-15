@@ -11,10 +11,17 @@ const CustomInput = ({ label, placeholder, value, onChangeValue, type }) => {
   const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
   const isPassword = type === "password";
+  const isParagraph = type === "paragraph";
   const keyboardType = type === "email" ? "email-address" : "default";
 
   const inputStyle = [
-    isPassword ? customInput.inputPassword : customInput.inputText,
+    type === "password"
+      ? customInput.inputPassword
+      : type === "text" || type === "email"
+      ? customInput.inputText
+      : type === "paragraph"
+      ? customInput.inputParagraph
+      : {},
     fontsTheme.regular,
   ];
 
@@ -23,12 +30,12 @@ const CustomInput = ({ label, placeholder, value, onChangeValue, type }) => {
       <Text style={fontsTheme.regular}>{label}</Text>
       <View
         style={[
+          customInput.inputContainer,
           type === "password"
             ? customInput.passwordContainer
             : type === "paragraph"
-            ? customInput.inputParagraph
+            ? customInput.paragraphContainer
             : {},
-          customInput.inputContainer,
         ]}
       >
         <TextInput
@@ -39,6 +46,7 @@ const CustomInput = ({ label, placeholder, value, onChangeValue, type }) => {
           placeholderTextColor={colorsTheme.lightGray}
           keyboardType={keyboardType}
           secureTextEntry={isPassword && !showPassword}
+          multiline={isParagraph}
         />
         {isPassword && (
           <TouchableOpacity
