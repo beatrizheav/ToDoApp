@@ -4,12 +4,12 @@ import Feather from "@expo/vector-icons/Feather";
 import { fontsTheme } from "../styles/fontsTheme";
 import { colorsTheme } from "../styles/colorsTheme";
 import { customInput } from "../styles/components/customInput";
+import { inputs } from "../styles/components/inputs";
 
 const CustomInput = ({ label, placeholder, value, onChangeValue, type }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
-
   const isPassword = type === "password";
   const isParagraph = type === "paragraph";
   const keyboardType = type === "email" ? "email-address" : "default";
@@ -31,9 +31,9 @@ const CustomInput = ({ label, placeholder, value, onChangeValue, type }) => {
       <Text style={fontsTheme.regular}>{label}</Text>
       <View
         style={[
-          customInput.inputContainer,
+          inputs.inputContainer,
           type === "password"
-            ? customInput.passwordContainer
+            ? inputs.rowContainer
             : type === "paragraph"
             ? customInput.paragraphContainer
             : {},

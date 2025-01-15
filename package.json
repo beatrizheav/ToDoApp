@@ -19,8 +19,10 @@
     "@expo-google-fonts/manrope": "^0.2.3",
     "@expo-google-fonts/open-sans": "^0.2.3",
     "@expo/vector-icons": "^14.0.2",
+    "@react-native-community/datetimepicker": "8.2.0",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
+    "date-fns": "^4.1.0",
     "expo": "~52.0.24",
     "expo-app-loading": "^2.1.1",
     "expo-blur": "~14.0.1",
@@ -43,8 +45,7 @@
     "react-native-screens": "~4.4.0",
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
-    "undefined": "@expo/vector-icons/Feather",
-    "@react-native-community/datetimepicker": "8.2.0"
+    "undefined": "@expo/vector-icons/Feather"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
