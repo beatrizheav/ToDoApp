@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { colorsTheme } from "../styles/colorsTheme";
+import { inputs } from "../styles/components/inputs";
+import { fontsTheme } from "../styles/fontsTheme";
+import { Feather } from "@expo/vector-icons";
 
 const DropdownInput = ({ label, data, value, onChange, placeholder }) => {
   const handleChange = (item) => {
@@ -9,13 +12,14 @@ const DropdownInput = ({ label, data, value, onChange, placeholder }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+    <View>
+      <Text style={fontsTheme.regular}>{label}</Text>
       <Dropdown
-        style={styles.dropdown}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
+        style={inputs.inputContainer}
+        placeholderStyle={fontsTheme.regular}
+        selectedTextStyle={fontsTheme.regular}
+        itemTextStyle={fontsTheme.regular}
+        showsVerticalScrollIndicator={true}
         data={data}
         labelField="label"
         valueField="value"
@@ -26,35 +30,5 @@ const DropdownInput = ({ label, data, value, onChange, placeholder }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    marginVertical: 10,
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  dropdown: {
-    backgroundColor: colorsTheme.lightGray,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    height: 50,
-    borderWidth: 1,
-    borderColor: colorsTheme.darkGray,
-  },
-  placeholderStyle: {
-    fontSize: 14,
-    color: colorsTheme.darkGray,
-  },
-  selectedTextStyle: {
-    fontSize: 14,
-  },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 14,
-  },
-});
 
 export default DropdownInput;
