@@ -22,22 +22,21 @@ export const customInput = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  input: {
+    height: "100%",
+  },
   inputPassword: {
     width: "90%",
-    height: "100%",
   },
   inputText: {
     width: "100%",
-    height: "100%",
   },
   inputParagraph: {
     width: "100%",
-    height: "100%",
     alignItems: "center",
     justifyContent: "center",
   },
   iconPassword: {
-    height: "100%",
     width: "10%",
     alignItems: "flex-end",
     justifyContent: "center",

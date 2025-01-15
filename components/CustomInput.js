@@ -23,6 +23,7 @@ const CustomInput = ({ label, placeholder, value, onChangeValue, type }) => {
       ? customInput.inputParagraph
       : {},
     fontsTheme.regular,
+    customInput.input,
   ];
 
   return (
