@@ -1,14 +1,27 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { containers } from "../styles/containers";
-import InputDatePicker from "../components/InputDatePicker";
+import DropdownInput from "../components/DropdownInput";
 
 const Main = () => {
-  const [date, setDate] = useState();
+  const [priority, setPriority] = useState(null);
+
+  const options = [
+    { label: "Option 1", value: "option1" },
+    { label: "Option 2", value: "option2" },
+    { label: "Option 3", value: "option3" },
+  ];
 
   return (
     <View style={containers.main}>
-      <InputDatePicker label={"Due Date"} date={date} setDate={setDate} />
+      <Text>Selected Option: {priority || "None"}</Text>
+      <DropdownInput
+        label="Priority"
+        data={options}
+        value={priority}
+        onChange={setPriority}
+        placeholder="Select the priority"
+      />
     </View>
   );
 };
