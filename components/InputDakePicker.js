@@ -1,36 +1,41 @@
-// import { Text } from "react-native";
-// import { fontsTheme } from "../styles/fontsTheme";
-
-// const InputDatePicker = ({}) => {
-//   return <Text>Hola</Text>;
-// };
-
-// export default InputDatePicker;
-
 import React, { useState } from "react";
-import { Button } from "react-native";
-import DatePicker from "react-native-date-picker";
+import { Button, View, Modal, Text } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { StyleSheet } from "react-native";
+import { inputDakePicker } from "../styles/components/inputDatePicker";
+// import { format } from "date-fns";
 
 const InputDatePicker = () => {
   const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(false);
+    setDate(currentDate);
+  };
+
+  // <Text>{format(date, 'MMMM dd, yyyy')}</Text>
 
   return (
-    <>
-      <Button title="Open" onPress={() => setOpen(true)} />
-      {/* <DatePicker
-        modal
-        open={open}
-        date={date}
-        onConfirm={(date) => {
-          setOpen(false);
-          setDate(date);
-        }}
-        onCancel={() => {
-          setOpen(false);
-        }}
-      /> */}
-    </>
+    <View style={inputDakePicker.container}>
+      <Button title="Open Modal" onPress={() => setShow(true)} />
+      <Text>{date.toString()}</Text>
+      <Modal visible={show} animationType="fade" transparent={false}>
+        <View style={inputDakePicker.modalBackground}>
+          <View style={inputDakePicker.modalContainer}>
+            <DateTimePicker
+              value={date}
+              mode="date"
+              display="spinner"
+              visible={show}
+              onChange={onChange}
+              themeVariant="light"
+            />
+          </View>
+        </View>
+      </Modal>
+    </View>
   );
 };
 
