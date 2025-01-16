@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { containers } from "../styles/containers";
 import DropdownInput from "../components/DropdownInput";
 import CustomInput from "../components/CustomInput";
 import InputDatePicker from "../components/InputDatePicker";
+import prioritys from "../data/prioritys.json";
 
 const Main = () => {
   const [priority, setPriority] = useState(null);
@@ -13,17 +14,11 @@ const Main = () => {
   const [paragraph, setParagraph] = useState("");
   const [date, setDate] = useState(new Date());
 
-  const options = [
-    { label: "Option 1", value: "option1" },
-    { label: "Option 2", value: "option2" },
-    { label: "Option 3", value: "option3" },
-  ];
-
   return (
     <View style={containers.main}>
       <DropdownInput
         label="Priority"
-        data={options}
+        data={prioritys}
         value={priority}
         onChange={setPriority}
         placeholder="Select the priority"
