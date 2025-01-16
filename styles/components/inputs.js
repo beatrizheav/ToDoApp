@@ -2,6 +2,9 @@ import { StyleSheet } from "react-native";
 import { colorsTheme } from "../colorsTheme";
 
 export const inputs = StyleSheet.create({
+  container: {
+    marginTop: 15,
+  },
   inputContainer: {
     height: 56,
     width: "100%",

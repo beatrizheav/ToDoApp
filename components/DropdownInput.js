@@ -1,10 +1,8 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React from "react";
+import { View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
-import { colorsTheme } from "../styles/colorsTheme";
 import { inputs } from "../styles/components/inputs";
 import { fontsTheme } from "../styles/fontsTheme";
-import { Feather } from "@expo/vector-icons";
 
 const DropdownInput = ({ label, data, value, onChange, placeholder }) => {
   const handleChange = (item) => {
@@ -12,11 +10,11 @@ const DropdownInput = ({ label, data, value, onChange, placeholder }) => {
   };
 
   return (
-    <View>
+    <View style={inputs.container}>
       <Text style={fontsTheme.regular}>{label}</Text>
       <Dropdown
         style={inputs.inputContainer}
-        placeholderStyle={fontsTheme.regular}
+        placeholderStyle={[fontsTheme.regular, fontsTheme.opacity70]}
         selectedTextStyle={fontsTheme.regular}
         itemTextStyle={fontsTheme.regular}
         showsVerticalScrollIndicator={true}

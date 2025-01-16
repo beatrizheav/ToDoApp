@@ -3,7 +3,7 @@ import { View, Modal, Text, TouchableOpacity } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
 import { format } from "date-fns";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { inputDakePicker } from "../styles/components/inputDatePicker";
+import { inputDakePicker } from "../styles/components/input-date-picker";
 import { inputs } from "../styles/components/inputs";
 import { fontsTheme } from "../styles/fontsTheme";
 import { colorsTheme } from "../styles/colorsTheme";
@@ -48,7 +48,7 @@ const InputDatePicker = ({ label, date, setDate }) => {
   const formattedDate = isToday(date) ? "Today" : format(date, "MMMM dd, yyyy");
 
   return (
-    <View>
+    <View style={inputs.container}>
       <Text style={fontsTheme.regular}>{label}</Text>
       <TouchableOpacity
         style={[inputs.inputContainer, inputs.rowContainer]}
