@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 import { useRouter } from "expo-router";
 import { LogBox } from "react-native";
-import { useFonts, Inter_400Regular } from "@expo-google-fonts/inter";
+import {
+  useFonts,
+  Inter_400Regular,
+  Inter_600SemiBold,
+} from "@expo-google-fonts/inter";
 import { OpenSans_600SemiBold } from "@expo-google-fonts/open-sans";
 import { Manrope_700Bold } from "@expo-google-fonts/manrope";
 
@@ -12,6 +16,7 @@ export default function Index() {
 
   let [fontsLoaded] = useFonts({
     Inter_400Regular,
+    Inter_600SemiBold,
     OpenSans_600SemiBold,
     Manrope_700Bold,
   });

@@ -16,6 +16,11 @@ export const fontsTheme = StyleSheet.create({
     fontFamily: "Inter_400Regular",
     fontSize: 14,
   },
+  semiBold: {
+    color: colorsTheme.darkBlue,
+    fontFamily: "Inter_600SemiBold",
+    fontSize: 14,
+  },
   opacity50: {
     opacity: 0.5,
   },
