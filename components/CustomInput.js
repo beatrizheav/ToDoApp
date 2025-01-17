@@ -3,7 +3,7 @@ import { TextInput, Text, View, TouchableOpacity } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 import { fontsTheme } from "../styles/fontsTheme";
 import { colorsTheme } from "../styles/colorsTheme";
-import { customInput } from "../styles/components/customInput";
+import { customInput } from "../styles/components/custom-input";
 import { inputs } from "../styles/components/inputs";
 
 const CustomInput = ({ label, placeholder, value, onChangeValue, type }) => {
@@ -27,7 +27,7 @@ const CustomInput = ({ label, placeholder, value, onChangeValue, type }) => {
   ];
 
   return (
-    <View style={customInput.container}>
+    <View style={inputs.container}>
       <Text style={fontsTheme.regular}>{label}</Text>
       <View
         style={[

@@ -1,9 +1,6 @@
 import { StyleSheet } from "react-native";
 
 export const customInput = StyleSheet.create({
-  container: {
-    marginTop: 15,
-  },
   paragraphContainer: {
     height: 80,
   },
