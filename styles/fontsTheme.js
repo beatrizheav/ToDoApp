@@ -22,15 +22,20 @@ export const fontsTheme = StyleSheet.create({
     fontFamily: "Inter_400Regular",
     fontSize: 14,
   },
+  regularSmall: {
+    color: colorsTheme.darkBlue,
+    fontFamily: "Inter_400Regular",
+    fontSize: 10,
+  },
   semiBold: {
     color: colorsTheme.darkBlue,
     fontFamily: "Inter_600SemiBold",
     fontSize: 14,
   },
-  small: {
+  bold: {
     color: colorsTheme.darkBlue,
-    fontFamily: "Inter_400Regular",
-    fontSize: 10,
+    fontFamily: "Inter_700Bold",
+    fontSize: 17,
   },
   opacity50: {
     opacity: 0.5,
