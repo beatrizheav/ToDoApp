@@ -1,11 +1,10 @@
 import React from "react";
 import { View } from "react-native";
-import { format } from "date-fns";
 import CalendarStrip from "react-native-calendar-strip";
-import { colorsTheme } from "../styles/colorsTheme";
-import { fontsTheme } from "../styles/fontsTheme";
+import { format } from "date-fns";
 import CustomTitle from "../components/CustomTitle";
 import { horizontalCalendar } from "../styles/components/horizontal-calendar";
+import { fontsTheme } from "../styles/fontsTheme";
 
 const HorizontalCalendar = ({ selectedDate, setSelectedDate }) => {
   const handleDateSelected = (date) => setSelectedDate(new Date(date));
@@ -35,9 +34,7 @@ const HorizontalCalendar = ({ selectedDate, setSelectedDate }) => {
         minDate={oneWeekBefore}
         selectedDate={selectedDate}
         onDateSelected={handleDateSelected}
-        highlightDateContainerStyle={{
-          backgroundColor: colorsTheme.softYellow,
-        }}
+        highlightDateContainerStyle={horizontalCalendar.dotSelectedDate}
         dateNameStyle={fontsTheme.small}
         dateNumberStyle={fontsTheme.semiBold}
         highlightDateNameStyle={fontsTheme.small}
