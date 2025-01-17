@@ -6,7 +6,7 @@ import TaskView from "../components/TaskView";
 const Main = () => {
   return (
     <View style={containers.main}>
-      <TaskView />
+      <TaskView name={"Send email"} priority={"High"} category={"Work"} />
     </View>
   );
 };
