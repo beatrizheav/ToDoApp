@@ -6,6 +6,12 @@ export const fontsTheme = StyleSheet.create({
     color: colorsTheme.darkBlue,
     fontFamily: "OpenSans_600SemiBold",
   },
+  titleBig: {
+    fontSize: 30,
+  },
+  titleSmall: {
+    fontSize: 20,
+  },
   buttons: {
     color: colorsTheme.darkBlue,
     fontFamily: "Manrope_700Bold",
@@ -20,6 +26,11 @@ export const fontsTheme = StyleSheet.create({
     color: colorsTheme.darkBlue,
     fontFamily: "Inter_600SemiBold",
     fontSize: 14,
+  },
+  small: {
+    color: colorsTheme.darkBlue,
+    fontFamily: "Inter_400Regular",
+    fontSize: 10,
   },
   opacity50: {
     opacity: 0.5,
