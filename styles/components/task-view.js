@@ -33,6 +33,7 @@ export const taskView = StyleSheet.create({
   },
   swipeable: {
     height: 48,
+    marginVertical: 8,
     width: "100%",
     paddingVertical: 8,
     paddingHorizontal: "6%",
