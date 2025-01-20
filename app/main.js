@@ -9,7 +9,7 @@ const Main = () => {
   return (
     <View style={containers.main}>
       <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-        <Text style={{ fontSize: 30 }}>Hola</Text>
+        <Text style={{ fontSize: 30 }}>Open Alert</Text>
       </TouchableOpacity>
       <CustomAlert
         visible={modalVisible}

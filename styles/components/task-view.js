@@ -6,8 +6,9 @@ export const taskView = StyleSheet.create({
     flexDirection: "row",
     width: 100,
     height: "100%",
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
+    paddingRight: 5,
   },
   priorityLine: {
     height: 4,
@@ -32,7 +33,7 @@ export const taskView = StyleSheet.create({
     justifyContent: "space-between",
   },
   swipeable: {
-    height: 48,
+    height: 60,
     width: "100%",
     paddingVertical: 8,
     paddingHorizontal: "6%",
