@@ -1,11 +1,9 @@
-import React, { useState } from "react";
-import { TouchableOpacity, View, Text } from "react-native";
+import React from "react";
+import { View } from "react-native";
 import { containers } from "../styles/containers";
-import TaskDetailModal from "../components/TaskDetailModal";
+import CategoryView from "../components/CategoryView";
 
 const Main = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-
   const task = {
     id: "1",
     title: "Task 1",
@@ -17,14 +15,7 @@ const Main = () => {
 
   return (
     <View style={containers.main}>
-      <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-        <Text style={{ fontSize: 30 }}>Open Details Task Modal</Text>
-      </TouchableOpacity>
-      <TaskDetailModal
-        visible={modalVisible}
-        setVisible={setModalVisible}
-        task={task}
-      />
+      <CategoryView />
     </View>
   );
 };
