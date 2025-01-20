@@ -15,13 +15,13 @@ export const taskView = StyleSheet.create({
     width: 30,
     borderRadius: 2,
   },
-  highPriorityLine: {
+  highPriorityColor: {
     backgroundColor: colorsTheme.vividRed,
   },
-  mediumPriorityLine: {
+  mediumPriorityColor: {
     backgroundColor: colorsTheme.Yellow,
   },
-  lowPriorityLine: {
+  lowPriorityColor: {
     backgroundColor: colorsTheme.Green,
   },
   centered: {

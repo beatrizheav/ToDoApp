@@ -3,8 +3,8 @@ import { colorsTheme } from "../colorsTheme";
 
 export const customIcon = StyleSheet.create({
   container: {
-    width: 33,
-    height: 33,
+    width: 35,
+    height: 35,
     borderRadius: 18,
     alignItems: "center",
     justifyContent: "center",

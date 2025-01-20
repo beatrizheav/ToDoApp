@@ -2,16 +2,20 @@ import React, { useState } from "react";
 import { TouchableOpacity, View, StyleSheet } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { colorsTheme } from "../styles/colorsTheme";
-import { customIcon } from "../styles/components/custom-icon";
 import CustomAlert from "./CustomAlert";
+import { customIcon } from "../styles/components/custom-icon";
 
-const CustomIcon = ({ name }) => {
+const CustomIcon = ({ name, iconColor, onPress }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
-  const background = name === "edit" ? customIcon.blue : customIcon.red;
+  const defaultBackground = name === "edit" ? customIcon.blue : customIcon.red;
+  const background = iconColor ? {} : defaultBackground;
+  const color = iconColor || colorsTheme.white;
 
   const onPressAction = () => {
-    if (name === "edit") {
+    if (onPress) {
+      onPress();
+    } else if (name === "edit") {
       alert("Edit pressed");
     } else {
       setModalVisible(true);
@@ -21,10 +25,10 @@ const CustomIcon = ({ name }) => {
   return (
     <View>
       <TouchableOpacity
-        style={[styles.container, background]}
+        style={[customIcon.container, background]}
         onPress={onPressAction}
       >
-        <MaterialIcons name={name} size={24} color={colorsTheme.white} />
+        <MaterialIcons name={name} size={22} color={color} />
       </TouchableOpacity>
       {name === "delete" && (
         <CustomAlert
@@ -37,20 +41,5 @@ const CustomIcon = ({ name }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    borderRadius: 50,
-    padding: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  blue: {
-    backgroundColor: colorsTheme.blue,
-  },
-  red: {
-    backgroundColor: colorsTheme.red,
-  },
-});
 
 export default CustomIcon;

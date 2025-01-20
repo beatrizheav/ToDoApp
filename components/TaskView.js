@@ -25,13 +25,13 @@ const RightAction = (prog, drag) => {
   );
 };
 
-const TaskView = ({ name, priority, category }) => {
+const TaskView = ({ task }) => {
   const priorityColor =
-    priority === "High"
-      ? taskView.highPriorityLine
-      : priority === "Medium"
-      ? taskView.mediumPriorityLine
-      : taskView.lowPriorityLine;
+    task.priority === "High"
+      ? taskView.highPriorityColor
+      : task.priority === "Medium"
+      ? taskView.mediumPriorityColor
+      : taskView.lowPriorityColor;
 
   return (
     <GestureHandlerRootView>
@@ -43,11 +43,11 @@ const TaskView = ({ name, priority, category }) => {
       >
         <View style={taskView.row}>
           <View style={taskView.centered}>
-            <Text style={fontsTheme.semiBold}>{name}</Text>
+            <Text style={fontsTheme.semiBold}>{task.title}</Text>
             <View style={[taskView.priorityLine, priorityColor]} />
           </View>
           <View style={taskView.centered}>
-            <Text style={fontsTheme.regular}>{category}</Text>
+            <Text style={fontsTheme.regular}>{task.category}</Text>
           </View>
         </View>
       </ReanimatedSwipeable>
