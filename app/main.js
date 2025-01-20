@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 import { containers } from "../styles/containers";
-import CategoryView from "../components/CategoryView";
+import AvatarDropdownGallery from "../components/AvatarPicker";
 
 const Main = () => {
   const task = {
@@ -13,9 +13,19 @@ const Main = () => {
     category: "Work",
   };
 
+  const [selectedAvatar, setSelectedAvatar] = useState(null); // Track selected avatar
+
+  const handleAvatarSelect = (avatarUri) => {
+    setSelectedAvatar(avatarUri);
+    // Do something with the selected avatar URI (e.g., save to the backend)
+  };
+
   return (
     <View style={containers.main}>
-      <CategoryView />
+      <AvatarDropdownGallery
+        selectedAvatarUri={selectedAvatar}
+        onAvatarSelect={handleAvatarSelect}
+      />
     </View>
   );
 };
