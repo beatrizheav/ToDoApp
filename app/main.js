@@ -11,7 +11,7 @@ const Main = () => {
     title: "Task 1",
     description: "Description of Task 1",
     date: "2025-01-20",
-    priority: "High",
+    priority: "Low",
     category: "Work",
   };
 
