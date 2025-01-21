@@ -1,16 +1,22 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { TouchableOpacity, View, Text } from "react-native";
 import { containers } from "../styles/containers";
-
-import TaskView from "../components/TaskView";
-import HorizontalCalendar from "../components/HorizontalCalendar";
+import CustomAlert from "../components/CustomAlert";
 
 const Main = () => {
-  const [date, setDate] = useState(new Date());
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={containers.main}>
-      <HorizontalCalendar selectedDate={date} setSelectedDate={setDate} />
+      <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+        <Text style={{ fontSize: 30 }}>Open Alert</Text>
+      </TouchableOpacity>
+      <CustomAlert
+        visible={modalVisible}
+        title={"Delete task"}
+        description={"Are you sure you want to delete this task?"}
+        setVisible={setModalVisible}
+      />
     </View>
   );
 };

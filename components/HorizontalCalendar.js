@@ -35,9 +35,9 @@ const HorizontalCalendar = ({ selectedDate, setSelectedDate }) => {
         selectedDate={selectedDate}
         onDateSelected={handleDateSelected}
         highlightDateContainerStyle={horizontalCalendar.dotSelectedDate}
-        dateNameStyle={fontsTheme.small}
+        dateNameStyle={fontsTheme.regularSmall}
         dateNumberStyle={fontsTheme.semiBold}
-        highlightDateNameStyle={fontsTheme.small}
+        highlightDateNameStyle={fontsTheme.regularSmall}
         highlightDateNumberStyle={fontsTheme.semiBold}
       />
       <CustomTitle text={formattedDate} type={"big"} />
