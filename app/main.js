@@ -1,21 +1,30 @@
 import React, { useState } from "react";
-import { TouchableOpacity, View, Text } from "react-native";
+import { View } from "react-native";
 import { containers } from "../styles/containers";
-import CustomAlert from "../components/CustomAlert";
+import AvatarDropdownGallery from "../components/AvatarPicker";
 
 const Main = () => {
-  const [modalVisible, setModalVisible] = useState(false);
+  const task = {
+    id: "1",
+    title: "Task 1",
+    description: "Description of Task 1",
+    date: "2025-01-20",
+    priority: "Low",
+    category: "Work",
+  };
+
+  const [selectedAvatar, setSelectedAvatar] = useState(null); // Track selected avatar
+
+  const handleAvatarSelect = (avatarUri) => {
+    setSelectedAvatar(avatarUri);
+    // Do something with the selected avatar URI (e.g., save to the backend)
+  };
 
   return (
     <View style={containers.main}>
-      <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-        <Text style={{ fontSize: 30 }}>Open Alert</Text>
-      </TouchableOpacity>
-      <CustomAlert
-        visible={modalVisible}
-        title={"Delete task"}
-        description={"Are you sure you want to delete this task?"}
-        setVisible={setModalVisible}
+      <AvatarDropdownGallery
+        selectedAvatarUri={selectedAvatar}
+        onAvatarSelect={handleAvatarSelect}
       />
     </View>
   );

@@ -5,7 +5,7 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 const CloseIcon = ({ onPress }) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <AntDesign name="close" size={20} color="black" />
+      <AntDesign name="close" size={22} color="black" />
     </TouchableOpacity>
   );
 };
