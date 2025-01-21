@@ -1,0 +1,18 @@
+export const avatars = [
+  { key: "1", src: require("../assets/avatars/1.png") },
+  { key: "2", src: require("../assets/avatars/2.png") },
+  { key: "3", src: require("../assets/avatars/3.png") },
+  { key: "4", src: require("../assets/avatars/4.png") },
+  { key: "5", src: require("../assets/avatars/5.png") },
+  { key: "6", src: require("../assets/avatars/6.png") },
+  { key: "7", src: require("../assets/avatars/7.png") },
+  { key: "8", src: require("../assets/avatars/8.png") },
+  { key: "9", src: require("../assets/avatars/9.png") },
+  { key: "10", src: require("../assets/avatars/10.png") },
+  { key: "11", src: require("../assets/avatars/11.png") },
+  { key: "12", src: require("../assets/avatars/12.png") },
+  { key: "13", src: require("../assets/avatars/13.png") },
+  { key: "14", src: require("../assets/avatars/14.png") },
+  { key: "15", src: require("../assets/avatars/15.png") },
+  { key: "16", src: require("../assets/avatars/16.png") },
+];

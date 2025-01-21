@@ -9,37 +9,27 @@ import {
   StyleSheet,
 } from "react-native";
 
-// Sample Avatar Data
-const avatars = [
-  { id: "1", uri: "https://randomuser.me/api/portraits/men/1.jpg" },
-  { id: "2", uri: "https://randomuser.me/api/portraits/men/2.jpg" },
-  { id: "3", uri: "https://randomuser.me/api/portraits/women/1.jpg" },
-  { id: "4", uri: "https://randomuser.me/api/portraits/women/2.jpg" },
-  // Add more avatars here
-];
+import { avatars } from "../data/avatars";
+import { colorsTheme } from "../styles/colorsTheme";
 
 const AvatarDropdownGallery = ({ onAvatarSelect, selectedAvatarUri }) => {
   const [isModalVisible, setIsModalVisible] = useState(false); // Modal visibility
 
   // Handle avatar selection
-  const handleAvatarSelect = (avatar) => {
-    onAvatarSelect(avatar);
+  const handleAvatarSelect = (avatarSrc) => {
+    onAvatarSelect(avatarSrc); // Pass the image to the parent component
     setIsModalVisible(false); // Close modal after selection
   };
 
   return (
-    <View style={styles.container}>
-      {/* Avatar Display */}
+    <View>
       <TouchableOpacity
         onPress={() => setIsModalVisible(true)}
-        style={styles.avatarDisplay}
+        style={styles.container}
       >
         <Text>{selectedAvatarUri ? "Selected Avatar" : "Select Avatar"}</Text>
         {selectedAvatarUri && (
-          <Image
-            source={{ uri: selectedAvatarUri }}
-            style={styles.avatarImage}
-          />
+          <Image source={selectedAvatarUri} style={styles.avatarImage} />
         )}
       </TouchableOpacity>
 
@@ -57,15 +47,12 @@ const AvatarDropdownGallery = ({ onAvatarSelect, selectedAvatarUri }) => {
             {/* Avatar Grid Gallery */}
             <FlatList
               data={avatars}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item.key}
               horizontal
               showsHorizontalScrollIndicator={false}
               renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => handleAvatarSelect(item.uri)}>
-                  <Image
-                    source={{ uri: item.uri }}
-                    style={styles.avatarImageGrid}
-                  />
+                <TouchableOpacity onPress={() => handleAvatarSelect(item.src)}>
+                  <Image source={item.src} style={styles.avatarImageGrid} />
                 </TouchableOpacity>
               )}
             />
@@ -85,17 +72,16 @@ const AvatarDropdownGallery = ({ onAvatarSelect, selectedAvatarUri }) => {
 // Styles
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
-  },
-  avatarDisplay: {
-    padding: 10,
-    borderRadius: 8,
-    backgroundColor: "#ddd",
+    height: 121,
+    width: 121,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: colorsTheme.lightestGray,
     alignItems: "center",
-    flexDirection: "row",
+    justifyContent: "center",
   },
   avatarImage: {
     width: 40,
