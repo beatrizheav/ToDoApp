@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import { View, Image } from "react-native";
+import { View } from "react-native";
 import { containers } from "../styles/containers";
-import AvatarDropdownGallery from "../components/AvatarPicker";
+import AvatarPicker from "../components/AvatarPicker";
 
 const Main = () => {
-  const [selectedAvatar, setSelectedAvatar] = useState(null); // Track selected avatar
+  const [selectedAvatar, setSelectedAvatar] = useState(null);
   return (
     <View style={containers.main}>
-      <Image source={selectedAvatar} />
-      <AvatarDropdownGallery
+      <AvatarPicker
         selectedAvatarUri={selectedAvatar}
         onAvatarSelect={setSelectedAvatar}
       />

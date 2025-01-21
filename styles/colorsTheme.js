@@ -1,5 +1,3 @@
-import { BottomTabBarHeightCallbackContext } from "@react-navigation/bottom-tabs";
-
 export const colorsTheme = {
   softYellow: "#FFEB8D", // Backgrounds and buttons
   lightGray: "#949292", // Contorno tareas
