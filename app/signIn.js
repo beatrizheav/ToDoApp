@@ -1,52 +1,73 @@
 import React, { useState } from "react";
-import { View, Image, StyleSheet } from "react-native";
-import { containers } from "../styles/containers";
+import { View, Image, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { Link } from "expo-router";
 import CustomTitle from "../components/CustomTitle";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import AccountPrompt from "../components/AccountPrompt";
+import { signIn } from "../styles/screens/sign-in";
+import { containers } from "../styles/containers";
 
 const SignIn = () => {
   const [signInData, setSignInData] = useState({
     email: "",
     password: "",
   });
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
+  const handleInputChange = (field, value) => {
+    setSignInData((prevState) => ({
+      ...prevState,
+      [field]: value,
+    }));
+  };
+
+  const validateForm = () => {
+    if (!signInData.email || !signInData.password) {
+      alert("Both fields are required.");
+      return false;
+    }
+
+    alert("Inputs correct");
+    return true;
+  };
+
   return (
-    <View style={containers.main}>
-      <CustomTitle text={"Sign In"} type={"big"} />
-      <Image
-        style={styles.image}
-        source={require("../assets/images/SignIn.png")}
-      />
-      <CustomInput
-        label={"Email address"}
-        placeholder={"Enter your email"}
-        value={email}
-        onChangeValue={setEmail}
-        type={"email"}
-      />
-      <CustomInput
-        label={"Password"}
-        placeholder={"Enter your password"}
-        value={password}
-        onChangeValue={setPassword}
-        type={"password"}
-      />
-      <CustomButton text={"Sign In"} type={"big"} onPress={""} />
-      <AccountPrompt
-        text={"Don't have an account?"}
-        textPressable={" Sign up"}
-      />
-    </View>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={[containers.safeArea, signIn.main]}>
+        <CustomTitle text={"Sign In"} type={"big"} />
+        <View style={signIn.imageContainer}>
+          <Image
+            style={signIn.image}
+            source={require("../assets/images/SignIn.png")}
+          />
+        </View>
+        <View style={signIn.inputs}>
+          <CustomInput
+            label={"Email address"}
+            placeholder={"Enter your email"}
+            value={signInData.email}
+            onChangeValue={(text) => handleInputChange("email", text)}
+            type={"email"}
+          />
+          <CustomInput
+            label={"Password"}
+            placeholder={"Enter your password"}
+            value={signInData.password}
+            onChangeValue={(text) => handleInputChange("password", text)}
+            type={"password"}
+          />
+        </View>
+        <View>
+          <CustomButton text={"Sign In"} type={"big"} onPress={validateForm} />
+          <Link href={"/main"}>
+            <AccountPrompt
+              text={"Don't have an account?"}
+              textPressable={" Sign up"}
+            />
+          </Link>
+        </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 export default SignIn;
-
-const styles = StyleSheet.create({
-  image: {
-    width: 230,
-    height: 230,
-  },
-});
