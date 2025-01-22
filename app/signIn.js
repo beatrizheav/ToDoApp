@@ -59,7 +59,7 @@ const SignIn = () => {
         </View>
         <View>
           <CustomButton text={"Sign In"} type={"big"} onPress={validateForm} />
-          <Link href={"/main"}>
+          <Link href={"/signUp"}>
             <AccountPrompt
               text={"Don't have an account?"}
               textPressable={" Sign up"}
