@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Image, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { Link } from "expo-router";
+import { handleInputChange } from "../hooks/handleInputChange";
 import CustomTitle from "../components/CustomTitle";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
