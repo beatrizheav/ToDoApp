@@ -8,12 +8,12 @@ export const customButton = StyleSheet.create({
     width: 328,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "#000", // Color de la sombra
+    shadowColor: colorsTheme.darkBlue, // Color de la sombra
     shadowOffset: { width: 0, height: 5 }, // Dirección de la sombra
     shadowOpacity: 0.3, // Opacidad de la sombra
     shadowRadius: 5, // Difuminado de la sombra
     elevation: 5, // Sombra para Android
-    margin: 10,
+    marginVertical: 10,
   },
   big: {
     height: 54,
