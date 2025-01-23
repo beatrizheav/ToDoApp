@@ -48,6 +48,7 @@ const CustomInput = ({ label, placeholder, value, onChangeValue, type }) => {
           keyboardType={keyboardType}
           secureTextEntry={isPassword && !showPassword}
           multiline={isParagraph}
+          textContentType="password"
         />
         {isPassword && (
           <TouchableOpacity
