@@ -15,12 +15,7 @@ const SignIn = () => {
     password: "",
   });
 
-  const handleInputChange = (field, value) => {
-    setSignInData((prevState) => ({
-      ...prevState,
-      [field]: value,
-    }));
-  };
+  console.log(signInData);
 
   const validateForm = () => {
     if (!signInData.email || !signInData.password) {
@@ -47,14 +42,18 @@ const SignIn = () => {
             label={"Email address"}
             placeholder={"Enter your email"}
             value={signInData.email}
-            onChangeValue={(text) => handleInputChange("email", text)}
+            onChangeValue={(text) =>
+              handleInputChange(setSignInData, "email", text)
+            }
             type={"email"}
           />
           <CustomInput
             label={"Password"}
             placeholder={"Enter your password"}
             value={signInData.password}
-            onChangeValue={(text) => handleInputChange("password", text)}
+            onChangeValue={(text) =>
+              handleInputChange(setSignInData, "password", text)
+            }
             type={"password"}
           />
         </View>
