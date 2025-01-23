@@ -27,11 +27,13 @@ const RightAction = (prog, drag) => {
 
 const TaskView = ({ task }) => {
   const priorityColor =
-    task.priority === "High"
+    task.priority === "high"
       ? taskView.highPriorityColor
-      : task.priority === "Medium"
+      : task.priority === "medium"
       ? taskView.mediumPriorityColor
-      : taskView.lowPriorityColor;
+      : task.priority === "low"
+      ? taskView.lowPriorityColor
+      : taskView.errorPriority;
 
   return (
     <GestureHandlerRootView>
@@ -43,7 +45,7 @@ const TaskView = ({ task }) => {
       >
         <View style={taskView.row}>
           <View style={taskView.centered}>
-            <Text style={fontsTheme.semiBold}>{task.title}</Text>
+            <Text style={fontsTheme.semiBold}>{task.name}</Text>
             <View style={[taskView.priorityLine, priorityColor]} />
           </View>
           <View style={taskView.centered}>
