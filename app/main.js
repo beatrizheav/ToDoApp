@@ -6,7 +6,7 @@ import AvatarPicker from "../components/AvatarPicker";
 const Main = () => {
   const [selectedAvatar, setSelectedAvatar] = useState(null);
   return (
-    <View style={containers.main}>
+    <View style={containers.safeArea}>
       <AvatarPicker
         selectedAvatarUri={selectedAvatar}
         onAvatarSelect={setSelectedAvatar}

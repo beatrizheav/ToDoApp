@@ -25,7 +25,7 @@ export default function App() {
   useEffect(() => {
     if (fontsLoaded) {
       SplashScreen.hideAsync();
-      router.replace("/signIn");
+      router.replace("/signUp");
     }
   }, [fontsLoaded, router]);
 
