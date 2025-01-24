@@ -43,6 +43,7 @@ export const taskView = StyleSheet.create({
     paddingHorizontal: "6%",
     borderWidth: 1,
     borderColor: colorsTheme.lightestGray,
+    backgroundColor: colorsTheme.white,
     borderRadius: 10,
     justifyContent: "center",
   },

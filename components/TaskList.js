@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, StatusBar, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import DraggableFlatList from "react-native-draggable-flatlist";
+import TaskView from "./TaskView";
+import data2 from "../data/tasks.json";
+import CustomTitle from "./CustomTitle";
 
-const data2 = [
+const data3 = [
   {
     id: 1,
     name: "Buy groceries",
@@ -33,7 +36,7 @@ const data2 = [
   },
 ];
 
-const App = () => {
+const TaskList = () => {
   // Group tasks by status
   const groupTasks = (tasks) => {
     return tasks.reduce((acc, task) => {
@@ -99,13 +102,13 @@ const App = () => {
           data={flatListDataGrouped}
           renderItem={({ item, index, drag }) => (
             <TouchableOpacity
-              style={item.isHeader ? styles.headerContainer : styles.item}
+              style={item.isHeader ? styles.headerContainer : {}}
               onLongPress={item.isHeader ? undefined : drag}
             >
               {item.isHeader ? (
-                <Text style={styles.header}>{item.item.name}</Text>
+                <CustomTitle text={item.item.name} type={"small"} />
               ) : (
-                <Text style={styles.title}>{item.item.name}</Text>
+                <TaskView task={item.item} />
               )}
             </TouchableOpacity>
           )}
@@ -124,26 +127,13 @@ const App = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: StatusBar.currentHeight,
+    flex: 0.9,
     marginLeft: 10,
   },
-  item: {
-    backgroundColor: "#f9c2ff",
-    padding: 20,
-    marginVertical: 8,
-  },
   headerContainer: {
-    backgroundColor: "#fff",
     paddingVertical: 10,
     paddingLeft: 16,
   },
-  header: {
-    fontSize: 32,
-  },
-  title: {
-    fontSize: 24,
-  },
 });
 
-export default App;
+export default TaskList;
