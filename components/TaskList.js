@@ -6,12 +6,15 @@ import DraggableFlatList, {
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import tasks from "../data/tasks.json";
 import TaskView from "./TaskView";
+import CustomTitle from "./CustomTitle";
 
 export default function App() {
-  const [data, setData] = useState(
+  const [dataToDo, setDataToDo] = useState(
     tasks.filter((item) => item.status === "to do")
   );
-  console.log("TO DO DATA", data);
+  const [dataInProgress, setDataInProgress] = useState(
+    tasks.filter((item) => item.status === "in progress")
+  );
 
   const renderItem = ({ item, drag, isActive }) => {
     return (
@@ -26,12 +29,25 @@ export default function App() {
   return (
     <GestureHandlerRootView>
       <View style={styles.container}>
-        <DraggableFlatList
-          data={data}
-          onDragEnd={({ data }) => setData(data)} // Update the state with the new data after drag
-          keyExtractor={(item) => item.id.toString()} // Key extractor for each item
-          renderItem={renderItem} // Render function for each item
-        />
+        <CustomTitle text={"To do"} type={"small"} />
+        <View style={{ height: 200, marginBottom: 15 }}>
+          <DraggableFlatList
+            data={dataToDo}
+            onDragEnd={({ data }) => setDataToDo(data)} // Update the state with the new data after drag
+            keyExtractor={(item) => item.id.toString()} // Key extractor for each item
+            renderItem={renderItem} // Render function for each item
+          />
+        </View>
+        2
+        <CustomTitle text={"In-progress"} type={"small"} />
+        <View style={{ height: 200 }}>
+          <DraggableFlatList
+            data={dataInProgress}
+            onDragEnd={({ data }) => setDataToDo(data)} // Update the state with the new data after drag
+            keyExtractor={(item) => item.id.toString()} // Key extractor for each item
+            renderItem={renderItem} // Render function for each item
+          />
+        </View>
       </View>
     </GestureHandlerRootView>
   );
