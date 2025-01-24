@@ -31,62 +31,12 @@ const SignUp = () => {
 
   const data = { ...signUpData, confirmPassword };
 
-  console.log(data);
-  //     const errors = [];
-
-  //     const validations = [
-  //       {
-  //         check: () => !signUpData.name || signUpData.name.length < 2,
-  //         message: "Enter a valid name.",
-  //       },
-  //       {
-  //         check: () =>
-  //           !signUpData.email || !/\S+@\S+\.\S+/.test(signUpData.email),
-  //         message: "Please enter a valid email address.",
-  //       },
-  //       {
-  //         check: () =>
-  //           !signUpData.password ||
-  //           signUpData.password.length < 8 ||
-  //           password1.length < 8,
-  //         message: "The password must be at least 8 characters.",
-  //       },
-  //       {
-  //         check: () => signUpData.password !== password1,
-  //         message: "The passwords must match.",
-  //       },
-  //       {
-  //         check: () => !signUpData.avatar || !password1,
-  //         message: "All fields are required.",
-  //       },
-  //     ];
-
-  //     validations.forEach((validation) => {
-  //       if (validation.check()) {
-  //         errors.push(validation.message);
-  //       }
-  //     });
-
-  //     // If there are errors, alert them and return false
-  //     if (errors.length > 0) {
-  //       alert(errors.join("\n"));
-  //       return false;
-  //     }
-
-  //     // If no errors, form is valid
-  //     alert("Inputs are correct.");
-  //     return true;
-  //   };
-
-  //   console.log(signUpData);
-
   const validateForm = useFormValidation(data, "signUp");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
       alert("Inputs correct");
-      // Aquí proceder con el registro
     }
   };
 

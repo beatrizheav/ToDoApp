@@ -18,8 +18,6 @@ const SignIn = () => {
     password: "",
   });
 
-  console.log(signInData);
-
   const validateForm = useFormValidation(signInData, "signIn");
 
   const handleSubmit = (e) => {
