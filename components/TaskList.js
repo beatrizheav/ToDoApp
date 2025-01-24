@@ -6,36 +6,6 @@ import TaskView from "./TaskView";
 import data2 from "../data/tasks.json";
 import CustomTitle from "./CustomTitle";
 
-const data3 = [
-  {
-    id: 1,
-    name: "Buy groceries",
-    description: "Purchase ingredients for the week.",
-    dueDate: "2025-01-20T10:00:00Z",
-    priority: "high",
-    category: "house",
-    status: "to do",
-  },
-  {
-    id: 2,
-    name: "Finish project report",
-    description: "Complete and submit the final report for the work project.",
-    dueDate: "2025-01-18T17:00:00Z",
-    priority: "high",
-    category: "work",
-    status: "in progress",
-  },
-  {
-    id: 3,
-    name: "Morning workout",
-    description: "Do a 30-minute cardio workout.",
-    dueDate: "2025-01-16T07:00:00Z",
-    priority: "medium",
-    category: "exercise",
-    status: "done",
-  },
-];
-
 const TaskList = () => {
   // Group tasks by status
   const groupTasks = (tasks) => {
