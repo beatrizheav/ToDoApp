@@ -1,3 +1,4 @@
+import "react-native-gesture-handler"; // this must be at the top
 import React, { useState } from "react";
 import { View } from "react-native";
 import { containers } from "../styles/containers";
@@ -14,7 +15,9 @@ const Main = () => {
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
       />
-      <TaskList />
+      <GestureHandlerRootView>
+        <TaskList />
+      </GestureHandlerRootView>
     </View>
   );
 };

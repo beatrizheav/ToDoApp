@@ -1,76 +1,107 @@
 import React, { useState } from "react";
-import { Text, StyleSheet, TouchableOpacity, View } from "react-native";
-import DraggableFlatList, {
-  ScaleDecorator,
-} from "react-native-draggable-flatlist";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import tasks from "../data/tasks.json";
-import TaskView from "./TaskView";
-import CustomTitle from "./CustomTitle";
+import {
+  StyleSheet,
+  Text,
+  View,
+  StatusBar,
+  TouchableOpacity,
+} from "react-native";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import DraggableFlatList from "react-native-draggable-flatlist";
 
-export default function App() {
-  const [dataToDo, setDataToDo] = useState(
-    tasks.filter((item) => item.status === "to do")
-  );
-  const [dataInProgress, setDataInProgress] = useState(
-    tasks.filter((item) => item.status === "in progress")
-  );
+const DATA = [
+  {
+    title: "Main dishes",
+    data: ["Pizza", "Burger", "Risotto"],
+  },
+  {
+    title: "Sides",
+    data: ["French Fries", "Onion Rings", "Fried Shrimps"],
+  },
+  {
+    title: "Drinks",
+    data: ["Water", "Coke", "Beer"],
+  },
+  {
+    title: "Desserts",
+    data: ["Cheese Cake", "Ice Cream"],
+  },
+];
 
-  const renderItem = ({ item, drag, isActive }) => {
-    return (
-      <ScaleDecorator>
-        <TouchableOpacity onLongPress={drag} disabled={isActive}>
-          <TaskView task={item} />
-        </TouchableOpacity>
-      </ScaleDecorator>
-    );
+const App = () => {
+  const [sections, setSections] = useState(DATA);
+
+  // Flatten the data for the DraggableFlatList
+  const flatListData = sections.reduce((acc, section) => {
+    const sectionHeader = { key: section.title, isHeader: true };
+    const items = section.data.map((item) => ({ key: item, isHeader: false }));
+    return [...acc, sectionHeader, ...items];
+  }, []);
+
+  // Handle the drag and drop of items
+  const handleDragEnd = ({ data }) => {
+    const newSections = [];
+    let currentSection = null;
+
+    data.forEach((item) => {
+      if (item.isHeader) {
+        currentSection = { title: item.key, data: [] };
+        newSections.push(currentSection);
+      } else {
+        currentSection.data.push(item.key);
+      }
+    });
+
+    setSections(newSections);
   };
 
   return (
-    <GestureHandlerRootView>
-      <View style={styles.container}>
-        <CustomTitle text={"To do"} type={"small"} />
-        <View style={{ height: 200, marginBottom: 15 }}>
-          <DraggableFlatList
-            data={dataToDo}
-            onDragEnd={({ data }) => setDataToDo(data)} // Update the state with the new data after drag
-            keyExtractor={(item) => item.id.toString()} // Key extractor for each item
-            renderItem={renderItem} // Render function for each item
-          />
-        </View>
-        2
-        <CustomTitle text={"In-progress"} type={"small"} />
-        <View style={{ height: 200 }}>
-          <DraggableFlatList
-            data={dataInProgress}
-            onDragEnd={({ data }) => setDataToDo(data)} // Update the state with the new data after drag
-            keyExtractor={(item) => item.id.toString()} // Key extractor for each item
-            renderItem={renderItem} // Render function for each item
-          />
-        </View>
-      </View>
-    </GestureHandlerRootView>
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container} edges={["top"]}>
+        <DraggableFlatList
+          data={flatListData}
+          renderItem={({ item, index, drag }) => (
+            <TouchableOpacity
+              style={item.isHeader ? styles.headerContainer : styles.item}
+              onLongPress={drag}
+            >
+              {item.isHeader ? (
+                <Text style={styles.header}>{item.key}</Text>
+              ) : (
+                <Text style={styles.title}>{item.key}</Text>
+              )}
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item, index) => item.key + index}
+          onDragEnd={handleDragEnd}
+        />
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 10,
-    paddingHorizontal: 20,
+    paddingTop: StatusBar.currentHeight,
+    marginHorizontal: 16,
   },
-  rowItem: {
-    height: 100,
-    marginVertical: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 8,
-    padding: 10,
+  item: {
+    backgroundColor: "#f9c2ff",
+    padding: 20,
+    marginVertical: 8,
   },
-  text: {
-    color: "white",
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
+  headerContainer: {
+    backgroundColor: "#fff",
+    paddingVertical: 10,
+    paddingLeft: 16,
+  },
+  header: {
+    fontSize: 32,
+  },
+  title: {
+    fontSize: 24,
   },
 });
+
+export default App;
