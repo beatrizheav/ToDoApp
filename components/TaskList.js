@@ -1,79 +1,121 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  StatusBar,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, StatusBar, TouchableOpacity } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import DraggableFlatList from "react-native-draggable-flatlist";
 
-const DATA = [
+const data2 = [
   {
-    title: "Main dishes",
-    data: ["Pizza", "Burger", "Risotto"],
+    id: 1,
+    name: "Buy groceries",
+    description: "Purchase ingredients for the week.",
+    dueDate: "2025-01-20T10:00:00Z",
+    priority: "high",
+    category: "house",
+    status: "to do",
   },
   {
-    title: "Sides",
-    data: ["French Fries", "Onion Rings", "Fried Shrimps"],
+    id: 2,
+    name: "Finish project report",
+    description: "Complete and submit the final report for the work project.",
+    dueDate: "2025-01-18T17:00:00Z",
+    priority: "high",
+    category: "work",
+    status: "in progress",
   },
   {
-    title: "Drinks",
-    data: ["Water", "Coke", "Beer"],
-  },
-  {
-    title: "Desserts",
-    data: ["Cheese Cake", "Ice Cream"],
+    id: 3,
+    name: "Morning workout",
+    description: "Do a 30-minute cardio workout.",
+    dueDate: "2025-01-16T07:00:00Z",
+    priority: "medium",
+    category: "exercise",
+    status: "done",
   },
 ];
 
 const App = () => {
-  const [sections, setSections] = useState(DATA);
+  // Group tasks by status
+  const groupTasks = (tasks) => {
+    return tasks.reduce((acc, task) => {
+      const { status } = task;
+      if (!acc[status]) {
+        acc[status] = [];
+      }
+      acc[status].push(task);
+      return acc;
+    }, {});
+  };
 
-  // Flatten the data for the DraggableFlatList
-  const flatListData = sections.reduce((acc, section) => {
-    const sectionHeader = { key: section.title, isHeader: true };
-    const items = section.data.map((item) => ({ key: item, isHeader: false }));
-    return [...acc, sectionHeader, ...items];
-  }, []);
+  // Initialize tasksGrouped from grouped tasks
+  const [tasksGrouped, setTasksGrouped] = useState(groupTasks(data2));
 
-  // Handle the drag and drop of items
-  const handleDragEnd = ({ data }) => {
-    const newSections = [];
+  // Flatten grouped data for DraggableFlatList
+  const flatListDataGrouped = Object.entries(tasksGrouped).reduce(
+    (acc, [status, tasks]) => {
+      const sectionHeader = {
+        item: {
+          id: `header-${status}`,
+          name: status,
+          isHeader: true,
+        },
+        isHeader: true,
+      };
+
+      const items = tasks.map((task) => ({
+        item: task,
+        isHeader: false,
+      }));
+
+      return [...acc, sectionHeader, ...items];
+    },
+    []
+  );
+
+  // Handle drag end event and update the tasksGrouped state
+  const handleDragEndGrouped = ({ data }) => {
+    const newGroupedData = {};
     let currentSection = null;
 
+    // Process the rearranged data after dragging
     data.forEach((item) => {
       if (item.isHeader) {
-        currentSection = { title: item.key, data: [] };
-        newSections.push(currentSection);
+        // If it's a header, start a new section
+        currentSection = { status: item.item.name, tasks: [] };
+        newGroupedData[currentSection.status] = currentSection.tasks;
       } else {
-        currentSection.data.push(item.key);
+        // If it's a task, add it to the current section
+        currentSection.tasks.push(item.item);
       }
     });
 
-    setSections(newSections);
+    // Update the tasksGrouped state with the new sectioned data
+    setTasksGrouped(newGroupedData);
   };
 
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container} edges={["top"]}>
         <DraggableFlatList
-          data={flatListData}
+          data={flatListDataGrouped}
           renderItem={({ item, index, drag }) => (
             <TouchableOpacity
               style={item.isHeader ? styles.headerContainer : styles.item}
-              onLongPress={drag}
+              onLongPress={item.isHeader ? undefined : drag}
             >
               {item.isHeader ? (
-                <Text style={styles.header}>{item.key}</Text>
+                <Text style={styles.header}>{item.item.name}</Text>
               ) : (
-                <Text style={styles.title}>{item.key}</Text>
+                <Text style={styles.title}>{item.item.name}</Text>
               )}
             </TouchableOpacity>
           )}
-          keyExtractor={(item, index) => item.key + index}
-          onDragEnd={handleDragEnd}
+          keyExtractor={
+            (item) =>
+              item.isHeader
+                ? `header-${item.item.name}` // Header key
+                : `task-${item.item.id}` // Task key
+          }
+          onDragEnd={handleDragEndGrouped}
         />
       </SafeAreaView>
     </SafeAreaProvider>
@@ -84,7 +126,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: StatusBar.currentHeight,
-    marginHorizontal: 16,
+    marginLeft: 10,
   },
   item: {
     backgroundColor: "#f9c2ff",
