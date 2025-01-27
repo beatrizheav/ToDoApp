@@ -37,17 +37,17 @@ const TaskView = ({ task, setTask, setModalVisible }) => {
 
   return (
     <GestureHandlerRootView>
-      <ReanimatedSwipeable
-        containerStyle={taskView.swipeable}
-        friction={2}
-        enableTrackpadTwoFingerGesture
-        renderRightActions={RightAction}
+      <TouchableOpacity
+        onPress={() => {
+          setTask(task);
+          setModalVisible(true);
+        }}
       >
-        <TouchableOpacity
-          onPress={() => {
-            setTask(task);
-            setModalVisible(true);
-          }}
+        <ReanimatedSwipeable
+          containerStyle={taskView.swipeable}
+          friction={2}
+          enableTrackpadTwoFingerGesture
+          renderRightActions={RightAction}
         >
           <View style={taskView.row}>
             <View style={taskView.centered}>
@@ -58,8 +58,8 @@ const TaskView = ({ task, setTask, setModalVisible }) => {
               <Text style={fontsTheme.regular}>{task.category}</Text>
             </View>
           </View>
-        </TouchableOpacity>
-      </ReanimatedSwipeable>
+        </ReanimatedSwipeable>
+      </TouchableOpacity>
     </GestureHandlerRootView>
   );
 };
