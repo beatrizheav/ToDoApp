@@ -19,6 +19,7 @@ const Main = () => {
       <GestureHandlerRootView>
         <TaskList date={selectedDate.toISOString().slice(0, 10)} />
       </GestureHandlerRootView>
+      <NavBar />
     </View>
   );
 };

@@ -6,64 +6,63 @@ import TaskView from "./TaskView";
 import data2 from "../data/tasks.json";
 import CustomTitle from "./CustomTitle";
 
-// Group tasks by their status
-const groupTasksByStatus = (tasks) => {
-  return tasks.reduce((acc, task) => {
-    const { status } = task;
-    if (!acc[status]) {
-      acc[status] = [];
-    }
-    acc[status].push(task);
-    return acc;
-  }, {});
-};
+// Flatten tasks into a format suitable for DraggableFlatList
+const flattenTasks = (tasks) => {
+  const sections = ["to do", "in progress", "done"]; // Ensure order
+  const flattened = [];
 
-// Flatten grouped tasks into a format suitable for DraggableFlatList
-const flattenGroupedTasks = (groupedTasks) => {
-  return Object.entries(groupedTasks).reduce((acc, [status, tasks]) => {
+  sections.forEach((section) => {
+    // Add section header
     const sectionHeader = {
-      item: { id: `header-${status}`, name: status, isHeader: true },
+      item: { id: `header-${section}`, name: section, isHeader: true },
       isHeader: true,
     };
+    flattened.push(sectionHeader);
 
-    const taskItems = tasks.map((task) => ({
-      item: task,
-      isHeader: false,
-    }));
+    // Check if there are tasks in this section
+    if (tasks && tasks[section] && tasks[section].length > 0) {
+      // If there are tasks, flatten them into the list
+      const taskItems = tasks[section].map((task) => ({
+        item: task,
+        isHeader: false,
+      }));
+      flattened.push(...taskItems);
+    }
+  });
 
-    return [...acc, sectionHeader, ...taskItems];
-  }, []);
+  return flattened;
 };
 
 const TaskList = ({ date }) => {
-  const [tasksGrouped, setTasksGrouped] = useState({});
+  const [tasks, setTasks] = useState(null);
 
-  // Function to filter tasks based on the given date
-  const filterTasksByDate = (tasks, date) => {
-    return tasks.filter((task) => task.dueDate === date);
-  };
-
-  // Filter and group tasks by status when date prop changes
   useEffect(() => {
-    const filteredTasks = filterTasksByDate(data2, date);
-    const groupedTasks = groupTasksByStatus(filteredTasks);
-    setTasksGrouped(groupedTasks);
-  }, [date]); // Re-run when the `date` prop changes
+    // Filter the data for the selected date
+    if (data2[date]) {
+      setTasks(data2[date]);
+    } else {
+      setTasks(null); // Handle case if no data exists for the selected date
+    }
+  }, [date]);
+
+  console.log("TASKS BY DATE", tasks);
 
   // Flatten grouped tasks for display in DraggableFlatList
-  const flatListDataGrouped = flattenGroupedTasks(tasksGrouped);
+  const flatListData = flattenTasks(tasks);
+
+  console.log(flatListData);
 
   // Handle the drag and drop logic to update the task order
-  const handleDragEndGrouped = useCallback(
+  const handleDragEnd = useCallback(
     ({ data }) => {
-      const newGroupedData = {};
+      const newData = {};
       let currentSection = null;
 
       data.forEach((item) => {
         if (item.isHeader) {
           // Header indicates a new section
           currentSection = { status: item.item.name, tasks: [] };
-          newGroupedData[currentSection.status] = currentSection.tasks;
+          newData[currentSection.status] = currentSection.tasks;
         } else {
           // Task item goes into the current section
           currentSection.tasks.push(item.item);
@@ -71,9 +70,9 @@ const TaskList = ({ date }) => {
       });
 
       // Update state with new order of tasks
-      setTasksGrouped(newGroupedData);
+      setTasks(newData);
     },
-    [setTasksGrouped]
+    [setTasks]
   );
 
   // Render function for DraggableFlatList items
@@ -92,14 +91,15 @@ const TaskList = ({ date }) => {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.container} edges={["top"]}>
+      <SafeAreaView style={styles.container}>
         <DraggableFlatList
-          data={flatListDataGrouped}
+          style={styles.flatList}
+          data={flatListData}
           renderItem={renderItem}
           keyExtractor={(item) =>
             item.isHeader ? `header-${item.item.name}` : `task-${item.item.id}`
           }
-          onDragEnd={handleDragEndGrouped}
+          onDragEnd={handleDragEnd}
         />
       </SafeAreaView>
     </SafeAreaProvider>
@@ -108,8 +108,11 @@ const TaskList = ({ date }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.9,
+    flex: 0.95,
     marginLeft: 10,
+  },
+  flatList: {
+    height: "100%",
   },
   headerContainer: {
     paddingVertical: 10,
