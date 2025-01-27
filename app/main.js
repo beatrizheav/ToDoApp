@@ -9,6 +9,7 @@ import TaskList from "../components/TaskList";
 
 const Main = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
+
   return (
     <View style={containers.safeArea}>
       <HorizontalCalendar
@@ -16,7 +17,7 @@ const Main = () => {
         setSelectedDate={setSelectedDate}
       />
       <GestureHandlerRootView>
-        <TaskList />
+        <TaskList date={selectedDate.toISOString().slice(0, 10)} />
       </GestureHandlerRootView>
     </View>
   );
