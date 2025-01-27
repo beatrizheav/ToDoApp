@@ -1,34 +1,31 @@
 import React, { useState } from "react";
 import { View, Image, TouchableWithoutFeedback, Keyboard } from "react-native";
-import { Link } from "expo-router";
+import { useRouter } from "expo-router";
+import { handleInputChange } from "../hooks/handleInputChange";
 import CustomTitle from "../components/CustomTitle";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import AccountPrompt from "../components/AccountPrompt";
 import { signIn } from "../styles/screens/sign-in";
 import { containers } from "../styles/containers";
+import useFormValidation from "../hooks/useFormValidation";
 
 const SignIn = () => {
+  const router = useRouter();
+
   const [signInData, setSignInData] = useState({
     email: "",
     password: "",
   });
 
-  const handleInputChange = (field, value) => {
-    setSignInData((prevState) => ({
-      ...prevState,
-      [field]: value,
-    }));
-  };
+  const validateForm = useFormValidation(signInData, "signIn");
 
-  const validateForm = () => {
-    if (!signInData.email || !signInData.password) {
-      alert("Both fields are required.");
-      return false;
+  const handleSubmit = (e) => {
+    // e.preventDefault();
+    if (validateForm()) {
+      alert("Inputs correct");
+      // Aquí proceder con el registro
     }
-
-    alert("Inputs correct");
-    return true;
   };
 
   return (
@@ -46,25 +43,28 @@ const SignIn = () => {
             label={"Email address"}
             placeholder={"Enter your email"}
             value={signInData.email}
-            onChangeValue={(text) => handleInputChange("email", text)}
+            onChangeValue={(text) =>
+              handleInputChange(setSignInData, "email", text)
+            }
             type={"email"}
           />
           <CustomInput
             label={"Password"}
             placeholder={"Enter your password"}
             value={signInData.password}
-            onChangeValue={(text) => handleInputChange("password", text)}
+            onChangeValue={(text) =>
+              handleInputChange(setSignInData, "password", text)
+            }
             type={"password"}
           />
         </View>
         <View>
-          <CustomButton text={"Sign In"} type={"big"} onPress={validateForm} />
-          <Link href={"/main"}>
-            <AccountPrompt
-              text={"Don't have an account?"}
-              textPressable={" Sign up"}
-            />
-          </Link>
+          <CustomButton text={"Sign In"} type={"big"} onPress={handleSubmit} />
+          <AccountPrompt
+            text={"Don't have an account?"}
+            textPressable={" Sign up"}
+            onPress={() => router.push("./signUp")}
+          />
         </View>
       </View>
     </TouchableWithoutFeedback>

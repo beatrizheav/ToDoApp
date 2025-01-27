@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { colorsTheme } from "../colorsTheme";
 
 export const avatarPicker = StyleSheet.create({
-  container: {
+  selectContainer: {
     justifyContent: "center",
     alignItems: "center",
     padding: 20,

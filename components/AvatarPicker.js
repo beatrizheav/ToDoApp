@@ -7,11 +7,11 @@ import {
   FlatList,
   Image,
 } from "react-native";
-
 import { avatars } from "../data/avatars";
+import CustomButton from "./CustomButton";
 import { avatarPicker } from "../styles/components/avatar-picker";
 import { fontsTheme } from "../styles/fontsTheme";
-import CustomButton from "./CustomButton";
+import { inputs } from "../styles/components/inputs";
 
 const AvatarPicker = ({ onAvatarSelect, selectedAvatarUri }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -22,11 +22,11 @@ const AvatarPicker = ({ onAvatarSelect, selectedAvatarUri }) => {
   };
 
   return (
-    <View>
+    <View style={inputs.container}>
       <Text style={fontsTheme.regular}>Pick an avatar!</Text>
       <TouchableOpacity
         onPress={() => setIsModalVisible(true)}
-        style={avatarPicker.container}
+        style={avatarPicker.selectContainer}
       >
         <Image
           source={
