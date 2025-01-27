@@ -1,10 +1,11 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import DraggableFlatList from "react-native-draggable-flatlist";
 import TaskView from "./TaskView";
-import data2 from "../data/tasks.json";
 import CustomTitle from "./CustomTitle";
+import data2 from "../data/tasks.json";
+import { taskList } from "../styles/components/task-list";
 
 // Flatten tasks into a format suitable for DraggableFlatList
 const flattenTasks = (tasks) => {
@@ -33,7 +34,7 @@ const flattenTasks = (tasks) => {
   return flattened;
 };
 
-const TaskList = ({ date }) => {
+const TaskList = ({ date, setTask, setModalVisible }) => {
   const [tasks, setTasks] = useState(null);
 
   useEffect(() => {
@@ -45,12 +46,8 @@ const TaskList = ({ date }) => {
     }
   }, [date]);
 
-  console.log("TASKS BY DATE", tasks);
-
   // Flatten grouped tasks for display in DraggableFlatList
   const flatListData = flattenTasks(tasks);
-
-  console.log(flatListData);
 
   // Handle the drag and drop logic to update the task order
   const handleDragEnd = useCallback(
@@ -78,22 +75,26 @@ const TaskList = ({ date }) => {
   // Render function for DraggableFlatList items
   const renderItem = ({ item, index, drag }) => (
     <TouchableOpacity
-      style={item.isHeader ? styles.headerContainer : {}}
+      style={item.isHeader ? taskList.headerContainer : {}}
       onLongPress={item.isHeader ? undefined : drag}
     >
       {item.isHeader ? (
         <CustomTitle text={item.item.name} type={"small"} />
       ) : (
-        <TaskView task={item.item} />
+        <TaskView
+          task={item.item}
+          setTask={setTask}
+          setModalVisible={setModalVisible}
+        />
       )}
     </TouchableOpacity>
   );
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={taskList.container}>
         <DraggableFlatList
-          style={styles.flatList}
+          style={taskList.flatList}
           data={flatListData}
           renderItem={renderItem}
           keyExtractor={(item) =>
@@ -105,19 +106,5 @@ const TaskList = ({ date }) => {
     </SafeAreaProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 0.95,
-    marginLeft: 10,
-  },
-  flatList: {
-    height: "100%",
-  },
-  headerContainer: {
-    paddingVertical: 10,
-    paddingLeft: 16,
-  },
-});
 
 export default TaskList;

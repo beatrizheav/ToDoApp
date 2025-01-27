@@ -11,11 +11,12 @@ import { taskDetail } from "../styles/components/task-detail-modal";
 
 const TaskDetailModal = ({ visible, setVisible, task }) => {
   const handleClose = () => setVisible(false);
+  console.log("TASK RECEIVED", task);
 
   const priorityColor =
-    task.priority === "High"
+    task.priority === "high"
       ? taskDetail.highPriority
-      : task.priority === "Medium"
+      : task.priority === "medium"
       ? taskDetail.mediumPriority
       : taskDetail.lowPriority;
 
@@ -30,7 +31,7 @@ const TaskDetailModal = ({ visible, setVisible, task }) => {
         <View style={taskDetail.modalContainer}>
           <View style={taskDetail.header}>
             <View style={taskDetail.textHeader}>
-              <CustomTitle text={task.title} type={"small"} />
+              <CustomTitle text={task.name} type={"small"} />
             </View>
             <CloseIcon onPress={handleClose} />
           </View>
@@ -46,7 +47,7 @@ const TaskDetailModal = ({ visible, setVisible, task }) => {
               color={colorsTheme.darkBlue}
               style={taskDetail.iconsMargin}
             />
-            <Text style={fontsTheme.regular}>Date: {task.date}</Text>
+            <Text style={fontsTheme.regular}>Date: {task.dueDate}</Text>
           </View>
           <View style={taskDetail.detailsItem}>
             <View

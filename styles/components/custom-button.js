@@ -25,4 +25,9 @@ export const customButton = StyleSheet.create({
     width: 160,
     borderRadius: 10,
   },
+  add: {
+    height: 28,
+    width: 102,
+    borderRadius: 10,
+  },
 });
