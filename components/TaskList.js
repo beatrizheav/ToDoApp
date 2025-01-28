@@ -34,7 +34,7 @@ const flattenTasks = (tasks) => {
   return flattened;
 };
 
-const TaskList = ({ date, setTask, setModalVisible }) => {
+const TaskList = ({ date, setTask, setModalVisible, onPressEdit }) => {
   const [tasks, setTasks] = useState(null);
 
   useEffect(() => {
@@ -77,15 +77,15 @@ const TaskList = ({ date, setTask, setModalVisible }) => {
     <TouchableOpacity
       style={item.isHeader ? taskList.headerContainer : {}}
       onLongPress={item.isHeader ? undefined : drag}
+      onPress={() => {
+        setTask(item.item);
+        setModalVisible(true);
+      }}
     >
       {item.isHeader ? (
         <CustomTitle text={item.item.name} type={"small"} />
       ) : (
-        <TaskView
-          task={item.item}
-          setTask={setTask}
-          setModalVisible={setModalVisible}
-        />
+        <TaskView task={item.item} onPressEdit={onPressEdit} />
       )}
     </TouchableOpacity>
   );

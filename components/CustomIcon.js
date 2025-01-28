@@ -15,8 +15,6 @@ const CustomIcon = ({ name, iconColor, onPress }) => {
   const onPressAction = () => {
     if (onPress) {
       onPress();
-    } else if (name === "edit") {
-      alert("Edit pressed");
     } else {
       setModalVisible(true);
     }

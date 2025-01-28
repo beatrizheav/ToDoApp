@@ -11,7 +11,6 @@ import { taskDetail } from "../styles/components/task-detail-modal";
 
 const TaskDetailModal = ({ visible, setVisible, task }) => {
   const handleClose = () => setVisible(false);
-  console.log("TASK RECEIVED", task);
 
   const priorityColor =
     task.priority === "high"
@@ -72,7 +71,7 @@ const TaskDetailModal = ({ visible, setVisible, task }) => {
             <CustomIcon
               name="edit"
               iconColor="black"
-              onPress={() => alert("Edit pressed")}
+              onPress={() => alert("Edit details task modal pressed")}
             />
           </View>
         </View>

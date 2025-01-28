@@ -14,11 +14,17 @@ const Main = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [detailTaskVisible, setDetailTaskVisible] = useState(false);
   const [task, setTask] = useState("");
-
   const [isSheetVisible, setIsSheetVisible] = useState(false);
+  const [action, setAction] = useState("edit");
 
   const toggleSheet = () => {
     setIsSheetVisible(!isSheetVisible);
+  };
+
+  const onPressEdit = () => {
+    setTask(task);
+    toggleSheet();
+    setAction("edit");
   };
 
   return (
@@ -30,11 +36,12 @@ const Main = () => {
       <GestureHandlerRootView>
         <TaskList
           date={selectedDate.toISOString().slice(0, 10)}
-          setTask={setTask}
           setModalVisible={setDetailTaskVisible}
+          onPressEdit={onPressEdit}
+          setTask={setTask}
         />
       </GestureHandlerRootView>
-      <NavBar add={toggleSheet} />
+      <NavBar toggleSheet={toggleSheet} setAction={setAction} />
       <TaskDetailModal
         task={task}
         visible={detailTaskVisible}
@@ -44,7 +51,7 @@ const Main = () => {
         <AddEditTask
           isVisible={isSheetVisible}
           toggleVisibility={toggleSheet}
-          action={"edit"}
+          action={action}
           task={task}
         />
       )}
