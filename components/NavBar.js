@@ -7,7 +7,7 @@ import CustomButton from "./CustomButton";
 import { navBar } from "../styles/components/nav-bar";
 import { colorsTheme } from "../styles/colorsTheme";
 
-const NavBar = () => {
+const NavBar = ({ add }) => {
   const router = useRouter();
 
   return (
@@ -19,7 +19,7 @@ const NavBar = () => {
           color={colorsTheme.darkBlue}
         />
       </TouchableOpacity>
-      <CustomButton type={"add"} />
+      <CustomButton type={"add"} onPress={add} />
       <TouchableOpacity onPress={() => router.push("./profile")}>
         <FontAwesome name="user-o" size={27} color={colorsTheme.darkBlue} />
       </TouchableOpacity>

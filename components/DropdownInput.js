@@ -3,6 +3,8 @@ import { View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { inputs } from "../styles/components/inputs";
 import { fontsTheme } from "../styles/fontsTheme";
+import { colorsTheme } from "../styles/colorsTheme";
+import { dropdownInput } from "../styles/components/dropdown-input";
 
 const DropdownInput = ({ label, type, value, onChange, placeholder }) => {
   const handleChange = (item) => {
@@ -46,6 +48,9 @@ const DropdownInput = ({ label, type, value, onChange, placeholder }) => {
         placeholder={placeholder}
         value={value}
         onChange={handleChange}
+        dropdownPosition="top"
+        containerStyle={dropdownInput.dropContainer}
+        backgroundColor={colorsTheme.blackOpacity}
       />
     </View>
   );
