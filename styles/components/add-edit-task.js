@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 export const addEditTask = StyleSheet.create({
   container: {
     flex: 1,
+    position: "absolute",
   },
   sheetStyles: {
     container: {

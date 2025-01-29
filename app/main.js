@@ -1,29 +1,27 @@
 import "react-native-gesture-handler";
-import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View } from "react-native";
 import { containers } from "../styles/containers";
 import HorizontalCalendar from "../components/HorizontalCalendar";
-import { GestureHandlerRootView } from "react-native-gesture-handler"; // Import GestureHandlerRootView
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import NavBar from "../components/NavBar";
 import TaskDetailModal from "../components/TaskDetailModal";
-
 import TaskList from "../components/TaskList";
 import AddEditTask from "../components/AddEditTask";
 
 const Main = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [detailTaskVisible, setDetailTaskVisible] = useState(false);
-  const [task, setTask] = useState("");
   const [isSheetVisible, setIsSheetVisible] = useState(false);
+  const [task, setTask] = useState("");
   const [action, setAction] = useState("edit");
 
-  const toggleSheet = () => {
-    setIsSheetVisible(!isSheetVisible);
+  const toggleSheetVisibility = () => {
+    setIsSheetVisible((prevState) => !prevState);
   };
 
-  const onPressEdit = () => {
-    setTask(task);
-    toggleSheet();
+  const handleEditTask = () => {
+    toggleSheetVisibility();
     setAction("edit");
   };
 
@@ -37,24 +35,26 @@ const Main = () => {
         <TaskList
           date={selectedDate.toISOString().slice(0, 10)}
           setModalVisible={setDetailTaskVisible}
-          onPressEdit={onPressEdit}
+          onPressEdit={handleEditTask}
           setTask={setTask}
         />
       </GestureHandlerRootView>
-      <NavBar toggleSheet={toggleSheet} setAction={setAction} />
-      <TaskDetailModal
-        task={task}
-        visible={detailTaskVisible}
-        setVisible={setDetailTaskVisible}
-      />
       {isSheetVisible && (
         <AddEditTask
           isVisible={isSheetVisible}
-          toggleVisibility={toggleSheet}
+          toggleVisibility={toggleSheetVisibility}
           action={action}
           task={task}
         />
       )}
+      <NavBar toggleSheet={toggleSheetVisibility} setAction={setAction} />
+      <TaskDetailModal
+        task={task}
+        visible={detailTaskVisible}
+        setVisible={setDetailTaskVisible}
+        onPress={handleEditTask}
+        setTask={setTask}
+      />
     </View>
   );
 };

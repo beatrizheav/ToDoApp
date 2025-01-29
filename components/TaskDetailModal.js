@@ -9,7 +9,7 @@ import { fontsTheme } from "../styles/fontsTheme";
 import { colorsTheme } from "../styles/colorsTheme";
 import { taskDetail } from "../styles/components/task-detail-modal";
 
-const TaskDetailModal = ({ visible, setVisible, task }) => {
+const TaskDetailModal = ({ visible, setVisible, task, onPress, setTask }) => {
   const handleClose = () => setVisible(false);
 
   const priorityColor =
@@ -18,6 +18,12 @@ const TaskDetailModal = ({ visible, setVisible, task }) => {
       : task.priority === "medium"
       ? taskDetail.mediumPriority
       : taskDetail.lowPriority;
+
+  const onPressEdit = () => {
+    onPress();
+    setTask(task);
+    handleClose();
+  };
 
   return (
     <Modal
@@ -71,7 +77,7 @@ const TaskDetailModal = ({ visible, setVisible, task }) => {
             <CustomIcon
               name="edit"
               iconColor="black"
-              onPress={() => alert("Edit details task modal pressed")}
+              onPress={() => onPressEdit()}
             />
           </View>
         </View>

@@ -8,7 +8,9 @@ import { taskView } from "../styles/components/task-view";
 import { fontsTheme } from "../styles/fontsTheme";
 import CustomIcon from "./CustomIcon";
 
-const TaskView = ({ task, onPressEdit }) => {
+const TaskView = ({ task, onPressEdit, updateTask }) => {
+  const taskToEdit = task;
+
   const priorityColor =
     task.priority === "high"
       ? taskView.highPriorityColor
@@ -28,7 +30,10 @@ const TaskView = ({ task, onPressEdit }) => {
     return (
       <Reanimated.View style={styleAnimation}>
         <View style={taskView.rightAction}>
-          <CustomIcon name={"edit"} onPress={() => onPressEdit()} />
+          <CustomIcon
+            name={"edit"}
+            onPress={() => [onPressEdit(), updateTask(task)]}
+          />
           <CustomIcon name={"delete"} />
         </View>
       </Reanimated.View>

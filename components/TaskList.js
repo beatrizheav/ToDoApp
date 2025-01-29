@@ -85,7 +85,11 @@ const TaskList = ({ date, setTask, setModalVisible, onPressEdit }) => {
       {item.isHeader ? (
         <CustomTitle text={item.item.name} type={"small"} />
       ) : (
-        <TaskView task={item.item} onPressEdit={onPressEdit} />
+        <TaskView
+          task={item.item}
+          onPressEdit={onPressEdit}
+          updateTask={setTask}
+        />
       )}
     </TouchableOpacity>
   );
