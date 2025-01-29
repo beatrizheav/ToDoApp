@@ -9,7 +9,7 @@ import { taskList } from "../styles/components/task-list";
 
 // Flatten tasks into a format suitable for DraggableFlatList
 const flattenTasks = (tasks) => {
-  const sections = ["to do", "in progress", "done"]; // Ensure order
+  const sections = ["to do", "in progress", "done"];
   const flattened = [];
 
   sections.forEach((section) => {
@@ -22,7 +22,6 @@ const flattenTasks = (tasks) => {
 
     // Check if there are tasks in this section
     if (tasks && tasks[section] && tasks[section].length > 0) {
-      // If there are tasks, flatten them into the list
       const taskItems = tasks[section].map((task) => ({
         item: task,
         isHeader: false,
@@ -38,18 +37,15 @@ const TaskList = ({ date, setTask, setModalVisible, onPressEdit }) => {
   const [tasks, setTasks] = useState(null);
 
   useEffect(() => {
-    // Filter the data for the selected date
     if (data2[date]) {
       setTasks(data2[date]);
     } else {
-      setTasks(null); // Handle case if no data exists for the selected date
+      setTasks(null);
     }
   }, [date]);
 
-  // Flatten grouped tasks for display in DraggableFlatList
   const flatListData = flattenTasks(tasks);
 
-  // Handle the drag and drop logic to update the task order
   const handleDragEnd = useCallback(
     ({ data }) => {
       const newData = {};
@@ -72,7 +68,6 @@ const TaskList = ({ date, setTask, setModalVisible, onPressEdit }) => {
     [setTasks]
   );
 
-  // Render function for DraggableFlatList items
   const renderItem = ({ item, index, drag }) => (
     <TouchableOpacity
       style={item.isHeader ? taskList.headerContainer : {}}

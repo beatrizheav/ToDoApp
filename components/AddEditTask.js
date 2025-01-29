@@ -49,7 +49,6 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
         priority: task.priority || "",
       });
     }
-    // If it's "add", reset the taskDetails to the default values
     if (action === "add") {
       setTaskDetails({
         task: "",
