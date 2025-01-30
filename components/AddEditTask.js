@@ -38,8 +38,6 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
     }
   }, [isVisible]);
 
-  console.log(task);
-
   // Set the task details when the action is "edit" and task changes
   useEffect(() => {
     if (action === "edit" && task) {

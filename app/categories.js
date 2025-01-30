@@ -34,8 +34,6 @@ const Categories = () => {
     />
   );
 
-  console.log(categoryEdit);
-
   return (
     <View style={[containers.safeArea, categories.container]}>
       <TouchableOpacity onPress={() => router.back()}>
