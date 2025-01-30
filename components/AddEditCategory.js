@@ -5,7 +5,7 @@ import CustomTitle from "./CustomTitle";
 import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
 import CloseIcon from "./CloseIcon";
-import { addEditCategory } from "../styles/components/add-edit-category";
+import { sheet } from "../styles/components/sheet";
 
 const AddEditTask = ({ action, isVisible, toggleVisibility, categoryEdit }) => {
   const [category, setCategory] = useState({
@@ -37,18 +37,23 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, categoryEdit }) => {
   }, [categoryEdit, action]);
 
   return (
-    <View style={addEditCategory.container}>
+    <View style={sheet.container}>
       <RBSheet
         closeOnPressMask={false}
         ref={refRBSheet}
-        customStyles={addEditCategory.sheetStyles}
+        customStyles={{
+          container: {
+            ...sheet.sheetStyles,
+            ...sheet.sheetCategory,
+          },
+        }}
         customModalProps={{
           animationType: "slide",
           statusBarTranslucent: true,
         }}
       >
         <View>
-          <View style={addEditCategory.header}>
+          <View style={sheet.header}>
             <CustomTitle text={title} />
             <CloseIcon onPress={toggleVisibility} />
           </View>
@@ -60,7 +65,7 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, categoryEdit }) => {
             type="text"
           />
         </View>
-        <View style={addEditCategory.footer}>
+        <View style={sheet.footer}>
           <CustomButton type="small" text={button} />
         </View>
       </RBSheet>

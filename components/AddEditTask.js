@@ -7,7 +7,7 @@ import CustomButton from "./CustomButton";
 import CloseIcon from "./CloseIcon";
 import InputDatePicker from "./InputDatePicker";
 import DropdownInput from "./DropdownInput";
-import { addEditTask } from "../styles/components/add-edit-task";
+import { sheet } from "../styles/components/sheet";
 
 const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
   const [taskDetails, setTaskDetails] = useState({
@@ -63,18 +63,23 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
   }, [task, action]);
 
   return (
-    <View style={addEditTask.container}>
+    <View style={sheet.container}>
       <RBSheet
         closeOnPressMask={false}
         ref={refRBSheet}
-        customStyles={addEditTask.sheetStyles}
+        customStyles={{
+          container: {
+            ...sheet.sheetStyles,
+            ...sheet.sheetTask,
+          },
+        }}
         customModalProps={{
           animationType: "slide",
           statusBarTranslucent: true,
         }}
       >
         <View>
-          <View style={addEditTask.header}>
+          <View style={sheet.header}>
             <CustomTitle text={title} />
             <CloseIcon onPress={toggleVisibility} />
           </View>
@@ -116,7 +121,7 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
           />
         </View>
 
-        <View style={addEditTask.footer}>
+        <View style={sheet.footer}>
           <CustomButton type="small" text={button} />
         </View>
       </RBSheet>
