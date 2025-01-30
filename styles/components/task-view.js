@@ -24,6 +24,9 @@ export const taskView = StyleSheet.create({
   lowPriorityColor: {
     backgroundColor: colorsTheme.Green,
   },
+  errorPriority: {
+    backgroundColor: colorsTheme.darkBlue,
+  },
   centered: {
     height: "100%",
     justifyContent: "center",
@@ -36,9 +39,11 @@ export const taskView = StyleSheet.create({
     height: 60,
     width: "100%",
     paddingVertical: 8,
+    marginBottom: 8,
     paddingHorizontal: "6%",
     borderWidth: 1,
     borderColor: colorsTheme.lightestGray,
+    backgroundColor: colorsTheme.white,
     borderRadius: 10,
     justifyContent: "center",
   },

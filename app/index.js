@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import {
@@ -25,7 +25,7 @@ export default function App() {
   useEffect(() => {
     if (fontsLoaded) {
       SplashScreen.hideAsync();
-      router.replace("/signUp");
+      router.replace("/main");
     }
   }, [fontsLoaded, router]);
 

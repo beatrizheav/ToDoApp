@@ -21,10 +21,8 @@ const SignIn = () => {
   const validateForm = useFormValidation(signInData, "signIn");
 
   const handleSubmit = (e) => {
-    // e.preventDefault();
     if (validateForm()) {
       alert("Inputs correct");
-      // Aquí proceder con el registro
     }
   };
 

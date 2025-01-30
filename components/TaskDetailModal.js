@@ -9,15 +9,21 @@ import { fontsTheme } from "../styles/fontsTheme";
 import { colorsTheme } from "../styles/colorsTheme";
 import { taskDetail } from "../styles/components/task-detail-modal";
 
-const TaskDetailModal = ({ visible, setVisible, task }) => {
+const TaskDetailModal = ({ visible, setVisible, task, onPress, setTask }) => {
   const handleClose = () => setVisible(false);
 
   const priorityColor =
-    task.priority === "High"
+    task.priority === "high"
       ? taskDetail.highPriority
-      : task.priority === "Medium"
+      : task.priority === "medium"
       ? taskDetail.mediumPriority
       : taskDetail.lowPriority;
+
+  const onPressEdit = () => {
+    onPress();
+    setTask(task);
+    handleClose();
+  };
 
   return (
     <Modal
@@ -30,7 +36,7 @@ const TaskDetailModal = ({ visible, setVisible, task }) => {
         <View style={taskDetail.modalContainer}>
           <View style={taskDetail.header}>
             <View style={taskDetail.textHeader}>
-              <CustomTitle text={task.title} type={"small"} />
+              <CustomTitle text={task.name} type={"small"} />
             </View>
             <CloseIcon onPress={handleClose} />
           </View>
@@ -46,7 +52,7 @@ const TaskDetailModal = ({ visible, setVisible, task }) => {
               color={colorsTheme.darkBlue}
               style={taskDetail.iconsMargin}
             />
-            <Text style={fontsTheme.regular}>Date: {task.date}</Text>
+            <Text style={fontsTheme.regular}>Date: {task.dueDate}</Text>
           </View>
           <View style={taskDetail.detailsItem}>
             <View
@@ -71,7 +77,7 @@ const TaskDetailModal = ({ visible, setVisible, task }) => {
             <CustomIcon
               name="edit"
               iconColor="black"
-              onPress={() => alert("Edit pressed")}
+              onPress={() => onPressEdit()}
             />
           </View>
         </View>

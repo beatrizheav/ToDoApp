@@ -1,17 +1,62 @@
-import React, { useState } from "react";
+import "react-native-gesture-handler";
+import React, { useState, useEffect } from "react";
 import { View } from "react-native";
 import { containers } from "../styles/containers";
-import AvatarPicker from "../components/AvatarPicker";
+import HorizontalCalendar from "../components/HorizontalCalendar";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import NavBar from "../components/NavBar";
+import TaskDetailModal from "../components/TaskDetailModal";
+import TaskList from "../components/TaskList";
+import AddEditTask from "../components/AddEditTask";
 
 const Main = () => {
-  const [selectedAvatar, setSelectedAvatar] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [detailTaskVisible, setDetailTaskVisible] = useState(false);
+  const [isSheetVisible, setIsSheetVisible] = useState(false);
+  const [task, setTask] = useState("");
+  const [action, setAction] = useState("edit");
+
+  const toggleSheetVisibility = () => {
+    setIsSheetVisible((prevState) => !prevState);
+  };
+
+  const handleEditTask = () => {
+    toggleSheetVisibility();
+    setAction("edit");
+  };
+
   return (
     <View style={containers.safeArea}>
-      <AvatarPicker
-        selectedAvatarUri={selectedAvatar}
-        onAvatarSelect={setSelectedAvatar}
+      <HorizontalCalendar
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+      />
+      <GestureHandlerRootView>
+        <TaskList
+          date={selectedDate.toISOString().slice(0, 10)}
+          setModalVisible={setDetailTaskVisible}
+          onPressEdit={handleEditTask}
+          setTask={setTask}
+        />
+      </GestureHandlerRootView>
+      {isSheetVisible && (
+        <AddEditTask
+          isVisible={isSheetVisible}
+          toggleVisibility={toggleSheetVisibility}
+          action={action}
+          task={task}
+        />
+      )}
+      <NavBar toggleSheet={toggleSheetVisibility} setAction={setAction} />
+      <TaskDetailModal
+        task={task}
+        visible={detailTaskVisible}
+        setVisible={setDetailTaskVisible}
+        onPress={handleEditTask}
+        setTask={setTask}
       />
     </View>
   );
 };
+
 export default Main;
