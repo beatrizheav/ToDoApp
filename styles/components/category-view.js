@@ -16,7 +16,7 @@ export const categoryView = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: "6%",
     borderBottomWidth: 1,
-    borderColor: colorsTheme.lightestGray,
+    borderColor: colorsTheme.white,
     justifyContent: "center",
   },
 });

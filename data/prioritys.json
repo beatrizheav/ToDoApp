@@ -1,5 +1,5 @@
 [
-  { "label": "High", "value": "3" },
-  { "label": "Medium", "value": "2" },
-  { "label": "Low", "value": "1" }
+  { "label": "High", "value": "high" },
+  { "label": "Medium", "value": "medium" },
+  { "label": "Low", "value": "low" }
 ]

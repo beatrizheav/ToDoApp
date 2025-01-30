@@ -21,7 +21,7 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
   const refRBSheet = useRef();
 
   const title = action === "add" ? "Add task" : "Edit task";
-  const button = action === "add" ? "Add" : "Edit";
+  const button = action === "add" ? "Add" : "Save";
 
   const handleInputChange = (field, value) => {
     setTaskDetails((prevDetails) => ({
@@ -38,13 +38,15 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
     }
   }, [isVisible]);
 
+  console.log(task);
+
   // Set the task details when the action is "edit" and task changes
   useEffect(() => {
     if (action === "edit" && task) {
       setTaskDetails({
         task: task.name || "",
         description: task.description || "",
-        date: task.date || new Date(),
+        date: new Date(task.dueDate) || new Date(),
         category: task.category || "",
         priority: task.priority || "",
       });
