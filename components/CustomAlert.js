@@ -5,7 +5,13 @@ import CustomButton from "./CustomButton";
 import { fontsTheme } from "../styles/fontsTheme";
 import { customAlert } from "../styles/components/custom-alert";
 
-const CustomAlert = ({ visible, title, description, setVisible }) => {
+const CustomAlert = ({
+  visible,
+  title,
+  description,
+  setVisible,
+  confirmAction,
+}) => {
   return (
     <Modal
       transparent={true}
@@ -27,7 +33,7 @@ const CustomAlert = ({ visible, title, description, setVisible }) => {
               {description}
             </Text>
             <CustomButton
-              onPress={() => setVisible(false)}
+              onPress={() => [setVisible(false), confirmAction()]}
               text={"Yes"}
               type={"small"}
             />

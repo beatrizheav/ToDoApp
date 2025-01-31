@@ -36,7 +36,6 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      alert("Inputs correct");
       router.push("/main");
     }
   };

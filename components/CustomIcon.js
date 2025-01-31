@@ -11,6 +11,7 @@ const CustomIcon = ({ name, iconColor, onPress, type }) => {
   const defaultBackground = name === "edit" ? customIcon.blue : customIcon.red;
   const background = iconColor ? {} : defaultBackground;
   const color = iconColor || colorsTheme.white;
+  const confirmTitle = "Delete " + type;
   const confirmText = "Are you sure you want to delete this " + type + "?";
 
   const onPressAction = () => {
@@ -32,7 +33,7 @@ const CustomIcon = ({ name, iconColor, onPress, type }) => {
       {name === "delete" && (
         <CustomAlert
           visible={modalVisible}
-          title={"Delete task"}
+          title={confirmTitle}
           description={confirmText}
           setVisible={setModalVisible}
         />
