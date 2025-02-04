@@ -34,7 +34,7 @@ const TaskView = ({ task, onPressEdit, updateTask }) => {
             name={"edit"}
             onPress={() => [onPressEdit(), updateTask(task)]}
           />
-          <CustomIcon name={"delete"} />
+          <CustomIcon name={"delete"} type={"task"} />
         </View>
       </Reanimated.View>
     );

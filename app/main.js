@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 import { containers } from "../styles/containers";
 import HorizontalCalendar from "../components/HorizontalCalendar";
