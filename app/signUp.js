@@ -1,20 +1,14 @@
 import React, { useState } from "react";
-import {
-  TouchableOpacity,
-  View,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import { View, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { useRouter } from "expo-router";
 import { handleInputChange } from "../hooks/handleInputChange";
 import AvatarPicker from "../components/AvatarPicker";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import BackIcon from "../components/BackIcon";
 import CustomTitle from "../components/CustomTitle";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import AccountPrompt from "../components/AccountPrompt";
 import { signUp } from "../styles/screens/sign-up";
-import { colorsTheme } from "../styles/colorsTheme";
 import { containers } from "../styles/containers";
 import useFormValidation from "../hooks/useFormValidation";
 
@@ -44,16 +38,7 @@ const SignUp = () => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={[containers.safeArea, signUp.main]}>
         <View style={signUp.title}>
-          <TouchableOpacity
-            onPress={() => router.back()}
-            style={signUp.backIcon}
-          >
-            <Ionicons
-              name="arrow-back-outline"
-              size={24}
-              color={colorsTheme.darkBlue}
-            />
-          </TouchableOpacity>
+          <BackIcon />
           <CustomTitle text={"Sign Up"} type={"big"} />
         </View>
         <CustomInput

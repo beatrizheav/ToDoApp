@@ -5,12 +5,14 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
+import CustomAlert from "../components/CustomAlert";
+import CustomTitle from "../components/CustomTitle";
+import BackIcon from "../components/BackIcon";
 import { avatars } from "../data/avatars";
 import { containers } from "../styles/containers";
 import { colorsTheme } from "../styles/colorsTheme";
-import CustomAlert from "../components/CustomAlert";
-import CustomTitle from "../components/CustomTitle";
 import { fontsTheme } from "../styles/fontsTheme";
+import { profile } from "../styles/screens/profile";
 
 const Profile = () => {
   const router = useRouter();
@@ -28,73 +30,33 @@ const Profile = () => {
 
   return (
     <View style={containers.safeArea}>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginTop: 20,
-        }}
-      >
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons
-            name="arrow-back-outline"
-            size={25}
-            color={colorsTheme.darkBlue}
-          />
-        </TouchableOpacity>
+      <View style={profile.header}>
+        <BackIcon />
         <TouchableOpacity onPress={() => setAlertVisible(true)}>
           <MaterialIcons name="logout" size={26} color={colorsTheme.darkBlue} />
         </TouchableOpacity>
       </View>
-      <Image
-        source={avatar.src}
-        style={{
-          height: 120,
-          width: 120,
-          alignSelf: "center",
-          borderRadius: 60,
-          backgroundColor: colorsTheme.softYellow,
-          marginTop: 100,
-        }}
-      />
-      <View style={{ alignSelf: "center", marginTop: 15, marginBottom: 40 }}>
+      <Image source={avatar.src} style={profile.avatar} />
+      <View style={profile.title}>
         <CustomTitle text={profileData.name} type={"small"} />
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          marginHorizontal: 40,
-        }}
-      >
+      <View style={profile.infoContainer}>
         <AntDesign name="mail" size={24} color={colorsTheme.darkBlue} />
-        <Text
-          style={[
-            fontsTheme.regular,
-            { marginLeft: 10, textDecorationLine: "underline" },
-          ]}
-        >
+        <Text style={[fontsTheme.regular, profile.mailText]}>
           {profileData.mail}
         </Text>
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          marginHorizontal: 40,
-          marginTop: 15,
-        }}
-      >
+      <View style={profile.infoContainer}>
         <Ionicons
           name="lock-closed-outline"
           size={27}
           color={colorsTheme.darkBlue}
         />
         <TextInput
-          style={[fontsTheme.regular, { marginLeft: 10, flex: 1 }]}
+          style={[fontsTheme.regular, profile.passwordText]}
           value={profileData.password}
-          secureTextEntry={!showPassword} // Toggle visibility based on showPassword state
-          editable={false} // Prevent editing the password directly
+          secureTextEntry={!showPassword}
+          editable={false}
         />
         <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
           <Feather
