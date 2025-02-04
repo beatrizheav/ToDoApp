@@ -22,7 +22,7 @@ const SignIn = () => {
 
   const handleSubmit = (e) => {
     if (validateForm()) {
-      alert("Inputs correct");
+      router.push("./main");
     }
   };
 
