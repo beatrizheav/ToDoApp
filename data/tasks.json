@@ -1,11 +1,11 @@
 {
-  "2025-01-27": {
+  "2025-01-31": {
     "to do": [
       {
         "id": 1,
         "name": "Buy groceries",
         "description": "Purchase ingredients for the week.",
-        "dueDate": "2025-01-27",
+        "dueDate": "2025-01-31",
         "priority": "high",
         "category": "house",
         "status": "to do"
@@ -14,7 +14,7 @@
         "id": 4,
         "name": "Call mom",
         "description": "Give my mom a call to check in and catch up.",
-        "dueDate": "2025-01-27",
+        "dueDate": "2025-01-31",
         "priority": "medium",
         "category": "personal",
         "status": "to do"
@@ -23,7 +23,7 @@
         "id": 11,
         "name": "Clean car",
         "description": "Wash and vacuum the car.",
-        "dueDate": "2025-01-27",
+        "dueDate": "2025-01-31",
         "priority": "medium",
         "category": "house",
         "status": "to do"
@@ -32,7 +32,7 @@
         "id": 12,
         "name": "Grocery shopping for the week",
         "description": "Buy weekly groceries for the house.",
-        "dueDate": "2025-01-27",
+        "dueDate": "2025-01-31",
         "priority": "high",
         "category": "house",
         "status": "to do"
@@ -41,7 +41,7 @@
         "id": 16,
         "name": "Pick up dry cleaning",
         "description": "Go to the dry cleaner to pick up the clothes.",
-        "dueDate": "2025-01-27",
+        "dueDate": "2025-01-31",
         "priority": "low",
         "category": "house",
         "status": "to do"
@@ -52,7 +52,7 @@
         "id": 2,
         "name": "Finish project report",
         "description": "Complete and submit the final report for the work project.",
-        "dueDate": "2025-01-27",
+        "dueDate": "2025-01-31",
         "priority": "high",
         "category": "work",
         "status": "in progress"
@@ -61,7 +61,7 @@
         "id": 10,
         "name": "Finish reading book",
         "description": "Complete reading 'Atomic Habits' by James Clear.",
-        "dueDate": "2025-01-27",
+        "dueDate": "2025-01-31",
         "priority": "low",
         "category": "personal",
         "status": "in progress"
@@ -72,7 +72,7 @@
         "id": 3,
         "name": "Morning workout",
         "description": "Do a 30-minute cardio workout.",
-        "dueDate": "2025-01-27",
+        "dueDate": "2025-01-31",
         "priority": "medium",
         "category": "exercise",
         "status": "done"
@@ -81,7 +81,7 @@
         "id": 7,
         "name": "Buy birthday gift",
         "description": "Get a gift for Sarah's birthday on January 21st.",
-        "dueDate": "2025-01-27",
+        "dueDate": "2025-01-31",
         "priority": "medium",
         "category": "personal",
         "status": "done"
@@ -90,7 +90,7 @@
         "id": 14,
         "name": "Take vitamins",
         "description": "Take daily vitamins and supplements.",
-        "dueDate": "2025-01-27",
+        "dueDate": "2025-01-31",
         "priority": "low",
         "category": "personal",
         "status": "done"
@@ -99,20 +99,20 @@
         "id": 19,
         "name": "Complete workout routine",
         "description": "Finish the full 45-minute workout.",
-        "dueDate": "2025-01-27",
+        "dueDate": "2025-01-31",
         "priority": "high",
         "category": "exercise",
         "status": "done"
       }
     ]
   },
-  "2025-01-28": {
+  "2025-02-01": {
     "to do": [
       {
         "id": 8,
         "name": "Schedule doctor's appointment",
         "description": "Make an appointment for a routine check-up.",
-        "dueDate": "2025-01-28",
+        "dueDate": "2025-02-01",
         "priority": "medium",
         "category": "personal",
         "status": "to do"
@@ -121,7 +121,7 @@
         "id": 13,
         "name": "Complete work email follow-up",
         "description": "Send follow-up emails to clients about the recent project.",
-        "dueDate": "2025-01-28",
+        "dueDate": "2025-02-01",
         "priority": "medium",
         "category": "work",
         "status": "done"
@@ -130,7 +130,7 @@
         "id": 20,
         "name": "Write blog post",
         "description": "Write a new blog post about productivity tips.",
-        "dueDate": "2025-01-28",
+        "dueDate": "2025-02-01",
         "priority": "medium",
         "category": "work",
         "status": "to do"
@@ -141,7 +141,7 @@
         "id": 5,
         "name": "Clean the house",
         "description": "Vacuum, mop, and organize the living room and kitchen.",
-        "dueDate": "2025-01-28",
+        "dueDate": "2025-02-01",
         "priority": "low",
         "category": "house",
         "status": "in progress"
@@ -150,7 +150,7 @@
         "id": 18,
         "name": "Organize home office",
         "description": "Tidy up the home office, organize papers and files.",
-        "dueDate": "2025-01-28",
+        "dueDate": "2025-02-01",
         "priority": "medium",
         "category": "house",
         "status": "in progress"
@@ -158,13 +158,13 @@
     ],
     "done": []
   },
-  "2025-01-29": {
+  "2025-02-02": {
     "to do": [
       {
         "id": 6,
         "name": "Prepare presentation for meeting",
         "description": "Create slides and prepare talking points for Monday's meeting.",
-        "dueDate": "2025-01-29",
+        "dueDate": "2025-02-02",
         "priority": "high",
         "category": "work",
         "status": "to do"
@@ -173,7 +173,7 @@
         "id": 15,
         "name": "Check work email",
         "description": "Go through new work emails and respond to urgent ones.",
-        "dueDate": "2025-01-29",
+        "dueDate": "2025-02-02",
         "priority": "medium",
         "category": "work",
         "status": "to do"
@@ -182,7 +182,7 @@
         "id": 17,
         "name": "Plan weekend getaway",
         "description": "Organize travel plans for a weekend trip.",
-        "dueDate": "2025-01-29",
+        "dueDate": "2025-02-02",
         "priority": "low",
         "category": "personal",
         "status": "to do"
@@ -193,7 +193,7 @@
         "id": 9,
         "name": "Submit tax documents",
         "description": "Submit the necessary tax documents to the accountant.",
-        "dueDate": "2025-01-29",
+        "dueDate": "2025-02-02",
         "priority": "high",
         "category": "work",
         "status": "in progress"

@@ -11,8 +11,13 @@ import { OpenSans_600SemiBold } from "@expo-google-fonts/open-sans";
 import { Manrope_700Bold } from "@expo-google-fonts/manrope";
 SplashScreen.preventAutoHideAsync();
 
+// Ignorar los warnings específicos
+import { LogBox } from "react-native";
+
 export default function App() {
   const router = useRouter();
+  // Ignorar todos los warnings
+  LogBox.ignoreAllLogs();
 
   const [fontsLoaded] = useFonts({
     Inter_400Regular,
@@ -25,7 +30,7 @@ export default function App() {
   useEffect(() => {
     if (fontsLoaded) {
       SplashScreen.hideAsync();
-      router.replace("/main");
+      router.replace("/signIn");
     }
   }, [fontsLoaded, router]);
 

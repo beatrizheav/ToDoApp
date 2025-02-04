@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, FlatList } from "react-native";
-import { useRouter } from "expo-router";
+import { View, FlatList } from "react-native";
 import { containers } from "../styles/containers";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { colorsTheme } from "../styles/colorsTheme";
+import BackIcon from "../components/BackIcon";
 import CustomTitle from "../components/CustomTitle";
 import CustomButton from "../components/CustomButton";
 import CategoryView from "../components/CategoryView";
@@ -15,7 +13,6 @@ const Categories = () => {
   const [isSheetVisible, setIsSheetVisible] = useState(false);
   const [categoryEdit, setCategoryEdit] = useState("");
   const [action, setAction] = useState("edit");
-  const router = useRouter();
 
   const toggleSheetVisibility = () => {
     setIsSheetVisible((prevState) => !prevState);
@@ -36,13 +33,7 @@ const Categories = () => {
 
   return (
     <View style={[containers.safeArea, categories.container]}>
-      <TouchableOpacity onPress={() => router.back()}>
-        <Ionicons
-          name="arrow-back-outline"
-          size={24}
-          color={colorsTheme.darkBlue}
-        />
-      </TouchableOpacity>
+      <BackIcon />
       <View style={categories.title}>
         <CustomTitle text={"Categories"} type={"small"} />
       </View>
