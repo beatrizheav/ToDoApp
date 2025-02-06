@@ -11,6 +11,7 @@ import AccountPrompt from "../components/AccountPrompt";
 import { signUp } from "../styles/screens/sign-up";
 import { containers } from "../styles/containers";
 import useFormValidation from "../hooks/useFormValidation";
+import axiosInstance from "../api/axiosInstance";
 
 const SignUp = () => {
   const router = useRouter();
@@ -22,15 +23,37 @@ const SignUp = () => {
     avatar: "",
   });
   const [confirmPassword, setConfirmPassword] = useState("");
-
   const data = { ...signUpData, confirmPassword };
+
+  const [apiResponse, setApiResponse] = useState("");
 
   const validateForm = useFormValidation(data, "signUp");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
+
+    if (!validateForm()) {
+      return;
+    }
+
+    try {
+      const response = await axiosInstance.post("/users", signUpData);
+      setApiResponse(response); // Update state with the API response
+      console.log("RESPONSE:", response.data);
       router.push("/main");
+    } catch (error) {
+      if (error.response) {
+        errorMessage =
+          error.response.data.message ||
+          "Something went wrong while processing your request.";
+        alert(errorMessage);
+      } else if (error.request) {
+        console.error("Request error:", error.request);
+        alert("Error: No response from the server.");
+      } else {
+        console.error("Error message:", error.data.message);
+        alert("Error: An unexpected error occurred.");
+      }
     }
   };
 
@@ -77,7 +100,7 @@ const SignUp = () => {
         />
         <View style={signUp.avatarContainer}>
           <AvatarPicker
-            selectedAvatarUri={signUpData.avatar}
+            selectedAvatar={signUpData.avatar}
             onAvatarSelect={(avatarSrc) =>
               handleInputChange(setSignUpData, "avatar", avatarSrc)
             }
