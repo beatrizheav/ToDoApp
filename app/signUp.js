@@ -37,7 +37,10 @@ const SignUp = () => {
     }
 
     try {
-      const response = await axiosInstance.post("/users", signUpData);
+      const response = await axiosInstance.post(
+        "/users/registration",
+        signUpData
+      );
       setApiResponse(response); // Update state with the API response
       console.log("RESPONSE:", response.data);
       router.push("/main");

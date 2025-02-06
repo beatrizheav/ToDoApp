@@ -9,6 +9,7 @@ import AccountPrompt from "../components/AccountPrompt";
 import { signIn } from "../styles/screens/sign-in";
 import { containers } from "../styles/containers";
 import useFormValidation from "../hooks/useFormValidation";
+import axiosInstance from "../api/axiosInstance";
 
 const SignIn = () => {
   const router = useRouter();
@@ -18,11 +19,38 @@ const SignIn = () => {
     password: "",
   });
 
+  const [apiResponse, setApiResponse] = useState("");
+
   const validateForm = useFormValidation(signInData, "signIn");
 
-  const handleSubmit = (e) => {
-    if (validateForm()) {
-      router.push("./main");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    try {
+      console.log(signInData);
+      const response = await axiosInstance.get("/users/auth", {
+        params: signInData,
+      });
+      setApiResponse(response);
+      console.log("RESPONSE:", response.data);
+      router.push("/main");
+    } catch (error) {
+      if (error.response) {
+        errorMessage =
+          error.response.data.message ||
+          "Something went wrong while processing your request.";
+        alert(errorMessage);
+      } else if (error.request) {
+        console.error("Request error:", error.request);
+        alert("Error: No response from the server.");
+      } else {
+        console.error("Error message:", error.data.message);
+        alert("Error: An unexpected error occurred.");
+      }
     }
   };
 
