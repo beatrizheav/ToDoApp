@@ -10,6 +10,7 @@ import { signIn } from "../styles/screens/sign-in";
 import { containers } from "../styles/containers";
 import useFormValidation from "../hooks/useFormValidation";
 import axiosInstance from "../api/axiosInstance";
+import { useUser } from "../context/UserContext";
 
 const SignIn = () => {
   const router = useRouter();
@@ -19,7 +20,7 @@ const SignIn = () => {
     password: "",
   });
 
-  const [apiResponse, setApiResponse] = useState("");
+  const { user, updateUser, clearUser } = useUser();
 
   const validateForm = useFormValidation(signInData, "signIn");
 
@@ -31,12 +32,18 @@ const SignIn = () => {
     }
 
     try {
-      console.log(signInData);
       const response = await axiosInstance.get("/users/auth", {
         params: signInData,
       });
-      setApiResponse(response);
-      console.log("RESPONSE:", response.data);
+      const userInfo = response.data.user;
+      updateUser({
+        id: userInfo.id,
+        name: userInfo.name,
+        email: userInfo.email,
+        password: userInfo.password,
+        avatar: userInfo.avatar,
+      });
+      console.log("RESPUESTAAAA", response.data.user);
       router.push("/main");
     } catch (error) {
       if (error.response) {

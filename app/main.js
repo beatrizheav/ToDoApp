@@ -9,6 +9,7 @@ import TaskDetailModal from "../components/TaskDetailModal";
 import TaskList from "../components/TaskList";
 import AddEditTask from "../components/AddEditTask";
 import axiosInstance from "../api/axiosInstance";
+import { useUser } from "../context/UserContext";
 
 const Main = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -32,6 +33,9 @@ const Main = () => {
     date: "2025-02-20",
     user: 1,
   };
+
+  const { user, updateUser, clearUser } = useUser();
+  console.error(user);
 
   const handleTasks = async () => {
     try {
