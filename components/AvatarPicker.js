@@ -13,13 +13,15 @@ import { avatarPicker } from "../styles/components/avatar-picker";
 import { fontsTheme } from "../styles/fontsTheme";
 import { inputs } from "../styles/components/inputs";
 
-const AvatarPicker = ({ onAvatarSelect, selectedAvatarUri }) => {
+const AvatarPicker = ({ onAvatarSelect, selectedAvatar }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleAvatarSelect = (avatarSrc) => {
     onAvatarSelect(avatarSrc);
     setIsModalVisible(false);
   };
+
+  const avatar = avatars.find((item) => item.key === selectedAvatar);
 
   return (
     <View style={inputs.container}>
@@ -29,11 +31,7 @@ const AvatarPicker = ({ onAvatarSelect, selectedAvatarUri }) => {
         style={avatarPicker.selectContainer}
       >
         <Image
-          source={
-            selectedAvatarUri
-              ? selectedAvatarUri
-              : require("../assets/avatars/add.png")
-          }
+          source={avatar ? avatar.src : require("../assets/avatars/add.png")}
           style={avatarPicker.avatarImage}
         />
       </TouchableOpacity>
@@ -52,7 +50,7 @@ const AvatarPicker = ({ onAvatarSelect, selectedAvatarUri }) => {
               horizontal
               showsHorizontalScrollIndicator={false}
               renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => handleAvatarSelect(item.src)}>
+                <TouchableOpacity onPress={() => handleAvatarSelect(item.key)}>
                   <Image
                     source={item.src}
                     style={[
