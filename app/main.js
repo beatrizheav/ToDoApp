@@ -8,8 +8,6 @@ import NavBar from "../components/NavBar";
 import TaskDetailModal from "../components/TaskDetailModal";
 import TaskList from "../components/TaskList";
 import AddEditTask from "../components/AddEditTask";
-import axiosInstance from "../api/axiosInstance";
-import { useUser } from "../context/UserContext";
 
 const Main = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -26,46 +24,6 @@ const Main = () => {
     toggleSheetVisibility();
     setAction("edit");
   };
-
-  const [apiResponse, setApiResponse] = useState("");
-
-  const pruebaApiData = {
-    date: "2025-02-20",
-    user: 1,
-  };
-
-  const { user, updateUser, clearUser } = useUser();
-  console.error(user);
-
-  const handleTasks = async () => {
-    try {
-      const response = await axiosInstance.get("/tasks/userTasks", {
-        params: pruebaApiData,
-      });
-      setApiResponse(response);
-      console.log("RESPONSE:", response.data);
-    } catch (error) {
-      if (error.response) {
-        // If the error has a response, it usually means the request reached the server
-        const errorMessage =
-          error.response.data.message ||
-          "Something went wrong while processing your request.";
-        alert(errorMessage);
-      } else if (error.request) {
-        // If the error doesn't have a response, it means the request was made but no response was received
-        console.error("Request error:", error.request);
-        alert("Error: No response from the server.");
-      } else {
-        // This part handles any other type of error (e.g., error setting up the request)
-        console.error("Error message:", error.message);
-        alert("Error: An unexpected error occurred.");
-      }
-    }
-  };
-
-  useEffect(() => {
-    handleTasks(); // Ejecuta la función al cargar la página
-  }, []); // El arreglo vacío [] asegura que solo se ejecute una vez al cargar el componente
 
   return (
     <View style={containers.safeArea}>
