@@ -8,123 +8,78 @@ import axiosInstance from "../api/axiosInstance";
 import { taskList } from "../styles/components/task-list";
 import { useUser } from "../context/UserContext";
 
+const SECTIONS = ["to do", "in progress", "done"];
+
 const groupTasksByStatus = (tasks) => {
-  const grouped = {
-    "to do": [],
-    "in progress": [],
-    done: [],
-  };
-  tasks.forEach((task) => {
-    if (grouped[task.status]) {
-      grouped[task.status].push(task);
+  return tasks.reduce((grouped, task) => {
+    if (SECTIONS.includes(task.status)) {
+      grouped[task.status] = [...(grouped[task.status] || []), task];
     } else {
       console.warn(`Unknown status for task: ${task.status}`);
     }
-  });
-  return grouped;
+    return grouped;
+  }, {});
 };
 
 const flattenTasks = (tasks) => {
-  const sections = ["to do", "in progress", "done"];
-  const flattened = [];
-
-  sections.forEach((section) => {
-    const sectionHeader = {
+  return SECTIONS.flatMap((section) => [
+    {
       item: { id: `header-${section}`, name: section, isHeader: true },
       isHeader: true,
-    };
-    flattened.push(sectionHeader);
-    if (tasks && tasks[section] && tasks[section].length > 0) {
-      const taskItems = tasks[section].map((task) => ({
-        item: task,
-        isHeader: false,
-      }));
-      flattened.push(...taskItems);
-    }
-  });
-  return flattened;
+    },
+    ...(tasks[section] || []).map((task) => ({ item: task, isHeader: false })),
+  ]);
 };
 
 const TaskList = ({ date, setTask, setModalVisible, onPressEdit }) => {
+  const [flatApi, setFlatApi] = useState(
+    SECTIONS.map((section) => ({
+      isHeader: true,
+      item: { id: `header-${section}`, isHeader: true, name: section },
+    }))
+  );
   const [apiResponse, setApiResponse] = useState(null);
-  const [flatApi, setFlatApi] = useState([
-    {
-      isHeader: true,
-      item: { id: "header-to do", isHeader: true, name: "to do" },
-    },
-    {
-      isHeader: true,
-      item: { id: "header-in progress", isHeader: true, name: "in progress" },
-    },
-    {
-      isHeader: true,
-      item: { id: "header-done", isHeader: true, name: "done" },
-    },
-  ]);
   const { user } = useUser();
 
-  const apiData = {
-    date: date,
-    user: user.id,
-  };
-
-  const handleTasks = async () => {
-    try {
-      const response = await axiosInstance.get("/tasks/userTasks", {
-        params: apiData,
-      });
-      setApiResponse(response.data);
-    } catch (error) {
-      if (error.response) {
-        const errorMessage =
-          error.response.data.message ||
-          "Something went wrong while processing your request.";
-        if (error.response.status === 404) {
-          setApiResponse("NO TASKS");
-        }
-        console.log(errorMessage);
-      } else if (error.request) {
-        console.error("Request error:", error.request);
-        console.log("Error: No response from the server.");
-      } else {
-        console.error("Error message:", error.message);
-        console.log("Error: An unexpected error occurred.");
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const { data } = await axiosInstance.get("/tasks/userTasks", {
+          params: { date, user: user.id },
+        });
+        setApiResponse(data);
+      } catch (error) {
+        console.error(
+          "Error fetching tasks:",
+          error.response?.data?.message || error.message
+        );
+        setApiResponse(error.response?.status === 404 ? "NO TASKS" : null);
       }
-    }
-  };
+    };
+    fetchTasks();
+  }, [date, user.id]);
 
   useEffect(() => {
-    handleTasks();
-  }, []);
-
-  useEffect(() => {
-    if (apiResponse !== null && apiResponse !== "NO TASKS") {
-      const grouped = groupTasksByStatus(apiResponse);
-      setFlatApi(flattenTasks(grouped));
+    if (apiResponse && apiResponse !== "NO TASKS") {
+      setFlatApi(flattenTasks(groupTasksByStatus(apiResponse)));
     }
   }, [apiResponse]);
 
-  const handleDragEnd = useCallback(
-    ({ data }) => {
-      const newData = [];
-      let currentSection = null;
-      data.forEach((item) => {
+  const handleDragEnd = useCallback(({ data }) => {
+    let currentSection = null;
+    setFlatApi(
+      data.map((item) => {
         if (item.isHeader) {
-          currentSection = { ...item };
-          newData.push(currentSection);
-        } else {
-          if (currentSection) {
-            item.item.status = currentSection.item.name;
-            newData.push(item);
-          }
+          currentSection = item;
+        } else if (currentSection) {
+          item.item.status = currentSection.item.name;
         }
-      });
-      setFlatApi(newData);
-    },
-    [setFlatApi]
-  );
+        return item;
+      })
+    );
+  }, []);
 
-  const renderItem = ({ item, index, drag }) => (
+  const renderItem = ({ item, drag }) => (
     <TouchableOpacity
       style={item.isHeader ? taskList.headerContainer : {}}
       onLongPress={item.isHeader ? undefined : drag}
@@ -138,7 +93,7 @@ const TaskList = ({ date, setTask, setModalVisible, onPressEdit }) => {
       }
     >
       {item.isHeader ? (
-        <CustomTitle text={item.item.name} type={"small"} />
+        <CustomTitle text={item.item.name} type="small" />
       ) : (
         <TaskView
           task={item.item}
@@ -157,14 +112,13 @@ const TaskList = ({ date, setTask, setModalVisible, onPressEdit }) => {
           data={flatApi}
           renderItem={renderItem}
           keyExtractor={(item) =>
-            item.isHeader ? `header-${item.item.name}` : `task-${item.item.id}`
+            `${item.isHeader ? "header" : "task"}-${item.item.id}`
           }
           onDragEnd={handleDragEnd}
         />
       </SafeAreaView>
     </SafeAreaProvider>
   );
-  // }
 };
 
 export default TaskList;
