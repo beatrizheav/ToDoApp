@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 import { containers } from "../styles/containers";
 import HorizontalCalendar from "../components/HorizontalCalendar";
@@ -33,6 +33,7 @@ const Main = () => {
       />
       <GestureHandlerRootView>
         <TaskList
+          key={selectedDate}
           date={selectedDate.toISOString().slice(0, 10)}
           setModalVisible={setDetailTaskVisible}
           onPressEdit={handleEditTask}
