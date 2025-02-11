@@ -89,9 +89,8 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
     try {
       const response = await axiosInstance.post("/tasks/createTask", apiTest);
       setApiResponse(response.data);
-      console.error("RESPONSE:", response.data);
+      toggleVisibility();
     } catch (error) {
-      console.error("ERROR");
       if (error.response) {
         errorMessage =
           error.response.data.message ||
