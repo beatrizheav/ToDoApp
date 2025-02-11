@@ -44,7 +44,6 @@ const TaskList = ({ date, setTask, setModalVisible, onPressEdit }) => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        console.error(date);
         const { data } = await axiosInstance.get("/tasks/userTasks", {
           params: { date, user: user.id },
         });

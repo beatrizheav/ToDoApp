@@ -67,7 +67,7 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
   const apiTest = {
     user_id: user.id,
     name: taskDetails.task,
-    category_id: 1,
+    category_id: taskDetails.category,
     description: taskDetails.description,
     due_date: taskDetails.date.toISOString().split("T")[0],
     priority: taskDetails.priority,
