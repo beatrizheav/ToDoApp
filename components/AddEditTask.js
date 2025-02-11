@@ -8,6 +8,8 @@ import CloseIcon from "./CloseIcon";
 import InputDatePicker from "./InputDatePicker";
 import DropdownInput from "./DropdownInput";
 import { sheet } from "../styles/components/sheet";
+import axiosInstance from "../api/axiosInstance";
+import { useUser } from "../context/UserContext";
 
 const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
   const [taskDetails, setTaskDetails] = useState({
@@ -17,6 +19,8 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
     category: "",
     priority: "",
   });
+
+  const { user } = useUser();
 
   const refRBSheet = useRef();
 
@@ -59,6 +63,49 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
       });
     }
   }, [task, action]);
+
+  const apiTest = {
+    user_id: user.id,
+    name: taskDetails.task,
+    category_id: 1,
+    description: taskDetails.description,
+    due_date: taskDetails.date.toISOString().split("T")[0],
+    priority: taskDetails.priority,
+  };
+
+  const [apiResponse, setApiResponse] = useState(null);
+
+  const AddTask = async () => {
+    console.error("Add task", taskDetails);
+
+    const empty = Object.values(taskDetails).some(
+      (value) => value === "" || value === null
+    );
+
+    if (empty) {
+      alert("Some inputs are empty or invalid.");
+    }
+
+    try {
+      const response = await axiosInstance.post("/tasks/createTask", apiTest);
+      setApiResponse(response.data);
+      console.error("RESPONSE:", response.data);
+    } catch (error) {
+      console.error("ERROR");
+      if (error.response) {
+        errorMessage =
+          error.response.data.message ||
+          "Something went wrong while processing your request.";
+        alert(errorMessage);
+      } else if (error.request) {
+        console.error("Request error:", error.request);
+        alert("Error: No response from the server.");
+      } else {
+        console.error("Error message:", error.data.message);
+        alert("Error: An unexpected error occurred.");
+      }
+    }
+  };
 
   return (
     <View style={sheet.container}>
@@ -120,7 +167,7 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
         </View>
 
         <View style={sheet.footer}>
-          <CustomButton type="small" text={button} />
+          <CustomButton type="small" text={button} onPress={() => AddTask()} />
         </View>
       </RBSheet>
     </View>
