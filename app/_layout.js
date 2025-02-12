@@ -1,12 +1,5 @@
-// import { Stack } from "expo-router";
-
-// export default function RootLayout() {
-//   return <Stack screenOptions={{ headerShown: false }} />;
-// }
-
-import { UserProvider } from "../context/UserContext"; // Import the UserProvider
-import { Stack } from "expo-router"; // Use Stack to manage screen options
-import { Slot } from "expo-router"; // To render the page content
+import { UserProvider } from "../context/UserContext";
+import { Slot } from "expo-router";
 
 export default function RootLayout() {
   return (

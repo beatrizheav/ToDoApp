@@ -25,8 +25,6 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const data = { ...signUpData, confirmPassword };
 
-  const [apiResponse, setApiResponse] = useState("");
-
   const validateForm = useFormValidation(data, "signUp");
 
   const handleSubmit = async (e) => {
@@ -37,12 +35,7 @@ const SignUp = () => {
     }
 
     try {
-      const response = await axiosInstance.post(
-        "/users/registration",
-        signUpData
-      );
-      setApiResponse(response); // Update state with the API response
-      console.log("RESPONSE:", response.data);
+      await axiosInstance.post("/users/registration", signUpData);
       router.push("/main");
     } catch (error) {
       if (error.response) {
