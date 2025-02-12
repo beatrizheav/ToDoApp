@@ -48,7 +48,7 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
       setTaskDetails({
         task: task.name || "",
         description: task.description || "",
-        date: new Date(task.dueDate) || new Date(),
+        date: new Date(task.due_date) || new Date(),
         category: task.category || "",
         priority: task.priority || "",
       });
@@ -64,19 +64,17 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
     }
   }, [task, action]);
 
-  const apiTest = {
-    user_id: user.id,
-    name: taskDetails.task,
-    category_id: taskDetails.category,
-    description: taskDetails.description,
-    due_date: taskDetails.date.toISOString().split("T")[0],
-    priority: taskDetails.priority,
-  };
-
   const [apiResponse, setApiResponse] = useState(null);
 
   const AddTask = async () => {
-    console.error("Add task", taskDetails);
+    const createTask = {
+      user_id: user.id,
+      name: taskDetails.task,
+      category_id: taskDetails.category,
+      description: taskDetails.description,
+      due_date: taskDetails.date.toISOString().split("T")[0],
+      priority: taskDetails.priority,
+    };
 
     const empty = Object.values(taskDetails).some(
       (value) => value === "" || value === null
@@ -87,7 +85,10 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
     }
 
     try {
-      const response = await axiosInstance.post("/tasks/createTask", apiTest);
+      const response = await axiosInstance.post(
+        "/tasks/createTask",
+        createTask
+      );
       setApiResponse(response.data);
       toggleVisibility();
     } catch (error) {

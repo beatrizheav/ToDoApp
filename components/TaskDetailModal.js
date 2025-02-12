@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, View, Text } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Fontisto from "@expo/vector-icons/Fontisto";
@@ -11,6 +11,7 @@ import { taskDetail } from "../styles/components/task-detail-modal";
 
 const TaskDetailModal = ({ visible, setVisible, task, onPress, setTask }) => {
   const handleClose = () => setVisible(false);
+  const [dueDate, setDueDate] = useState(null);
 
   const priorityColor =
     task.priority === "high"
@@ -18,6 +19,13 @@ const TaskDetailModal = ({ visible, setVisible, task, onPress, setTask }) => {
       : task.priority === "medium"
       ? taskDetail.mediumPriority
       : taskDetail.lowPriority;
+
+  useEffect(() => {
+    if (task?.due_date) {
+      const date = new Date(task.due_date);
+      setDueDate(!isNaN(date) ? date.toISOString().split("T")[0] : undefined);
+    }
+  }, [task]);
 
   const onPressEdit = () => {
     onPress();
@@ -52,7 +60,7 @@ const TaskDetailModal = ({ visible, setVisible, task, onPress, setTask }) => {
               color={colorsTheme.darkBlue}
               style={taskDetail.iconsMargin}
             />
-            <Text style={fontsTheme.regular}>Date: {task.dueDate}</Text>
+            <Text style={fontsTheme.regular}>Date: {dueDate}</Text>
           </View>
           <View style={taskDetail.detailsItem}>
             <View
@@ -71,7 +79,7 @@ const TaskDetailModal = ({ visible, setVisible, task, onPress, setTask }) => {
               color={colorsTheme.darkBlue}
               style={taskDetail.iconsMargin}
             />
-            <Text style={fontsTheme.regular}>Category: {task.category}</Text>
+            <Text style={fontsTheme.regular}>Category: {task.category_id}</Text>
           </View>
           <View style={taskDetail.editIcon}>
             <CustomIcon
