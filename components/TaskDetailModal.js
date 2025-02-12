@@ -8,17 +8,19 @@ import CustomIcon from "./CustomIcon";
 import { fontsTheme } from "../styles/fontsTheme";
 import { colorsTheme } from "../styles/colorsTheme";
 import { taskDetail } from "../styles/components/task-detail-modal";
+import axiosInstance from "../api/axiosInstance";
 
 const TaskDetailModal = ({ visible, setVisible, task, onPress, setTask }) => {
   const handleClose = () => setVisible(false);
-  const [dueDate, setDueDate] = useState(null);
 
+  const [dueDate, setDueDate] = useState(null);
   const priorityColor =
     task.priority === "high"
       ? taskDetail.highPriority
       : task.priority === "medium"
       ? taskDetail.mediumPriority
       : taskDetail.lowPriority;
+  const [category, setCategory] = useState(null);
 
   useEffect(() => {
     if (task?.due_date) {
@@ -26,6 +28,23 @@ const TaskDetailModal = ({ visible, setVisible, task, onPress, setTask }) => {
       setDueDate(!isNaN(date) ? date.toISOString().split("T")[0] : undefined);
     }
   }, [task]);
+
+  useEffect(() => {
+    const fetchCategory = async () => {
+      try {
+        const { data } = await axiosInstance.get("/categories/category", {
+          params: { id: task.category_id },
+        });
+        setCategory(data.name);
+      } catch (error) {
+        console.error(
+          "Error fetching categories:",
+          error.response?.data?.message || error.message
+        );
+      }
+    };
+    fetchCategory();
+  }, [task.category_id]);
 
   const onPressEdit = () => {
     onPress();
@@ -79,7 +98,7 @@ const TaskDetailModal = ({ visible, setVisible, task, onPress, setTask }) => {
               color={colorsTheme.darkBlue}
               style={taskDetail.iconsMargin}
             />
-            <Text style={fontsTheme.regular}>Category: {task.category_id}</Text>
+            <Text style={fontsTheme.regular}>Category: {category}</Text>
           </View>
           <View style={taskDetail.editIcon}>
             <CustomIcon

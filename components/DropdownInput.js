@@ -18,7 +18,7 @@ const DropdownInput = ({ label, type, value, onChange, placeholder }) => {
   };
 
   useEffect(() => {
-    const fetchTasks = async () => {
+    const fetchCategories = async () => {
       try {
         const { data } = await axiosInstance.get("/categories/userCategories", {
           params: { user: user.id },
@@ -37,7 +37,7 @@ const DropdownInput = ({ label, type, value, onChange, placeholder }) => {
         );
       }
     };
-    fetchTasks();
+    fetchCategories();
   }, []);
 
   const data = type === "priority" ? priorityData : apiCategoryResponse;
