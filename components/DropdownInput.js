@@ -29,7 +29,6 @@ const DropdownInput = ({ label, type, value, onChange, placeholder }) => {
           value: category.id, // 'id' becomes 'value'
         }));
         setApiCategoryResponse(transformedData);
-        console.error(data);
       } catch (error) {
         console.error(
           "Error fetching categories:",
