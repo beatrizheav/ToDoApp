@@ -20,7 +20,7 @@ const SignIn = () => {
     password: "",
   });
 
-  const { user, updateUser, clearUser } = useUser();
+  const { updateUser } = useUser();
 
   const validateForm = useFormValidation(signInData, "signIn");
 
@@ -43,7 +43,6 @@ const SignIn = () => {
         password: userInfo.password,
         avatar: userInfo.avatar,
       });
-      console.log("RESPUESTAAAA", response.data.user);
       router.push("/main");
     } catch (error) {
       if (error.response) {

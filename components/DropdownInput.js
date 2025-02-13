@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { inputs } from "../styles/components/inputs";
@@ -6,14 +6,49 @@ import { fontsTheme } from "../styles/fontsTheme";
 import { colorsTheme } from "../styles/colorsTheme";
 import { dropdownInput } from "../styles/components/dropdown-input";
 import priorityData from "../data/prioritys.json";
-import categoryData from "../data/categories.json";
+import axiosInstance from "../api/axiosInstance";
+import { useUser } from "../context/UserContext";
 
 const DropdownInput = ({ label, type, value, onChange, placeholder }) => {
+  const [apiCategoryResponse, setApiCategoryResponse] = useState(null);
+  const { user } = useUser();
+
   const handleChange = (item) => {
     onChange(item.value);
   };
 
-  const data = type === "priority" ? priorityData : categoryData;
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const { data } = await axiosInstance.get("/categories/userCategories", {
+          params: { user: user.id },
+        });
+        // Transform the API response to match Dropdown input requirements
+        const transformedData = data.map((category) => ({
+          label: category.name, // 'name' becomes 'label'
+          value: category.id, // 'id' becomes 'value'
+        }));
+        setApiCategoryResponse(transformedData);
+        console.error(data);
+      } catch (error) {
+        console.error(
+          "Error fetching categories:",
+          error.response?.data?.message || error.message
+        );
+      }
+    };
+    fetchTasks();
+  }, []);
+
+  const data = type === "priority" ? priorityData : apiCategoryResponse;
+
+  if (!data) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={inputs.container}>

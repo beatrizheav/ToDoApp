@@ -65,10 +65,14 @@ const TaskList = ({ date, setTask, setModalVisible, onPressEdit }) => {
     }
   }, [apiResponse]);
 
-  const handleDragEnd = useCallback(({ data }) => {
+  const handleDragEnd = useCallback(({ data, to }) => {
+    if (to === 0) {
+      return;
+    }
+
     let currentSection = null;
     setFlatApi(
-      data.map((item) => {
+      data.map((item, index) => {
         if (item.isHeader) {
           currentSection = item;
         } else if (currentSection) {
@@ -103,6 +107,8 @@ const TaskList = ({ date, setTask, setModalVisible, onPressEdit }) => {
       )}
     </TouchableOpacity>
   );
+
+  console.error(flatApi);
 
   return (
     <SafeAreaProvider>
