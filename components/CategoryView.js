@@ -37,7 +37,7 @@ const CategoryView = ({ category, onPress, setCategoryEdit }) => {
         renderRightActions={RightAction}
       >
         <View style={categoryView.centered}>
-          <Text style={fontsTheme.regular}>{category.label}</Text>
+          <Text style={fontsTheme.regular}>{category.name}</Text>
         </View>
       </ReanimatedSwipeable>
     </GestureHandlerRootView>
