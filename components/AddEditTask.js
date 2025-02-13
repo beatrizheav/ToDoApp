@@ -72,7 +72,6 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
       return;
     }
 
-    // Build the payload with common fields
     const payload = {
       name: taskDetails.task,
       category_id: taskDetails.category,
@@ -82,7 +81,6 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
       ...(action === "add" ? { user_id: user.id } : { taskId: task.id }),
     };
 
-    // Choose the endpoint and HTTP method based on the action
     const endpoint = action === "add" ? "/tasks/createTask" : "/tasks/editTask";
     const axiosMethod =
       action === "add" ? axiosInstance.post : axiosInstance.put;
