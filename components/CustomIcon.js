@@ -6,7 +6,7 @@ import CustomAlert from "./CustomAlert";
 import { customIcon } from "../styles/components/custom-icon";
 import axiosInstance from "../api/axiosInstance";
 
-const CustomIcon = ({ name, iconColor, onPress, type }) => {
+const CustomIcon = ({ name, iconColor, onPress, type, task, setRefresh }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const defaultBackground = name === "edit" ? customIcon.blue : customIcon.red;
@@ -24,11 +24,12 @@ const CustomIcon = ({ name, iconColor, onPress, type }) => {
   };
 
   const deleteTask = async () => {
-    const taskId = 4; // Replace this with the task ID
+    const taskId = task.id; // Replace this with the task ID
     try {
       const response = await axiosInstance.delete("/tasks/deleteTask", {
         params: { id: taskId }, // Correct format for sending taskId as query param
       });
+      setRefresh(task.id);
       console.log("Task deleted successfully:", response.data);
     } catch (error) {
       let errorMessage = "An unexpected error occurred.";

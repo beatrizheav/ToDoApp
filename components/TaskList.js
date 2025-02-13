@@ -31,7 +31,13 @@ const flattenTasks = (tasks) => {
   ]);
 };
 
-const TaskList = ({ date, setTask, setModalVisible, onPressEdit }) => {
+const TaskList = ({
+  date,
+  setTask,
+  setModalVisible,
+  onPressEdit,
+  setRefresh,
+}) => {
   const [flatApi, setFlatApi] = useState(
     SECTIONS.map((section) => ({
       isHeader: true,
@@ -103,6 +109,7 @@ const TaskList = ({ date, setTask, setModalVisible, onPressEdit }) => {
           task={item.item}
           onPressEdit={onPressEdit}
           updateTask={setTask}
+          setRefresh={setRefresh}
         />
       )}
     </TouchableOpacity>
