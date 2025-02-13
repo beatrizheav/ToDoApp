@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 import CustomButton from "../../components/CustomButton";
 import { customButton } from "../../styles/components/custom-button";
 import { fontsTheme } from "../../styles/fontsTheme";
+import { Feather } from "@expo/vector-icons";
 
 describe("CustomButton", () => {
   it("renders the correct text", () => {
@@ -81,12 +82,12 @@ describe("CustomButton", () => {
     expect(onPressMock).toHaveBeenCalledTimes(1); // The function should have been called exactly once
   });
 
-  it("renders the correct icon when type is 'add'", () => {
-    const { getByTestId } = render(<CustomButton type="add" />);
-
-    // Busca el icono de Feather
-    const icon = getByTestId("feather-icon");
-
-    expect(icon).toBeTruthy();
+  it("renderiza el texto cuando type no es 'add'", () => {
+    const textValue = "Test Button";
+    const { getByText, queryByTestId } = render(
+      <CustomButton type="other" text={textValue} />
+    );
+    expect(getByText(textValue)).toBeTruthy();
+    expect(queryByTestId("feather-icon")).toBeNull();
   });
 });
