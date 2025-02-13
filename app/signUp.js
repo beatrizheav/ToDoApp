@@ -12,9 +12,11 @@ import { signUp } from "../styles/screens/sign-up";
 import { containers } from "../styles/containers";
 import useFormValidation from "../hooks/useFormValidation";
 import axiosInstance from "../api/axiosInstance";
+import { useUser } from "../context/UserContext";
 
 const SignUp = () => {
   const router = useRouter();
+  const { updateUser } = useUser();
 
   const [signUpData, setSignUpData] = useState({
     name: "",
@@ -35,7 +37,18 @@ const SignUp = () => {
     }
 
     try {
-      await axiosInstance.post("/users/registration", signUpData);
+      const response = await axiosInstance.post(
+        "/users/registration",
+        signUpData
+      );
+      const userInfo = response.data;
+      updateUser({
+        id: userInfo.id,
+        name: userInfo.name,
+        email: userInfo.email,
+        password: userInfo.password,
+        avatar: userInfo.avatar,
+      });
       router.push("/main");
     } catch (error) {
       if (error.response) {
