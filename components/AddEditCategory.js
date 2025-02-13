@@ -34,7 +34,7 @@ const AddEditTask = ({
 
   useEffect(() => {
     if (action === "edit" && categoryEdit) {
-      setCategory(categoryEdit.label || "");
+      setCategory(categoryEdit.name || "");
     }
     if (action === "add") {
       setCategory("");
