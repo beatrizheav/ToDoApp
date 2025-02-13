@@ -33,6 +33,7 @@ const Main = () => {
       />
       <GestureHandlerRootView>
         <TaskList
+          key={selectedDate}
           date={selectedDate.toISOString().slice(0, 10)}
           setModalVisible={setDetailTaskVisible}
           onPressEdit={handleEditTask}

@@ -4,81 +4,96 @@ import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import DraggableFlatList from "react-native-draggable-flatlist";
 import TaskView from "./TaskView";
 import CustomTitle from "./CustomTitle";
-import data2 from "../data/tasks.json";
+import axiosInstance from "../api/axiosInstance";
 import { taskList } from "../styles/components/task-list";
+import { useUser } from "../context/UserContext";
 
-// Flatten tasks into a format suitable for DraggableFlatList
+const SECTIONS = ["to do", "in progress", "done"];
+
+const groupTasksByStatus = (tasks) => {
+  return tasks.reduce((grouped, task) => {
+    if (SECTIONS.includes(task.status)) {
+      grouped[task.status] = [...(grouped[task.status] || []), task];
+    } else {
+      console.warn(`Unknown status for task: ${task.status}`);
+    }
+    return grouped;
+  }, {});
+};
+
 const flattenTasks = (tasks) => {
-  const sections = ["to do", "in progress", "done"];
-  const flattened = [];
-
-  sections.forEach((section) => {
-    // Add section header
-    const sectionHeader = {
+  return SECTIONS.flatMap((section) => [
+    {
       item: { id: `header-${section}`, name: section, isHeader: true },
       isHeader: true,
-    };
-    flattened.push(sectionHeader);
-
-    // Check if there are tasks in this section
-    if (tasks && tasks[section] && tasks[section].length > 0) {
-      const taskItems = tasks[section].map((task) => ({
-        item: task,
-        isHeader: false,
-      }));
-      flattened.push(...taskItems);
-    }
-  });
-
-  return flattened;
+    },
+    ...(tasks[section] || []).map((task) => ({ item: task, isHeader: false })),
+  ]);
 };
 
 const TaskList = ({ date, setTask, setModalVisible, onPressEdit }) => {
-  const [tasks, setTasks] = useState(null);
+  const [flatApi, setFlatApi] = useState(
+    SECTIONS.map((section) => ({
+      isHeader: true,
+      item: { id: `header-${section}`, isHeader: true, name: section },
+    }))
+  );
+  const [apiResponse, setApiResponse] = useState(null);
+  const { user } = useUser();
 
   useEffect(() => {
-    if (data2[date]) {
-      setTasks(data2[date]);
-    } else {
-      setTasks(null);
+    const fetchTasks = async () => {
+      try {
+        const { data } = await axiosInstance.get("/tasks/userTasks", {
+          params: { date, user: user.id },
+        });
+        setApiResponse(data);
+      } catch (error) {
+        console.error(
+          "Error fetching tasks:",
+          error.response?.data?.message || error.message
+        );
+        setApiResponse(error.response?.status === 404 ? "NO TASKS" : null);
+      }
+    };
+    fetchTasks();
+  }, [date, user.id]);
+
+  useEffect(() => {
+    if (apiResponse && apiResponse !== "NO TASKS") {
+      setFlatApi(flattenTasks(groupTasksByStatus(apiResponse)));
     }
-  }, [date]);
+  }, [apiResponse]);
 
-  const flatListData = flattenTasks(tasks);
-
-  const handleDragEnd = useCallback(
-    ({ data }) => {
-      const newData = {};
-      let currentSection = null;
-
-      data.forEach((item) => {
+  const handleDragEnd = useCallback(({ data }) => {
+    let currentSection = null;
+    setFlatApi(
+      data.map((item) => {
         if (item.isHeader) {
-          // Header indicates a new section
-          currentSection = { status: item.item.name, tasks: [] };
-          newData[currentSection.status] = currentSection.tasks;
-        } else {
-          // Task item goes into the current section
-          currentSection.tasks.push(item.item);
+          currentSection = item;
+        } else if (currentSection) {
+          item.item.status = currentSection.item.name;
         }
-      });
+        return item;
+      })
+    );
+  }, []);
 
-      // Update state with new order of tasks
-      setTasks(newData);
-    },
-    [setTasks]
-  );
-
-  const renderItem = ({ item, index, drag }) => (
+  const renderItem = ({ item, drag }) => (
     <TouchableOpacity
       style={item.isHeader ? taskList.headerContainer : {}}
       onLongPress={item.isHeader ? undefined : drag}
-      onPress={() => {
-        setTask(item.item);
-        setModalVisible(true);
-      }}
+      onPress={
+        item.isHeader
+          ? undefined
+          : () => {
+              setTask(item.item);
+              setModalVisible(true);
+            }
+      }
     >
       {item.isHeader ? (
-        <CustomTitle text={item.item.name} type={"small"} />
+        <CustomTitle text={item.item.name} type="small" />
       ) : (
         <TaskView
           task={item.item}
@@ -94,10 +109,10 @@ const TaskList = ({ date, setTask, setModalVisible, onPressEdit }) => {
       <SafeAreaView style={taskList.container}>
         <DraggableFlatList
           style={taskList.flatList}
-          data={flatListData}
+          data={flatApi}
           renderItem={renderItem}
           keyExtractor={(item) =>
-            item.isHeader ? `header-${item.item.name}` : `task-${item.item.id}`
+            `${item.isHeader ? "header" : "task"}-${item.item.id}`
           }
           onDragEnd={handleDragEnd}
         />
