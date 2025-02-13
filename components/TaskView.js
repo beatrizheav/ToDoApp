@@ -9,8 +9,6 @@ import { fontsTheme } from "../styles/fontsTheme";
 import CustomIcon from "./CustomIcon";
 
 const TaskView = ({ task, onPressEdit, updateTask }) => {
-  const taskToEdit = task;
-
   const priorityColor =
     task.priority === "high"
       ? taskView.highPriorityColor

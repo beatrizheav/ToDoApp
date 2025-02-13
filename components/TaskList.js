@@ -108,8 +108,6 @@ const TaskList = ({ date, setTask, setModalVisible, onPressEdit }) => {
     </TouchableOpacity>
   );
 
-  console.error(flatApi);
-
   return (
     <SafeAreaProvider>
       <SafeAreaView style={taskList.container}>

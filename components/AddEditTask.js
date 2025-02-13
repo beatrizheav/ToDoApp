@@ -19,13 +19,12 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
     category: "",
     priority: "",
   });
+  const title = action === "add" ? "Add task" : "Edit task";
+  const button = action === "add" ? "Add" : "Save";
 
   const { user } = useUser();
 
   const refRBSheet = useRef();
-
-  const title = action === "add" ? "Add task" : "Edit task";
-  const button = action === "add" ? "Add" : "Save";
 
   const handleInputChange = (field, value) => {
     setTaskDetails((prevDetails) => ({
@@ -48,8 +47,8 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
       setTaskDetails({
         task: task.name || "",
         description: task.description || "",
-        date: new Date(task.dueDate) || new Date(),
-        category: task.category || "",
+        date: new Date(task.due_date) || new Date(),
+        category: task.category_id || "",
         priority: task.priority || "",
       });
     }
@@ -64,33 +63,35 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
     }
   }, [task, action]);
 
-  const apiTest = {
-    user_id: user.id,
-    name: taskDetails.task,
-    category_id: taskDetails.category,
-    description: taskDetails.description,
-    due_date: taskDetails.date.toISOString().split("T")[0],
-    priority: taskDetails.priority,
-  };
-
-  const [apiResponse, setApiResponse] = useState(null);
-
-  const AddTask = async () => {
-    console.error("Add task", taskDetails);
-
+  const handleTask = async () => {
     const empty = Object.values(taskDetails).some(
       (value) => value === "" || value === null
     );
-
     if (empty) {
       alert("Some inputs are empty or invalid.");
+      return;
     }
 
+    // Build the payload with common fields
+    const payload = {
+      name: taskDetails.task,
+      category_id: taskDetails.category,
+      description: taskDetails.description,
+      due_date: taskDetails.date.toISOString().split("T")[0],
+      priority: taskDetails.priority,
+      ...(action === "add" ? { user_id: user.id } : { taskId: task.id }),
+    };
+
+    // Choose the endpoint and HTTP method based on the action
+    const endpoint = action === "add" ? "/tasks/createTask" : "/tasks/editTask";
+    const axiosMethod =
+      action === "add" ? axiosInstance.post : axiosInstance.put;
+
     try {
-      const response = await axiosInstance.post("/tasks/createTask", apiTest);
-      setApiResponse(response.data);
+      await axiosMethod(endpoint, payload);
       toggleVisibility();
     } catch (error) {
+      let errorMessage;
       if (error.response) {
         errorMessage =
           error.response.data.message ||
@@ -100,7 +101,7 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
         console.error("Request error:", error.request);
         alert("Error: No response from the server.");
       } else {
-        console.error("Error message:", error.data.message);
+        console.error("Error message:", error.message);
         alert("Error: An unexpected error occurred.");
       }
     }
@@ -166,7 +167,11 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
         </View>
 
         <View style={sheet.footer}>
-          <CustomButton type="small" text={button} onPress={() => AddTask()} />
+          <CustomButton
+            type="small"
+            text={button}
+            onPress={() => handleTask()}
+          />
         </View>
       </RBSheet>
     </View>
