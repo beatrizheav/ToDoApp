@@ -33,6 +33,7 @@ const Categories = () => {
       category={item}
       onPress={handleEditCategory}
       setCategoryEdit={setCategoryEdit}
+      setRefresh={setRefreshing}
     />
   );
 
@@ -61,6 +62,7 @@ const Categories = () => {
       </View>
       <View style={categories.listContainer}>
         <FlatList
+          key={refreshing}
           data={apiCategoryResponse}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
