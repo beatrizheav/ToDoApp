@@ -5,6 +5,7 @@ import { colorsTheme } from "../styles/colorsTheme";
 import CustomAlert from "./CustomAlert";
 import { customIcon } from "../styles/components/custom-icon";
 import axiosInstance from "../api/axiosInstance";
+import { useUser } from "../context/UserContext";
 
 const CustomIcon = ({
   name,
@@ -15,8 +16,8 @@ const CustomIcon = ({
   setRefresh,
   category,
 }) => {
+  const { user } = useUser();
   const [modalVisible, setModalVisible] = useState(false);
-
   const defaultBackground = name === "edit" ? customIcon.blue : customIcon.red;
   const background = iconColor ? {} : defaultBackground;
   const color = iconColor || colorsTheme.white;
@@ -37,8 +38,10 @@ const CustomIcon = ({
     const endpoint =
       type === "category" ? "/categories/deleteCategory" : "/tasks/deleteTask";
 
+    const payload =
+      type === "category" ? { id: id, userId: user.id } : { task: id };
     try {
-      await axiosInstance.delete(endpoint, { params: { id: id } });
+      await axiosInstance.delete(endpoint, { params: payload });
       setRefresh(id);
       console.log("deleted successfully:");
     } catch (error) {
