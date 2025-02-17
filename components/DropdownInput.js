@@ -18,7 +18,7 @@ const DropdownInput = ({ label, type, value, onChange, placeholder }) => {
   };
 
   useEffect(() => {
-    const fetchTasks = async () => {
+    const fetchCategories = async () => {
       try {
         const { data } = await axiosInstance.get("/categories/userCategories", {
           params: { user: user.id },
@@ -29,7 +29,6 @@ const DropdownInput = ({ label, type, value, onChange, placeholder }) => {
           value: category.id, // 'id' becomes 'value'
         }));
         setApiCategoryResponse(transformedData);
-        console.error(data);
       } catch (error) {
         console.error(
           "Error fetching categories:",
@@ -37,7 +36,7 @@ const DropdownInput = ({ label, type, value, onChange, placeholder }) => {
         );
       }
     };
-    fetchTasks();
+    fetchCategories();
   }, []);
 
   const data = type === "priority" ? priorityData : apiCategoryResponse;
