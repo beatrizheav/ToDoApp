@@ -26,8 +26,6 @@ const Main = () => {
     setAction("edit");
   };
 
-  console.error("REFRESH", refresh);
-
   return (
     <View style={containers.safeArea}>
       <HorizontalCalendar
