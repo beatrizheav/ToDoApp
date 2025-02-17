@@ -1,14 +1,23 @@
 import React, { useState } from "react";
-import { TouchableOpacity, View, StyleSheet } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { colorsTheme } from "../styles/colorsTheme";
 import CustomAlert from "./CustomAlert";
 import { customIcon } from "../styles/components/custom-icon";
 import axiosInstance from "../api/axiosInstance";
+import { useUser } from "../context/UserContext";
 
-const CustomIcon = ({ name, iconColor, onPress, type, task, setRefresh }) => {
+const CustomIcon = ({
+  name,
+  iconColor,
+  onPress,
+  type,
+  task,
+  setRefresh,
+  category,
+}) => {
+  const { user } = useUser();
   const [modalVisible, setModalVisible] = useState(false);
-
   const defaultBackground = name === "edit" ? customIcon.blue : customIcon.red;
   const background = iconColor ? {} : defaultBackground;
   const color = iconColor || colorsTheme.white;
@@ -23,16 +32,20 @@ const CustomIcon = ({ name, iconColor, onPress, type, task, setRefresh }) => {
     }
   };
 
-  const deleteTask = async () => {
-    const taskId = task.id; // Replace this with the task ID
+  const handleDelete = async () => {
+    const id = type === "category" ? category.id : task.id;
+
+    const endpoint =
+      type === "category" ? "/categories/deleteCategory" : "/tasks/deleteTask";
+
+    const payload =
+      type === "category" ? { id: id, userId: user.id } : { task: id };
     try {
-      const response = await axiosInstance.delete("/tasks/deleteTask", {
-        params: { id: taskId }, // Correct format for sending taskId as query param
-      });
-      setRefresh(task.id);
-      console.log("Task deleted successfully:", response.data);
+      await axiosInstance.delete(endpoint, { params: payload });
+      setRefresh(id);
+      console.log("deleted successfully:");
     } catch (error) {
-      let errorMessage = "An unexpected error occurred.";
+      let errorMessage;
       if (error.response) {
         errorMessage =
           error.response.data.message ||
@@ -62,7 +75,7 @@ const CustomIcon = ({ name, iconColor, onPress, type, task, setRefresh }) => {
           title={confirmTitle}
           description={confirmText}
           setVisible={setModalVisible}
-          confirmAction={deleteTask}
+          confirmAction={handleDelete}
         />
       )}
     </View>

@@ -7,7 +7,7 @@ import CustomIcon from "./CustomIcon";
 import { categoryView } from "../styles/components/category-view";
 import { fontsTheme } from "../styles/fontsTheme";
 
-const CategoryView = ({ category, onPress, setCategoryEdit }) => {
+const CategoryView = ({ category, onPress, setCategoryEdit, setRefresh }) => {
   const RightAction = (prog, drag) => {
     const styleAnimation = useAnimatedStyle(() => {
       return {
@@ -22,7 +22,12 @@ const CategoryView = ({ category, onPress, setCategoryEdit }) => {
             name={"edit"}
             onPress={() => [onPress(), setCategoryEdit(category)]}
           />
-          <CustomIcon name={"delete"} type={"category"} />
+          <CustomIcon
+            name={"delete"}
+            type={"category"}
+            category={category}
+            setRefresh={setRefresh}
+          />
         </View>
       </Reanimated.View>
     );

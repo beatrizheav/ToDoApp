@@ -41,17 +41,26 @@ const AddEditTask = ({
     }
   }, [categoryEdit, action]);
 
-  const createCategory = async () => {
+  const handleCategory = async () => {
     if (category === "") {
       alert("Category is empty or invalid.");
       return;
     }
+
+    const payload = {
+      user_id: user.id,
+      name: category,
+      ...(action === "edit" && { id: categoryEdit.id }),
+    };
+    const endpoint =
+      action === "add"
+        ? "/categories/createCategory"
+        : "/categories/editCategory";
+    const axiosMethod =
+      action === "add" ? axiosInstance.post : axiosInstance.put;
+
     try {
-      const payload = {
-        user_id: user.id,
-        name: category,
-      };
-      await axiosInstance.post("/categories/createCategory", payload);
+      await axiosMethod(endpoint, payload);
       setRefreshing((prevState) => !prevState);
       toggleVisibility();
     } catch (error) {
@@ -104,7 +113,7 @@ const AddEditTask = ({
           <CustomButton
             type="small"
             text={button}
-            onPress={() => createCategory()}
+            onPress={() => handleCategory()}
           />
         </View>
       </RBSheet>

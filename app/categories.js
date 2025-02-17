@@ -33,6 +33,7 @@ const Categories = () => {
       category={item}
       onPress={handleEditCategory}
       setCategoryEdit={setCategoryEdit}
+      setRefresh={setRefreshing}
     />
   );
 
@@ -42,7 +43,9 @@ const Categories = () => {
         const { data } = await axiosInstance.get("/categories/userCategories", {
           params: { user: user.id },
         });
-        setApiCategoryResponse(data);
+        setApiCategoryResponse(
+          data.filter((item) => item.name !== "No category")
+        );
       } catch (error) {
         console.error(
           "Error fetching categories:",
@@ -61,6 +64,7 @@ const Categories = () => {
       </View>
       <View style={categories.listContainer}>
         <FlatList
+          key={refreshing}
           data={apiCategoryResponse}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
