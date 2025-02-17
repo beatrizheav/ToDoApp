@@ -25,8 +25,8 @@ const DropdownInput = ({ label, type, value, onChange, placeholder }) => {
         });
         // Transform the API response to match Dropdown input requirements
         const transformedData = data.map((category) => ({
-          label: category.name, // 'name' becomes 'label'
-          value: category.id, // 'id' becomes 'value'
+          label: category.name,
+          value: category.id,
         }));
         setApiCategoryResponse(transformedData);
       } catch (error) {

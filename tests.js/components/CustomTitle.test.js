@@ -1,13 +1,12 @@
 import React from "react";
 import { render } from "@testing-library/react-native";
-import CustomTitle from "../../components/CustomTitle"; // Adjust the path to your component
-import { fontsTheme } from "../../styles/fontsTheme"; // Ensure the fontsTheme is imported
+import CustomTitle from "../../components/CustomTitle";
+import { fontsTheme } from "../../styles/fontsTheme";
 
 describe("CustomTitle", () => {
   it("renders the correct text", () => {
     const { getByText } = render(<CustomTitle text="Test Title" type="big" />);
 
-    // Check if the text is rendered
     expect(getByText("Test Title")).toBeTruthy();
   });
 
@@ -16,7 +15,6 @@ describe("CustomTitle", () => {
 
     const textElement = getByText("Test Title");
 
-    // Check that the correct styles are applied when 'big' type is passed
     expect(textElement).toHaveStyle(fontsTheme.title);
     expect(textElement).toHaveStyle(fontsTheme.titleBig);
   });
@@ -28,7 +26,6 @@ describe("CustomTitle", () => {
 
     const textElement = getByText("Test Title");
 
-    // Check that the correct styles are applied when 'small' type is passed
     expect(textElement).toHaveStyle(fontsTheme.title);
     expect(textElement).toHaveStyle(fontsTheme.titleSmall);
   });
