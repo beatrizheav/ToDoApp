@@ -125,8 +125,6 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
             <CustomTitle text={title} />
             <CloseIcon onPress={toggleVisibility} />
           </View>
-
-          {/* Task Input Fields */}
           <CustomInput
             label="Task"
             placeholder="What do you need to do"

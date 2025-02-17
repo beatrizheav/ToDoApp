@@ -8,11 +8,12 @@ const BackIcon = () => {
   const router = useRouter();
 
   return (
-    <TouchableOpacity onPress={() => router.back()}>
+    <TouchableOpacity onPress={() => router.back()} testID="backIcon-touchable">
       <Ionicons
         name="arrow-back-outline"
         size={25}
         color={colorsTheme.darkBlue}
+        testID="backIcon-button"
       />
     </TouchableOpacity>
   );
