@@ -4,8 +4,9 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { colorsTheme } from "../styles/colorsTheme";
 import CustomAlert from "./CustomAlert";
 import { customIcon } from "../styles/components/custom-icon";
+import axiosInstance from "../api/axiosInstance";
 
-const CustomIcon = ({ name, iconColor, onPress, type }) => {
+const CustomIcon = ({ name, iconColor, onPress, type, task, setRefresh }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const defaultBackground = name === "edit" ? customIcon.blue : customIcon.red;
@@ -19,6 +20,31 @@ const CustomIcon = ({ name, iconColor, onPress, type }) => {
       onPress();
     } else {
       setModalVisible(true);
+    }
+  };
+
+  const deleteTask = async () => {
+    const taskId = task.id; // Replace this with the task ID
+    try {
+      const response = await axiosInstance.delete("/tasks/deleteTask", {
+        params: { id: taskId }, // Correct format for sending taskId as query param
+      });
+      setRefresh(task.id);
+      console.log("Task deleted successfully:", response.data);
+    } catch (error) {
+      let errorMessage = "An unexpected error occurred.";
+      if (error.response) {
+        errorMessage =
+          error.response.data.message ||
+          "Something went wrong while processing your request.";
+        alert(errorMessage);
+      } else if (error.request) {
+        console.error("Request error:", error.request);
+        alert("Error: No response from the server.");
+      } else {
+        console.error("Error message:", error.message);
+        alert("Error: An unexpected error occurred.");
+      }
     }
   };
 
@@ -36,6 +62,7 @@ const CustomIcon = ({ name, iconColor, onPress, type }) => {
           title={confirmTitle}
           description={confirmText}
           setVisible={setModalVisible}
+          confirmAction={deleteTask}
         />
       )}
     </View>

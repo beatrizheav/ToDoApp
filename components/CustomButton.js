@@ -16,9 +16,18 @@ const CustomButton = ({ text, type, onPress }) => {
   ];
 
   return (
-    <TouchableOpacity style={buttonStyle} onPress={onPress}>
+    <TouchableOpacity
+      style={buttonStyle}
+      onPress={onPress}
+      testID="custom-button"
+    >
       {type === "add" ? (
-        <Feather name="plus" size={24} color={colorsTheme.darkBlue} />
+        <Feather
+          name="plus"
+          size={24}
+          color={colorsTheme.darkBlue}
+          testID="feather-icon"
+        />
       ) : (
         <Text style={fontsTheme.buttons}>{text}</Text>
       )}

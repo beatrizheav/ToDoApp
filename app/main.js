@@ -15,6 +15,7 @@ const Main = () => {
   const [isSheetVisible, setIsSheetVisible] = useState(false);
   const [task, setTask] = useState("");
   const [action, setAction] = useState("edit");
+  const [refresh, setRefresh] = useState(0);
 
   const toggleSheetVisibility = () => {
     setIsSheetVisible((prevState) => !prevState);
@@ -25,6 +26,8 @@ const Main = () => {
     setAction("edit");
   };
 
+  console.error("REFRESH", refresh);
+
   return (
     <View style={containers.safeArea}>
       <HorizontalCalendar
@@ -33,11 +36,12 @@ const Main = () => {
       />
       <GestureHandlerRootView>
         <TaskList
-          key={`${selectedDate}-${isSheetVisible}`}
+          key={`${selectedDate}-${isSheetVisible}-${refresh}`}
           date={selectedDate.toISOString().slice(0, 10)}
           setModalVisible={setDetailTaskVisible}
           onPressEdit={handleEditTask}
           setTask={setTask}
+          setRefresh={setRefresh}
         />
       </GestureHandlerRootView>
       {isSheetVisible && (
