@@ -6,11 +6,18 @@ import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
 import CloseIcon from "./CloseIcon";
 import { sheet } from "../styles/components/sheet";
+import { useUser } from "../context/UserContext";
+import axiosInstance from "../api/axiosInstance";
 
-const AddEditTask = ({ action, isVisible, toggleVisibility, categoryEdit }) => {
-  const [category, setCategory] = useState({
-    category: "",
-  });
+const AddEditTask = ({
+  action,
+  isVisible,
+  toggleVisibility,
+  categoryEdit,
+  setRefreshing,
+}) => {
+  const [category, setCategory] = useState("");
+  const { user } = useUser();
 
   const refRBSheet = useRef();
 
@@ -27,14 +34,42 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, categoryEdit }) => {
 
   useEffect(() => {
     if (action === "edit" && categoryEdit) {
-      setCategory(categoryEdit.label || "");
+      setCategory(categoryEdit.name || "");
     }
     if (action === "add") {
-      setCategory({
-        task: "",
-      });
+      setCategory("");
     }
   }, [categoryEdit, action]);
+
+  const createCategory = async () => {
+    if (category === "") {
+      alert("Category is empty or invalid.");
+      return;
+    }
+    try {
+      const payload = {
+        user_id: user.id,
+        name: category,
+      };
+      await axiosInstance.post("/categories/createCategory", payload);
+      setRefreshing((prevState) => !prevState);
+      toggleVisibility();
+    } catch (error) {
+      let errorMessage;
+      if (error.response) {
+        errorMessage =
+          error.response.data.message ||
+          "Something went wrong while processing your request.";
+        alert(errorMessage);
+      } else if (error.request) {
+        console.error("Request error:", error.request);
+        alert("Error: No response from the server.");
+      } else {
+        console.error("Error message:", error.message);
+        alert("Error: An unexpected error occurred.");
+      }
+    }
+  };
 
   return (
     <View style={sheet.container}>
@@ -66,7 +101,11 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, categoryEdit }) => {
           />
         </View>
         <View style={sheet.footer}>
-          <CustomButton type="small" text={button} />
+          <CustomButton
+            type="small"
+            text={button}
+            onPress={() => createCategory()}
+          />
         </View>
       </RBSheet>
     </View>
