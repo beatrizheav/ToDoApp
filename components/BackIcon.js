@@ -13,7 +13,6 @@ const BackIcon = () => {
         name="arrow-back-outline"
         size={25}
         color={colorsTheme.darkBlue}
-        testID="backIcon-button"
       />
     </TouchableOpacity>
   );
