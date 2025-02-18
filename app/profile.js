@@ -14,10 +14,11 @@ import { colorsTheme } from "../styles/colorsTheme";
 import { fontsTheme } from "../styles/fontsTheme";
 import { profile } from "../styles/screens/profile";
 import { useUser } from "../context/UserContext";
+import logout from "../asyncStorage/logout";
 
 const Profile = () => {
   const router = useRouter();
-  const { user, clearUser } = useUser();
+  const { user } = useUser();
   const [alertVisible, setAlertVisible] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -64,7 +65,7 @@ const Profile = () => {
         setVisible={setAlertVisible}
         title={"Log out"}
         description={"Are you sure you want to log out?"}
-        confirmAction={() => [router.push("./signIn"), clearUser()]}
+        confirmAction={() => [router.push("./signIn"), logout()]}
       />
     </View>
   );

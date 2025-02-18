@@ -11,6 +11,7 @@ import { containers } from "../styles/containers";
 import useFormValidation from "../hooks/useFormValidation";
 import axiosInstance from "../api/axiosInstance";
 import { useUser } from "../context/UserContext";
+import storeUser from "../asyncStorage/storeUser";
 
 const SignIn = () => {
   const router = useRouter();
@@ -43,6 +44,7 @@ const SignIn = () => {
         password: userInfo.password,
         avatar: userInfo.avatar,
       });
+      storeUser(userInfo);
       router.push("/main");
     } catch (error) {
       if (error.response) {

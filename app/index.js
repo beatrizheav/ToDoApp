@@ -11,6 +11,8 @@ import {
 import { OpenSans_600SemiBold } from "@expo-google-fonts/open-sans";
 import { Manrope_700Bold } from "@expo-google-fonts/manrope";
 import { Asset } from "expo-asset";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useUser } from "../context/UserContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -19,6 +21,8 @@ export default function App() {
 
   const router = useRouter();
   const [assetsLoaded, setAssetsLoaded] = useState(false);
+  const { updateUser } = useUser();
+  const [user, setUser] = useState(null);
 
   const [fontsLoaded] = useFonts({
     Inter_400Regular,
@@ -51,6 +55,22 @@ export default function App() {
   ];
 
   useEffect(() => {
+    const checkUserSession = async () => {
+      try {
+        const storedUser = await AsyncStorage.getItem("user");
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
+          updateUser(JSON.parse(storedUser));
+        }
+      } catch (error) {
+        console.error("Error recuperando el usuario:", error);
+      }
+    };
+
+    checkUserSession();
+  }, []);
+
+  useEffect(() => {
     async function loadAssets() {
       await Asset.loadAsync(assets);
       setAssetsLoaded(true);
@@ -61,7 +81,9 @@ export default function App() {
   useEffect(() => {
     if (fontsLoaded && assetsLoaded) {
       SplashScreen.hideAsync();
-      router.replace("/signIn");
+      if (user) {
+        router.replace("/main");
+      } else router.replace("/signIn");
     }
   }, [fontsLoaded, router]);
 
