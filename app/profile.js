@@ -17,7 +17,7 @@ import { useUser } from "../context/UserContext";
 
 const Profile = () => {
   const router = useRouter();
-  const { user } = useUser();
+  const { user, clearUser } = useUser();
   const [alertVisible, setAlertVisible] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -64,7 +64,7 @@ const Profile = () => {
         setVisible={setAlertVisible}
         title={"Log out"}
         description={"Are you sure you want to log out?"}
-        confirmAction={() => router.push("./signIn")}
+        confirmAction={() => [router.push("./signIn"), clearUser()]}
       />
     </View>
   );
