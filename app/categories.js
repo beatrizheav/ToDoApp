@@ -5,7 +5,6 @@ import BackIcon from "../components/BackIcon";
 import CustomTitle from "../components/CustomTitle";
 import CustomButton from "../components/CustomButton";
 import CategoryView from "../components/CategoryView";
-import categoryData from "../data/categories.json";
 import { categories } from "../styles/screens/categories";
 import AddEditCategory from "../components/AddEditCategory";
 import axiosInstance from "../api/axiosInstance";

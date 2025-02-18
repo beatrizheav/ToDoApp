@@ -13,20 +13,15 @@ import { containers } from "../styles/containers";
 import { colorsTheme } from "../styles/colorsTheme";
 import { fontsTheme } from "../styles/fontsTheme";
 import { profile } from "../styles/screens/profile";
+import { useUser } from "../context/UserContext";
 
 const Profile = () => {
   const router = useRouter();
+  const { user } = useUser();
   const [alertVisible, setAlertVisible] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const profileData = {
-    avatarKey: "1",
-    name: "Beatriz Avila",
-    mail: "avila8beatriz@gmail.com",
-    password: "Beatriz123",
-  };
-
-  const avatar = avatars.find((item) => item.key === profileData.avatarKey);
+  const avatar = avatars.find((item) => item.key === user.avatar);
 
   return (
     <View style={containers.safeArea}>
@@ -38,13 +33,11 @@ const Profile = () => {
       </View>
       <Image source={avatar.src} style={profile.avatar} />
       <View style={profile.title}>
-        <CustomTitle text={profileData.name} type={"small"} />
+        <CustomTitle text={user.name} type={"small"} />
       </View>
       <View style={profile.infoContainer}>
         <AntDesign name="mail" size={24} color={colorsTheme.darkBlue} />
-        <Text style={[fontsTheme.regular, profile.mailText]}>
-          {profileData.mail}
-        </Text>
+        <Text style={[fontsTheme.regular, profile.mailText]}>{user.email}</Text>
       </View>
       <View style={profile.infoContainer}>
         <Ionicons
@@ -54,7 +47,7 @@ const Profile = () => {
         />
         <TextInput
           style={[fontsTheme.regular, profile.passwordText]}
-          value={profileData.password}
+          value={user.password}
           secureTextEntry={!showPassword}
           editable={false}
         />
