@@ -43,7 +43,6 @@ const CustomIcon = ({
     try {
       await axiosInstance.delete(endpoint, { params: payload });
       setRefresh(id);
-      console.log("deleted successfully:");
     } catch (error) {
       let errorMessage;
       if (error.response) {

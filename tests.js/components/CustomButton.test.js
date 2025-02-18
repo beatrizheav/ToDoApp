@@ -10,7 +10,6 @@ describe("CustomButton", () => {
   it("renders the correct text", () => {
     const { getByText } = render(<CustomButton text="Test Title" type="big" />);
 
-    // Check if the text is rendered
     expect(getByText("Test Title")).toBeTruthy();
   });
 
@@ -19,7 +18,6 @@ describe("CustomButton", () => {
 
     const textElement = getByText("Test Title");
 
-    // Check that the correct styles are applied when 'big' type is passed
     expect(textElement).toHaveStyle(fontsTheme.buttons);
   });
 
@@ -29,7 +27,6 @@ describe("CustomButton", () => {
     );
 
     const button = getByTestId("custom-button");
-    // Flatten the style array
     const combinedStyle = StyleSheet.flatten(button.props.style);
 
     expect(combinedStyle).toMatchObject({
@@ -45,7 +42,6 @@ describe("CustomButton", () => {
 
     const button = getByTestId("custom-button");
 
-    // Flatten the style array
     const combinedStyle = StyleSheet.flatten(button.props.style);
 
     expect(combinedStyle).toMatchObject({
@@ -58,7 +54,6 @@ describe("CustomButton", () => {
     const { getByTestId } = render(<CustomButton text="Big Button" />);
 
     const button = getByTestId("custom-button");
-    // Flatten the style array
     const combinedStyle = StyleSheet.flatten(button.props.style);
 
     expect(combinedStyle).toMatchObject({
@@ -76,10 +71,9 @@ describe("CustomButton", () => {
 
     const button = getByTestId("custom-button");
 
-    fireEvent.press(button); // Simulate a press event on the button
+    fireEvent.press(button);
 
-    // Check if the mock function was called when the button is pressed
-    expect(onPressMock).toHaveBeenCalledTimes(1); // The function should have been called exactly once
+    expect(onPressMock).toHaveBeenCalledTimes(1);
   });
 
   it("renderiza el texto cuando type no es 'add'", () => {
