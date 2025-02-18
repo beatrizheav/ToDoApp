@@ -1,4 +1,3 @@
-import "react-native-gesture-handler";
 import React, { useState } from "react";
 import { View } from "react-native";
 import { containers } from "../styles/containers";
@@ -8,7 +7,6 @@ import NavBar from "../components/NavBar";
 import TaskDetailModal from "../components/TaskDetailModal";
 import TaskList from "../components/TaskList";
 import AddEditTask from "../components/AddEditTask";
-import { useUser } from "../context/UserContext";
 
 const Main = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -17,10 +15,6 @@ const Main = () => {
   const [task, setTask] = useState("");
   const [action, setAction] = useState("edit");
   const [refresh, setRefresh] = useState(0);
-
-  const { user } = useUser();
-
-  console.error(user);
 
   const toggleSheetVisibility = () => {
     setIsSheetVisible((prevState) => !prevState);
