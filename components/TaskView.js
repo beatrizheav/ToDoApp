@@ -4,11 +4,14 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import Reanimated, { useAnimatedStyle } from "react-native-reanimated";
 import { taskView } from "../styles/components/task-view";
+import { useTask } from "../context/TaskContext";
 
 import { fontsTheme } from "../styles/fontsTheme";
 import CustomIcon from "./CustomIcon";
 
-const TaskView = ({ task, onPressEdit, updateTask, setRefresh }) => {
+const TaskView = ({ task, onPressEdit, setRefresh }) => {
+  const { updateTask } = useTask();
+
   const priorityColor =
     task.priority === "high"
       ? taskView.highPriorityColor

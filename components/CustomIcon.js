@@ -39,7 +39,7 @@ const CustomIcon = ({
       type === "category" ? "/categories/deleteCategory" : "/tasks/deleteTask";
 
     const payload =
-      type === "category" ? { id: id, userId: user.id } : { task: id };
+      type === "category" ? { id: id, userId: user.id } : { id: id };
     try {
       await axiosInstance.delete(endpoint, { params: payload });
       setRefresh(id);

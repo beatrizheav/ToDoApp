@@ -10,8 +10,10 @@ import DropdownInput from "./DropdownInput";
 import { sheet } from "../styles/components/sheet";
 import axiosInstance from "../api/axiosInstance";
 import { useUser } from "../context/UserContext";
+import { useTask } from "../context/TaskContext";
 
-const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
+const AddEditTask = ({ action, isVisible, toggleVisibility }) => {
+  const { task } = useTask();
   const [taskDetails, setTaskDetails] = useState({
     task: "",
     description: "",

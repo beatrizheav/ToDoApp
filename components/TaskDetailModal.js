@@ -9,9 +9,13 @@ import { fontsTheme } from "../styles/fontsTheme";
 import { colorsTheme } from "../styles/colorsTheme";
 import { taskDetail } from "../styles/components/task-detail-modal";
 import axiosInstance from "../api/axiosInstance";
+import { useTask } from "../context/TaskContext";
 
-const TaskDetailModal = ({ visible, setVisible, task, onPress, setTask }) => {
+const TaskDetailModal = ({ visible, setVisible, onPress }) => {
   const handleClose = () => setVisible(false);
+  const { task, updateTask } = useTask();
+
+  console.error(task, "TASK INFO");
 
   const [dueDate, setDueDate] = useState(null);
   const priorityColor =
@@ -48,7 +52,7 @@ const TaskDetailModal = ({ visible, setVisible, task, onPress, setTask }) => {
 
   const onPressEdit = () => {
     onPress();
-    setTask(task);
+    updateTask(task);
     handleClose();
   };
 

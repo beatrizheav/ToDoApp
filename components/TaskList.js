@@ -7,6 +7,7 @@ import CustomTitle from "./CustomTitle";
 import axiosInstance from "../api/axiosInstance";
 import { taskList } from "../styles/components/task-list";
 import { useUser } from "../context/UserContext";
+import { useTask } from "../context/TaskContext";
 
 const SECTIONS = ["to do", "in progress", "done"];
 
@@ -31,13 +32,7 @@ const flattenTasks = (tasks) => {
   ]);
 };
 
-const TaskList = ({
-  date,
-  setTask,
-  setModalVisible,
-  onPressEdit,
-  setRefresh,
-}) => {
+const TaskList = ({ date, setModalVisible, onPressEdit, setRefresh }) => {
   const [flatApi, setFlatApi] = useState(
     SECTIONS.map((section) => ({
       isHeader: true,
@@ -46,6 +41,7 @@ const TaskList = ({
   );
   const [apiResponse, setApiResponse] = useState(null);
   const { user } = useUser();
+  const { updateTask } = useTask();
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -97,7 +93,7 @@ const TaskList = ({
         item.isHeader
           ? undefined
           : () => {
-              setTask(item.item);
+              updateTask(item.item);
               setModalVisible(true);
             }
       }
@@ -108,7 +104,6 @@ const TaskList = ({
         <TaskView
           task={item.item}
           onPressEdit={onPressEdit}
-          updateTask={setTask}
           setRefresh={setRefresh}
         />
       )}
