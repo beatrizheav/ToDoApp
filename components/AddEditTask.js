@@ -10,10 +10,10 @@ import DropdownInput from "./DropdownInput";
 import { sheet } from "../styles/components/sheet";
 import axiosInstance from "../api/axiosInstance";
 import { useUser } from "../context/UserContext";
-import { useTask } from "../context/TaskContext";
+import { useSelectedTask } from "../context/SelectedTaskContext";
 
 const AddEditTask = ({ action, isVisible, toggleVisibility }) => {
-  const { task } = useTask();
+  const { selectedTask } = useSelectedTask();
   const [taskDetails, setTaskDetails] = useState({
     task: "",
     description: "",
@@ -44,13 +44,13 @@ const AddEditTask = ({ action, isVisible, toggleVisibility }) => {
   }, [isVisible]);
 
   useEffect(() => {
-    if (action === "edit" && task) {
+    if (action === "edit" && selectedTask) {
       setTaskDetails({
-        task: task.name || "",
-        description: task.description || "",
-        date: new Date(task.due_date) || new Date(),
-        category: task.category_id || "",
-        priority: task.priority || "",
+        task: selectedTask.name || "",
+        description: selectedTask.description || "",
+        date: new Date(selectedTask.due_date) || new Date(),
+        category: selectedTask.category_id || "",
+        priority: selectedTask.priority || "",
       });
     }
     if (action === "add") {
@@ -62,7 +62,7 @@ const AddEditTask = ({ action, isVisible, toggleVisibility }) => {
         priority: "",
       });
     }
-  }, [task, action]);
+  }, [selectedTask, action]);
 
   const handleTask = async () => {
     const empty = Object.values(taskDetails).some(
@@ -79,7 +79,9 @@ const AddEditTask = ({ action, isVisible, toggleVisibility }) => {
       description: taskDetails.description,
       due_date: taskDetails.date.toISOString().split("T")[0],
       priority: taskDetails.priority,
-      ...(action === "add" ? { user_id: user.id } : { taskId: task.id }),
+      ...(action === "add"
+        ? { user_id: user.id }
+        : { taskId: selectedTask.id }),
     };
 
     const endpoint = action === "add" ? "/tasks/createTask" : "/tasks/editTask";

@@ -1,5 +1,5 @@
 import { UserProvider } from "../context/UserContext";
-import { TaskProvider } from "../context/TaskContext";
+import { TaskProvider } from "../context/SelectedTaskContext";
 import { Slot } from "expo-router";
 
 export default function RootLayout() {

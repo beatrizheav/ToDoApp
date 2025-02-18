@@ -7,7 +7,7 @@ import CustomTitle from "./CustomTitle";
 import axiosInstance from "../api/axiosInstance";
 import { taskList } from "../styles/components/task-list";
 import { useUser } from "../context/UserContext";
-import { useTask } from "../context/TaskContext";
+import { useSelectedTask } from "../context/SelectedTaskContext";
 
 const SECTIONS = ["to do", "in progress", "done"];
 
@@ -41,7 +41,7 @@ const TaskList = ({ date, setModalVisible, onPressEdit, setRefresh }) => {
   );
   const [apiResponse, setApiResponse] = useState(null);
   const { user } = useUser();
-  const { updateTask } = useTask();
+  const { updateSelectedTask } = useSelectedTask();
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -93,7 +93,7 @@ const TaskList = ({ date, setModalVisible, onPressEdit, setRefresh }) => {
         item.isHeader
           ? undefined
           : () => {
-              updateTask(item.item);
+              updateSelectedTask(item.item);
               setModalVisible(true);
             }
       }
