@@ -5,13 +5,9 @@ import CustomButton from "./CustomButton";
 import { fontsTheme } from "../styles/fontsTheme";
 import { customAlert } from "../styles/components/custom-alert";
 
-const CustomAlert = ({
-  visible,
-  title,
-  description,
-  setVisible,
-  confirmAction,
-}) => {
+const CustomAlert = ({ visible, setVisible, confirmAction, type }) => {
+  const title = "Delete " + type;
+  const description = "Are you sure you want to delete this " + type + "?";
   return (
     <Modal
       transparent={true}

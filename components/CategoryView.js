@@ -24,7 +24,6 @@ const CategoryView = ({ category, onPress, setCategoryEdit, setRefresh }) => {
           />
           <CustomIcon
             name={"delete"}
-            type={"category"}
             category={category}
             setRefresh={setRefresh}
           />

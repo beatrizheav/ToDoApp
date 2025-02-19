@@ -10,7 +10,7 @@ import AddEditTask from "../components/AddEditTask";
 
 const Main = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [detailTaskVisible, setDetailTaskVisible] = useState(false);
+  const [detailsModalVisible, setDetailsModalVisible] = useState(false);
   const [isSheetVisible, setIsSheetVisible] = useState(false);
   const [action, setAction] = useState("edit");
   const [refresh, setRefresh] = useState(0);
@@ -34,8 +34,8 @@ const Main = () => {
         <TaskList
           key={`${selectedDate}-${isSheetVisible}-${refresh}`}
           date={selectedDate.toISOString().slice(0, 10)}
-          setModalVisible={setDetailTaskVisible}
-          onPressEdit={handleEditTask}
+          setModalVisible={setDetailsModalVisible}
+          handleEditTask={handleEditTask}
           setRefresh={setRefresh}
         />
       </GestureHandlerRootView>
@@ -48,8 +48,8 @@ const Main = () => {
       )}
       <NavBar toggleSheet={toggleSheetVisibility} setAction={setAction} />
       <TaskDetailModal
-        visible={detailTaskVisible}
-        setVisible={setDetailTaskVisible}
+        visible={detailsModalVisible}
+        setVisible={setDetailsModalVisible}
         onPress={handleEditTask}
       />
     </View>
