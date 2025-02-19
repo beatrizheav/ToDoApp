@@ -3,25 +3,24 @@ import { Text, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import Reanimated, { useAnimatedStyle } from "react-native-reanimated";
-import { taskView } from "../styles/components/task-view";
-import { useSelectedTask } from "../context/SelectedTaskContext";
-
-import { fontsTheme } from "../styles/fontsTheme";
 import CustomIcon from "./CustomIcon";
+import { useSelectedTask } from "../context/SelectedTaskContext";
+import { taskView } from "../styles/components/task-view";
+import { fontsTheme } from "../styles/fontsTheme";
 
 const TaskView = ({ task, handleEditTask, setRefresh }) => {
   const { updateSelectedTask } = useSelectedTask();
 
-  const priorityColor =
-    task.priority === "high"
-      ? taskView.highPriorityColor
-      : task.priority === "medium"
-      ? taskView.mediumPriorityColor
-      : task.priority === "low"
-      ? taskView.lowPriorityColor
-      : taskView.errorPriority;
+  const priorityColors = {
+    high: taskView.highPriorityColor,
+    medium: taskView.mediumPriorityColor,
+    low: taskView.lowPriorityColor,
+  };
+
+  const priorityColor = priorityColors[task.priority] || taskView.errorPriority;
 
   const RightAction = (prog, drag) => {
+    // Style on do the animation
     const styleAnimation = useAnimatedStyle(() => {
       return {
         transform: [{ translateX: drag.value + 100 }],
@@ -30,7 +29,7 @@ const TaskView = ({ task, handleEditTask, setRefresh }) => {
 
     return (
       <Reanimated.View style={styleAnimation}>
-        <View style={taskView.rightAction}>
+        <View style={taskView.iconsContainer}>
           <CustomIcon
             name={"edit"}
             onPress={() => [handleEditTask(), updateSelectedTask(task)]}

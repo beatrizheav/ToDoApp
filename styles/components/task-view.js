@@ -2,7 +2,7 @@ import { colorsTheme } from "../colorsTheme";
 import { StyleSheet } from "react-native";
 
 export const taskView = StyleSheet.create({
-  rightAction: {
+  iconsContainer: {
     flexDirection: "row",
     width: 100,
     height: "100%",
