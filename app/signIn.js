@@ -36,15 +36,8 @@ const SignIn = () => {
       const response = await axiosInstance.get("/users/auth", {
         params: signInData,
       });
-      const userInfo = response.data.user;
-      updateUser({
-        id: userInfo.id,
-        name: userInfo.name,
-        email: userInfo.email,
-        password: userInfo.password,
-        avatar: userInfo.avatar,
-      });
-      storeUser(userInfo);
+      updateUser(response.data);
+      storeUser(response.data);
       router.push("/main");
     } catch (error) {
       if (error.response) {

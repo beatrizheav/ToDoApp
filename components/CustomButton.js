@@ -1,18 +1,19 @@
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
+import Feather from "@expo/vector-icons/Feather";
 import { customButton } from "../styles/components/custom-button";
 import { fontsTheme } from "../styles/fontsTheme";
-import Feather from "@expo/vector-icons/Feather";
 import { colorsTheme } from "../styles/colorsTheme";
 
 const CustomButton = ({ text, type, onPress }) => {
+  const buttonStyles = {
+    big: customButton.big,
+    small: customButton.small,
+  };
+
   const buttonStyle = [
     customButton.container,
-    type === "big"
-      ? customButton.big
-      : type === "small"
-      ? customButton.small
-      : customButton.add,
+    buttonStyles[type] || customButton.add,
   ];
 
   return (

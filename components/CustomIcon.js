@@ -7,38 +7,40 @@ import { customIcon } from "../styles/components/custom-icon";
 import axiosInstance from "../api/axiosInstance";
 import { useUser } from "../context/UserContext";
 
-const CustomIcon = ({
-  name,
-  iconColor,
-  onPress,
-  task,
-  category,
-  setRefresh,
-}) => {
+const CustomIcon = ({ name, item, onPress, setRefresh, iconColor }) => {
   const { user } = useUser();
-  const [alertModalVisible, setAlertModalVisible] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
+  // Determines the background color and icon color for the custom icon component.
+
+  //Sets a default background color based on the icon name.
   const defaultIconBackground =
     name === "edit" ? customIcon.blue : customIcon.red;
+  // If `iconColor` is provided, no background is applied otherwise, it falls back to `defaultIconBackground`.
   const background = iconColor ? {} : defaultIconBackground;
-  const color = iconColor || colorsTheme.white;
+  // Uses `iconColor` if provided, otherwise defaults to `colorsTheme.white`.
+  const colorIcon = iconColor || colorsTheme.white;
 
   const onPressAction = () => {
     if (onPress) {
       onPress();
     } else {
-      setAlertModalVisible(true);
+      //if not onPress action is recieved the icon use it is delete so opens the modal
+      setDeleteModalVisible(true);
     }
   };
 
+  // Determines whether the type is "task" or "category" based on the item's content.
+  const type = item?.description ? "task" : item ? "category" : "";
+
+  //Delete the category/task from the db
   const handleDelete = async () => {
-    const id = category ? category.id : task.id;
+    const id = item.id;
 
-    const endpoint = category
-      ? "/categories/deleteCategory"
-      : "/tasks/deleteTask";
+    const endpoint =
+      type === "task" ? "/tasks/deleteTask" : "/categories/deleteCategory";
 
-    const payload = category ? { id: id, userId: user.id } : { id: id };
+    const payload = type === "task" ? { id: id } : { id: id, userId: user.id };
     try {
       await axiosInstance.delete(endpoint, { params: payload });
       setRefresh(id);
@@ -65,13 +67,13 @@ const CustomIcon = ({
         style={[customIcon.container, background]}
         onPress={onPressAction}
       >
-        <MaterialIcons name={name} size={22} color={color} />
+        <MaterialIcons name={name} size={22} color={colorIcon} />
       </TouchableOpacity>
       {name === "delete" && (
         <CustomAlert
-          visible={alertModalVisible}
-          setVisible={setAlertModalVisible}
-          type={category ? "category" : "task"}
+          visible={deleteModalVisible}
+          setVisible={setDeleteModalVisible}
+          type={type === "category" ? "category" : "task"}
           confirmAction={handleDelete}
         />
       )}

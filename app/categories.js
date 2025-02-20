@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { View, FlatList } from "react-native";
-import { containers } from "../styles/containers";
 import BackIcon from "../components/BackIcon";
 import CustomTitle from "../components/CustomTitle";
 import CustomButton from "../components/CustomButton";
-import CategoryView from "../components/CategoryView";
-import { categories } from "../styles/screens/categories";
+import SwipeableView from "../components/SwipeableView";
 import AddEditCategory from "../components/AddEditCategory";
 import axiosInstance from "../api/axiosInstance";
 import { useUser } from "../context/UserContext";
+import { categories } from "../styles/screens/categories";
+import { containers } from "../styles/containers";
 
 const Categories = () => {
   const [isSheetVisible, setIsSheetVisible] = useState(false);
@@ -22,17 +22,18 @@ const Categories = () => {
     setIsSheetVisible((prevState) => !prevState);
   };
 
-  const handleEditCategory = () => {
+  const handleCategoryAction = (actionType, item) => {
     toggleSheetVisibility();
-    setAction("edit");
+    setAction(actionType);
+    actionType === "edit" && setCategoryEdit(item);
   };
 
   const renderItem = ({ item }) => (
-    <CategoryView
-      category={item}
-      onPress={handleEditCategory}
-      setCategoryEdit={setCategoryEdit}
+    <SwipeableView
+      item={item}
+      onPressEdit={() => handleCategoryAction("edit", item)}
       setRefresh={setRefreshing}
+      isTask={false}
     />
   );
 
@@ -72,10 +73,7 @@ const Categories = () => {
       <View style={categories.add}>
         <CustomButton
           type={"add"}
-          onPress={() => {
-            setAction("add");
-            toggleSheetVisibility();
-          }}
+          onPress={() => handleCategoryAction("add")}
         />
       </View>
       {isSheetVisible && (

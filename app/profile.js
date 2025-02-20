@@ -63,8 +63,6 @@ const Profile = () => {
       <CustomAlert
         visible={alertVisible}
         setVisible={setAlertVisible}
-        title={"Log out"}
-        description={"Are you sure you want to log out?"}
         confirmAction={() => [router.push("./signIn"), logout()]}
       />
     </View>

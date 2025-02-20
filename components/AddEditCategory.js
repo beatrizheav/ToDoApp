@@ -9,7 +9,7 @@ import { sheet } from "../styles/components/sheet";
 import { useUser } from "../context/UserContext";
 import axiosInstance from "../api/axiosInstance";
 
-const AddEditTask = ({
+const AddEditCategory = ({
   action,
   isVisible,
   toggleVisibility,
@@ -18,7 +18,6 @@ const AddEditTask = ({
 }) => {
   const [category, setCategory] = useState("");
   const { user } = useUser();
-
   const refRBSheet = useRef();
 
   const title = action === "add" ? "Add category" : "Edit category";
@@ -121,4 +120,4 @@ const AddEditTask = ({
   );
 };
 
-export default AddEditTask;
+export default AddEditCategory;

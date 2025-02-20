@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import { TouchableOpacity } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import DraggableFlatList from "react-native-draggable-flatlist";
-import TaskView from "./TaskView";
+import SwipeableView from "./SwipeableView";
 import CustomTitle from "./CustomTitle";
 import axiosInstance from "../api/axiosInstance";
 import { useUser } from "../context/UserContext";
@@ -133,10 +133,14 @@ const TaskList = ({ date, setModalVisible, handleEditTask, setRefresh }) => {
       {item.isHeader ? (
         <CustomTitle text={item.item.name} type="small" />
       ) : (
-        <TaskView
-          task={item.item}
-          handleEditTask={handleEditTask}
+        <SwipeableView
+          item={item.item}
+          onPressEdit={() => {
+            handleEditTask();
+            updateSelectedTask(item.item);
+          }}
           setRefresh={setRefresh}
+          isTask={true}
         />
       )}
     </TouchableOpacity>

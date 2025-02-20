@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import { View, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { useRouter } from "expo-router";
-import { handleInputChange } from "../hooks/handleInputChange";
 import AvatarPicker from "../components/AvatarPicker";
 import BackIcon from "../components/BackIcon";
 import CustomTitle from "../components/CustomTitle";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import AccountPrompt from "../components/AccountPrompt";
+import axiosInstance from "../api/axiosInstance";
+import { useUser } from "../context/UserContext";
+import { handleInputChange } from "../hooks/handleInputChange";
+import storeUser from "../asyncStorage/storeUser";
 import { signUp } from "../styles/screens/sign-up";
 import { containers } from "../styles/containers";
 import useFormValidation from "../hooks/useFormValidation";
-import axiosInstance from "../api/axiosInstance";
-import { useUser } from "../context/UserContext";
 
 const SignUp = () => {
   const router = useRouter();
@@ -25,10 +26,12 @@ const SignUp = () => {
     avatar: "",
   });
   const [confirmPassword, setConfirmPassword] = useState("");
+  // Concatenates the data to send and the confirm password
   const data = { ...signUpData, confirmPassword };
 
   const validateForm = useFormValidation(data, "signUp");
 
+  //Create the user in the db
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -41,14 +44,10 @@ const SignUp = () => {
         "/users/registration",
         signUpData
       );
-      const userInfo = response.data;
-      updateUser({
-        id: userInfo.id,
-        name: userInfo.name,
-        email: userInfo.email,
-        password: userInfo.password,
-        avatar: userInfo.avatar,
-      });
+      //Update the user in te context
+      updateUser(response.data);
+      //Store the user in the async storage
+      storeUser(response.data);
       router.push("/main");
     } catch (error) {
       if (error.response) {
