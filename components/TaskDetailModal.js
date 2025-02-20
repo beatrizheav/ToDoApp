@@ -5,32 +5,29 @@ import Fontisto from "@expo/vector-icons/Fontisto";
 import CloseIcon from "./CloseIcon";
 import CustomTitle from "./CustomTitle";
 import CustomIcon from "./CustomIcon";
+import axiosInstance from "../api/axiosInstance";
+import { useSelectedTask } from "../context/SelectedTaskContext";
+import { getPriorityColor } from "../hooks/getPriorityColor";
 import { fontsTheme } from "../styles/fontsTheme";
 import { colorsTheme } from "../styles/colorsTheme";
 import { taskDetail } from "../styles/components/task-detail-modal";
-import axiosInstance from "../api/axiosInstance";
-import { useSelectedTask } from "../context/SelectedTaskContext";
 
 const TaskDetailModal = ({ visible, setVisible, onPress }) => {
-  const handleClose = () => setVisible(false);
-  const { selectedTask, updateSelectedTask } = useSelectedTask();
+  const { selectedTask } = useSelectedTask();
 
-  const [dueDate, setDueDate] = useState(null);
-  const priorityColor =
-    selectedTask.priority === "high"
-      ? taskDetail.highPriority
-      : selectedTask.priority === "medium"
-      ? taskDetail.mediumPriority
-      : taskDetail.lowPriority;
   const [category, setCategory] = useState(null);
+  const [dueDate, setDueDate] = useState(null);
 
+  const priorityColor = getPriorityColor(selectedTask.priority);
+
+  // Check if a due date exists, converts it to a valid Date object, and formats it as YYYY-MM-DD
   useEffect(() => {
     if (selectedTask?.due_date) {
-      const date = new Date(selectedTask.due_date);
-      setDueDate(!isNaN(date) ? date.toISOString().split("T")[0] : undefined);
+      setDueDate(new Date(selectedTask.due_date).toISOString().split("T")[0]);
     }
   }, [selectedTask]);
 
+  // Get the name category based on the id
   useEffect(() => {
     const fetchCategory = async () => {
       try {
@@ -48,9 +45,10 @@ const TaskDetailModal = ({ visible, setVisible, onPress }) => {
     fetchCategory();
   }, [selectedTask.category_id]);
 
+  const handleClose = () => setVisible(false);
+
   const onPressEdit = () => {
     onPress();
-    updateSelectedTask(selectedTask);
     handleClose();
   };
 

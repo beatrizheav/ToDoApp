@@ -5,13 +5,12 @@ import CustomButton from "./CustomButton";
 import { fontsTheme } from "../styles/fontsTheme";
 import { customAlert } from "../styles/components/custom-alert";
 
-const CustomAlert = ({
-  visible,
-  title,
-  description,
-  setVisible,
-  confirmAction,
-}) => {
+const CustomAlert = ({ visible, setVisible, confirmAction, type }) => {
+  const title = type ? `Delete ${type}` : "Log out";
+  const description = `Are you sure you want to ${
+    type ? `delete this ${type}` : "log out"
+  }?`;
+
   return (
     <Modal
       transparent={true}

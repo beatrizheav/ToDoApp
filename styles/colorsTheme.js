@@ -9,5 +9,5 @@ export const colorsTheme = {
   Green: "#4CAF50", // Low priority
   darkBlue: "#30304A", //Titles
   white: "#FFFFFF", // Background
-  blackOpacity: "rgba(0, 0, 0, 0.5)",
+  blackOpacity: "rgba(0, 0, 0, 0.5)", // Background when modals and sheets
 };

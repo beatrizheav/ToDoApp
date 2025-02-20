@@ -2,12 +2,12 @@ import React, { useState, useCallback, useEffect } from "react";
 import { TouchableOpacity } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import DraggableFlatList from "react-native-draggable-flatlist";
-import TaskView from "./TaskView";
+import SwipeableView from "./SwipeableView";
 import CustomTitle from "./CustomTitle";
 import axiosInstance from "../api/axiosInstance";
-import { taskList } from "../styles/components/task-list";
 import { useUser } from "../context/UserContext";
 import { useSelectedTask } from "../context/SelectedTaskContext";
+import { taskList } from "../styles/components/task-list";
 
 const SECTIONS = ["to do", "in progress", "done"];
 
@@ -22,6 +22,7 @@ const groupTasksByStatus = (tasks) => {
   }, {});
 };
 
+// Flatten the tasks array to include section headers
 const flattenTasks = (tasks) => {
   return SECTIONS.flatMap((section) => [
     {
@@ -32,14 +33,45 @@ const flattenTasks = (tasks) => {
   ]);
 };
 
-const TaskList = ({ date, setModalVisible, onPressEdit, setRefresh }) => {
+const updateTaskStatusInDB = async (item) => {
+  if (!item) {
+    alert("No item dragged");
+    return;
+  }
+
+  const payload = {
+    taskId: item.id,
+    status: item.status,
+  };
+
+  try {
+    await axiosInstance.put("/tasks/editTaskStatus", payload);
+  } catch (error) {
+    let errorMessage;
+    if (error.response) {
+      errorMessage =
+        error.response.data.message ||
+        "Something went wrong while processing your request.";
+      alert(errorMessage);
+    } else if (error.request) {
+      console.error("Request error:", error.request);
+      alert("Error: No response from the server.");
+    } else {
+      console.error("Error message:", error.message);
+      alert("Error: An unexpected error occurred.");
+    }
+  }
+};
+
+const TaskList = ({ date, setModalVisible, handleEditTask, setRefresh }) => {
+  // Initialize the flat API with the section headers
   const [flatApi, setFlatApi] = useState(
     SECTIONS.map((section) => ({
       isHeader: true,
       item: { id: `header-${section}`, isHeader: true, name: section },
     }))
   );
-  const [apiResponse, setApiResponse] = useState(null);
+
   const { user } = useUser();
   const { updateSelectedTask } = useSelectedTask();
 
@@ -49,30 +81,26 @@ const TaskList = ({ date, setModalVisible, onPressEdit, setRefresh }) => {
         const { data } = await axiosInstance.get("/tasks/userTasks", {
           params: { date, user: user.id },
         });
-        setApiResponse(data);
+        setFlatApi(flattenTasks(groupTasksByStatus(data)));
       } catch (error) {
         console.error(
           "Error fetching tasks:",
           error.response?.data?.message || error.message
         );
-        setApiResponse(error.response?.status === 404 ? "NO TASKS" : null);
       }
     };
     fetchTasks();
-  }, [date, user.id]);
-
-  useEffect(() => {
-    if (apiResponse && apiResponse !== "NO TASKS") {
-      setFlatApi(flattenTasks(groupTasksByStatus(apiResponse)));
-    }
-  }, [apiResponse]);
+  }, []);
 
   const handleDragEnd = useCallback(({ data, to }) => {
+    // Prevent move task above to do header
     if (to === 0) {
       return;
     }
 
     let currentSection = null;
+
+    // Update the status of the dragged task
     setFlatApi(
       data.map((item, index) => {
         if (item.isHeader) {
@@ -83,11 +111,15 @@ const TaskList = ({ date, setModalVisible, onPressEdit, setRefresh }) => {
         return item;
       })
     );
+
+    // Update the task status in the database sending the drag task as parameter
+    updateTaskStatusInDB(data[to].item);
   }, []);
 
   const renderItem = ({ item, drag }) => (
     <TouchableOpacity
       style={item.isHeader ? taskList.headerContainer : {}}
+      // Prevent to drag headers
       onLongPress={item.isHeader ? undefined : drag}
       onPress={
         item.isHeader
@@ -101,10 +133,14 @@ const TaskList = ({ date, setModalVisible, onPressEdit, setRefresh }) => {
       {item.isHeader ? (
         <CustomTitle text={item.item.name} type="small" />
       ) : (
-        <TaskView
-          task={item.item}
-          onPressEdit={onPressEdit}
+        <SwipeableView
+          item={item.item}
+          onPressEdit={() => {
+            handleEditTask();
+            updateSelectedTask(item.item);
+          }}
           setRefresh={setRefresh}
+          isTask={true}
         />
       )}
     </TouchableOpacity>

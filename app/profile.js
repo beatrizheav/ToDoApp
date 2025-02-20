@@ -8,13 +8,13 @@ import Feather from "@expo/vector-icons/Feather";
 import CustomAlert from "../components/CustomAlert";
 import CustomTitle from "../components/CustomTitle";
 import BackIcon from "../components/BackIcon";
+import logout from "../asyncStorage/logout";
+import { useUser } from "../context/UserContext";
 import { avatars } from "../data/avatars";
 import { containers } from "../styles/containers";
 import { colorsTheme } from "../styles/colorsTheme";
 import { fontsTheme } from "../styles/fontsTheme";
 import { profile } from "../styles/screens/profile";
-import { useUser } from "../context/UserContext";
-import logout from "../asyncStorage/logout";
 
 const Profile = () => {
   const router = useRouter();
@@ -63,8 +63,6 @@ const Profile = () => {
       <CustomAlert
         visible={alertVisible}
         setVisible={setAlertVisible}
-        title={"Log out"}
-        description={"Are you sure you want to log out?"}
         confirmAction={() => [router.push("./signIn"), logout()]}
       />
     </View>

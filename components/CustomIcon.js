@@ -1,45 +1,46 @@
 import React, { useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { colorsTheme } from "../styles/colorsTheme";
 import CustomAlert from "./CustomAlert";
-import { customIcon } from "../styles/components/custom-icon";
 import axiosInstance from "../api/axiosInstance";
 import { useUser } from "../context/UserContext";
+import { customIcon } from "../styles/components/custom-icon";
+import { colorsTheme } from "../styles/colorsTheme";
 
-const CustomIcon = ({
-  name,
-  iconColor,
-  onPress,
-  type,
-  task,
-  setRefresh,
-  category,
-}) => {
+const CustomIcon = ({ name, item, onPress, setRefresh, iconColor }) => {
   const { user } = useUser();
-  const [modalVisible, setModalVisible] = useState(false);
-  const defaultBackground = name === "edit" ? customIcon.blue : customIcon.red;
-  const background = iconColor ? {} : defaultBackground;
-  const color = iconColor || colorsTheme.white;
-  const confirmTitle = "Delete " + type;
-  const confirmText = "Are you sure you want to delete this " + type + "?";
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+
+  // Determines the background color and icon color for the custom icon component.
+
+  //Sets a default background color based on the icon name.
+  const defaultIconBackground =
+    name === "edit" ? customIcon.blue : customIcon.red;
+  // If `iconColor` is provided, no background is applied otherwise, it falls back to `defaultIconBackground`.
+  const background = iconColor ? {} : defaultIconBackground;
+  // Uses `iconColor` if provided, otherwise defaults to `colorsTheme.white`.
+  const colorIcon = iconColor || colorsTheme.white;
 
   const onPressAction = () => {
     if (onPress) {
       onPress();
     } else {
-      setModalVisible(true);
+      //if not onPress action is recieved the icon use it is delete so opens the modal
+      setDeleteModalVisible(true);
     }
   };
 
+  // Determines whether the type is "task" or "category" based on the item's content.
+  const type = item?.description ? "task" : item ? "category" : "";
+
+  //Delete the category/task from the db
   const handleDelete = async () => {
-    const id = type === "category" ? category.id : task.id;
+    const id = item.id;
 
     const endpoint =
-      type === "category" ? "/categories/deleteCategory" : "/tasks/deleteTask";
+      type === "task" ? "/tasks/deleteTask" : "/categories/deleteCategory";
 
-    const payload =
-      type === "category" ? { id: id, userId: user.id } : { id: id };
+    const payload = type === "task" ? { id: id } : { id: id, userId: user.id };
     try {
       await axiosInstance.delete(endpoint, { params: payload });
       setRefresh(id);
@@ -66,14 +67,13 @@ const CustomIcon = ({
         style={[customIcon.container, background]}
         onPress={onPressAction}
       >
-        <MaterialIcons name={name} size={22} color={color} />
+        <MaterialIcons name={name} size={22} color={colorIcon} />
       </TouchableOpacity>
       {name === "delete" && (
         <CustomAlert
-          visible={modalVisible}
-          title={confirmTitle}
-          description={confirmText}
-          setVisible={setModalVisible}
+          visible={deleteModalVisible}
+          setVisible={setDeleteModalVisible}
+          type={type === "category" ? "category" : "task"}
           confirmAction={handleDelete}
         />
       )}

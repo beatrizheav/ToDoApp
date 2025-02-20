@@ -6,12 +6,12 @@ import CustomTitle from "../components/CustomTitle";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import AccountPrompt from "../components/AccountPrompt";
-import { signIn } from "../styles/screens/sign-in";
-import { containers } from "../styles/containers";
-import useFormValidation from "../hooks/useFormValidation";
 import axiosInstance from "../api/axiosInstance";
 import { useUser } from "../context/UserContext";
 import storeUser from "../asyncStorage/storeUser";
+import useFormValidation from "../hooks/useFormValidation";
+import { signIn } from "../styles/screens/sign-in";
+import { containers } from "../styles/containers";
 
 const SignIn = () => {
   const router = useRouter();
@@ -36,15 +36,8 @@ const SignIn = () => {
       const response = await axiosInstance.get("/users/auth", {
         params: signInData,
       });
-      const userInfo = response.data.user;
-      updateUser({
-        id: userInfo.id,
-        name: userInfo.name,
-        email: userInfo.email,
-        password: userInfo.password,
-        avatar: userInfo.avatar,
-      });
-      storeUser(userInfo);
+      updateUser(response.data);
+      storeUser(response.data);
       router.push("/main");
     } catch (error) {
       if (error.response) {

@@ -7,8 +7,8 @@ import {
   FlatList,
   Image,
 } from "react-native";
-import { avatars } from "../data/avatars";
 import CustomButton from "./CustomButton";
+import { avatars } from "../data/avatars";
 import { avatarPicker } from "../styles/components/avatar-picker";
 import { fontsTheme } from "../styles/fontsTheme";
 import { inputs } from "../styles/components/inputs";
@@ -16,11 +16,12 @@ import { inputs } from "../styles/components/inputs";
 const AvatarPicker = ({ onAvatarSelect, selectedAvatar }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const handleAvatarSelect = (avatarSrc) => {
-    onAvatarSelect(avatarSrc);
+  const handleAvatarSelect = (avatarKey) => {
+    onAvatarSelect(avatarKey);
     setIsModalVisible(false);
   };
 
+  // Look for the avatar image based on the key saved in the database
   const avatar = avatars.find((item) => item.key === selectedAvatar);
 
   return (
