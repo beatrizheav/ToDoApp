@@ -62,10 +62,6 @@ The application is built on a modern architecture, leveraging **MySQL** for real
   - **GitHub Projects** for organizing tasks, tracking progress, and managing the development workflow.
   - **Slack** for real-time communication within the development team.
 
-### Project Purpose
-
-This project is designed to be a useful tool for anyone looking to improve their productivity and organization. By providing a simple and efficient platform to manage daily tasks, users can visualize their workload, prioritize the urgent, and stay on top of their responsibilities.
-
 ### Possible Future Enhancements
 
 - **Filter**: To allow users to easily sort and manage tasks based on criteria such as priority, due date, or status.
