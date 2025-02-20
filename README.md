@@ -2,9 +2,10 @@
 
 **ToDo** is an intuitive application designed to help users efficiently organize, manage, and track their daily tasks. The system provides an easy-to-use interface for managing tasks, allowing users to assign different statuses (`to do`, `in progress`, `done`), set due dates, assign priorities, and categorize tasks based on activity type.
 
-To enhance personalization, users can create and manage custom categories, giving them more control over task organization. Additionally, users have the ability to create a profile, upload an avatar, and log in or log out for a tailored experience.
+Users can create and manage custom categories to enhance personalization, giving them more control over task organization. Additionally, users have the ability to create a profile, upload an avatar, and log in or log out for a tailored experience.
 
-The application is built on a modern architecture, leveraging **MySQL** for real-time data management and user authentication, while **Express** handles backend operations and API requests, ensuring seamless communication between the front end and database.
+The application is built on a modern architecture, leveraging **MySQL** for real-time data management and user authentication, while **Express** handles backend operations and API requests, ensuring seamless communication between the front end and the database.
+___
 
 ### Main Features
 
@@ -17,7 +18,7 @@ The application is built on a modern architecture, leveraging **MySQL** for real
   - Organize tasks by their status (`to do`, `in progress`, `done`).
 - **Category management**: Create, edit, and delete categories to better organize tasks.
 - **Simple and intuitive interface**: Easy-to-use user interface to add, edit, and manage tasks without hassle.
-
+___
 ### Technologies Used
 
 - **Frontend**:
@@ -61,6 +62,7 @@ The application is built on a modern architecture, leveraging **MySQL** for real
   - **Git** for version control, tracking changes, and collaboration.
   - **GitHub Projects** for organizing tasks, tracking progress, and managing the development workflow.
   - **Slack** for real-time communication within the development team.
+___
 
 ### Possible Future Enhancements
 
@@ -69,6 +71,7 @@ The application is built on a modern architecture, leveraging **MySQL** for real
 - **Notifications**: Add push notifications for important or overdue tasks.
 - **Mobile optimized interface**: Extend functionality to be fully optimized for mobile devices.
 - **Productivity analytics**: Integrate analytics on how the user is managing their tasks, providing efficiency and compliance statistics.
+___
 
 ### Installation Instructions
 
@@ -96,7 +99,7 @@ Follow these steps to set up and run the project locally:
   - `DB_NAME=todoApp`
   - `PORT=5000`
 - **Run the Backend Server**:
-  To starth the server run the following command on the backend repository.
+  To start the server run the following command on the backend repository.
   `npm start`
 - **Run the frontend**:
 
@@ -107,7 +110,7 @@ Follow these steps to set up and run the project locally:
 
 - **Test the Application**:
   Once the frontend and backend servers are running, you should be able to interact with the application by navigating to the appropriate endpoints and testing the functionalities such as user registration, task creation, and task management.
-
+___
 ### Usage
 
 Once the app is installed and running, you can start using it to manage your tasks. Here's a quick guide on how to interact with the main features:
@@ -157,25 +160,25 @@ To view your profile information, navigate to the Profile screen by clicking the
 On this screen, you will see the avatar you selected during registration, along with your email and password.
 
 To log out, click the icon in the top-right corner of the screen. A confirmation modal will appear; click 'Yes' to log out, and the app will redirect you to the login screen.
-
+___
 ### UI Design
 
 https://www.figma.com/design/xDbEjN2lqm4EZBGdpXeWpJ/ToDo?node-id=0-1&p=f&t=DlgwD5Qe42RxgnfM-0
-
+___
 ## Github project
 
 https://github.com/users/beatrizheav/projects/3
-
+___
 ## Backend repository
 
 https://github.com/beatrizheav/ToDoApp_Backend
-
+___
 ## Credits
 
 This project is currently maintained and developed by Beatriz Avila (Sofware Engineer and Jr. Developer).
+
 Feel free to contact me for any questions or suggestions!
 
 | Contributor |
 | :---------: |
-
-|[<img src="https://avatars.githubusercontent.com/u/116601645?v=4" width=115><br><sub>Beatriz Ávila</sub>]
+|<img src="https://avatars.githubusercontent.com/u/116601645?v=4" width=115><br>[beatrizheav](https://github.com/beatrizheav)|
