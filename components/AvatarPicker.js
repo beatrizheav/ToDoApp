@@ -7,8 +7,8 @@ import {
   FlatList,
   Image,
 } from "react-native";
-import { avatars } from "../data/avatars";
 import CustomButton from "./CustomButton";
+import { avatars } from "../data/avatars";
 import { avatarPicker } from "../styles/components/avatar-picker";
 import { fontsTheme } from "../styles/fontsTheme";
 import { inputs } from "../styles/components/inputs";

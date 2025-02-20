@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { colorsTheme } from "../styles/colorsTheme";
 import CustomAlert from "./CustomAlert";
-import { customIcon } from "../styles/components/custom-icon";
 import axiosInstance from "../api/axiosInstance";
 import { useUser } from "../context/UserContext";
+import { customIcon } from "../styles/components/custom-icon";
+import { colorsTheme } from "../styles/colorsTheme";
 
 const CustomIcon = ({ name, item, onPress, setRefresh, iconColor }) => {
   const { user } = useUser();

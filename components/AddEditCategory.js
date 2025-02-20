@@ -5,9 +5,9 @@ import CustomTitle from "./CustomTitle";
 import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
 import CloseIcon from "./CloseIcon";
-import { sheet } from "../styles/components/sheet";
 import { useUser } from "../context/UserContext";
 import axiosInstance from "../api/axiosInstance";
+import { sheet } from "../styles/components/sheet";
 
 const AddEditCategory = ({
   action,

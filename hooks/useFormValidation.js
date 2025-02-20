@@ -1,5 +1,7 @@
-import { signUpValidationRules } from "./validationsRules";
-import { signInValidationRules } from "./validationsRules";
+import {
+  signUpValidationRules,
+  signInValidationRules,
+} from "./validationsRules";
 
 const useFormValidation = (data, screen) => {
   let validations;

@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+// When user log out remove the item in the async storage
 const logout = async () => {
   try {
     await AsyncStorage.removeItem("user");
