@@ -10,8 +10,10 @@ import DropdownInput from "./DropdownInput";
 import { sheet } from "../styles/components/sheet";
 import axiosInstance from "../api/axiosInstance";
 import { useUser } from "../context/UserContext";
+import { useSelectedTask } from "../context/SelectedTaskContext";
 
-const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
+const AddEditTask = ({ action, isVisible, toggleVisibility }) => {
+  const { selectedTask } = useSelectedTask();
   const [taskDetails, setTaskDetails] = useState({
     task: "",
     description: "",
@@ -42,13 +44,13 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
   }, [isVisible]);
 
   useEffect(() => {
-    if (action === "edit" && task) {
+    if (action === "edit" && selectedTask) {
       setTaskDetails({
-        task: task.name || "",
-        description: task.description || "",
-        date: new Date(task.due_date) || new Date(),
-        category: task.category_id || "",
-        priority: task.priority || "",
+        task: selectedTask.name || "",
+        description: selectedTask.description || "",
+        date: new Date(selectedTask.due_date) || new Date(),
+        category: selectedTask.category_id || "",
+        priority: selectedTask.priority || "",
       });
     }
     if (action === "add") {
@@ -60,7 +62,7 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
         priority: "",
       });
     }
-  }, [task, action]);
+  }, [selectedTask, action]);
 
   const handleTask = async () => {
     const empty = Object.values(taskDetails).some(
@@ -77,7 +79,9 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
       description: taskDetails.description,
       due_date: taskDetails.date.toISOString().split("T")[0],
       priority: taskDetails.priority,
-      ...(action === "add" ? { user_id: user.id } : { taskId: task.id }),
+      ...(action === "add"
+        ? { user_id: user.id }
+        : { taskId: selectedTask.id }),
     };
 
     const endpoint = action === "add" ? "/tasks/createTask" : "/tasks/editTask";
@@ -125,8 +129,6 @@ const AddEditTask = ({ action, isVisible, toggleVisibility, task }) => {
             <CustomTitle text={title} />
             <CloseIcon onPress={toggleVisibility} />
           </View>
-
-          {/* Task Input Fields */}
           <CustomInput
             label="Task"
             placeholder="What do you need to do"

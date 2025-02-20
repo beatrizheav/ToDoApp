@@ -9,31 +9,33 @@ import { fontsTheme } from "../styles/fontsTheme";
 import { colorsTheme } from "../styles/colorsTheme";
 import { taskDetail } from "../styles/components/task-detail-modal";
 import axiosInstance from "../api/axiosInstance";
+import { useSelectedTask } from "../context/SelectedTaskContext";
 
-const TaskDetailModal = ({ visible, setVisible, task, onPress, setTask }) => {
+const TaskDetailModal = ({ visible, setVisible, onPress }) => {
   const handleClose = () => setVisible(false);
+  const { selectedTask, updateSelectedTask } = useSelectedTask();
 
   const [dueDate, setDueDate] = useState(null);
   const priorityColor =
-    task.priority === "high"
+    selectedTask.priority === "high"
       ? taskDetail.highPriority
-      : task.priority === "medium"
+      : selectedTask.priority === "medium"
       ? taskDetail.mediumPriority
       : taskDetail.lowPriority;
   const [category, setCategory] = useState(null);
 
   useEffect(() => {
-    if (task?.due_date) {
-      const date = new Date(task.due_date);
+    if (selectedTask?.due_date) {
+      const date = new Date(selectedTask.due_date);
       setDueDate(!isNaN(date) ? date.toISOString().split("T")[0] : undefined);
     }
-  }, [task]);
+  }, [selectedTask]);
 
   useEffect(() => {
     const fetchCategory = async () => {
       try {
         const { data } = await axiosInstance.get("/categories/category", {
-          params: { id: task.category_id },
+          params: { id: selectedTask.category_id },
         });
         setCategory(data.name);
       } catch (error) {
@@ -44,11 +46,11 @@ const TaskDetailModal = ({ visible, setVisible, task, onPress, setTask }) => {
       }
     };
     fetchCategory();
-  }, [task.category_id]);
+  }, [selectedTask.category_id]);
 
   const onPressEdit = () => {
     onPress();
-    setTask(task);
+    updateSelectedTask(selectedTask);
     handleClose();
   };
 
@@ -63,13 +65,13 @@ const TaskDetailModal = ({ visible, setVisible, task, onPress, setTask }) => {
         <View style={taskDetail.modalContainer}>
           <View style={taskDetail.header}>
             <View style={taskDetail.textHeader}>
-              <CustomTitle text={task.name} type={"small"} />
+              <CustomTitle text={selectedTask.name} type={"small"} />
             </View>
             <CloseIcon onPress={handleClose} />
           </View>
 
           <View style={taskDetail.detailsItem}>
-            <Text style={fontsTheme.regular}>{task.description}</Text>
+            <Text style={fontsTheme.regular}>{selectedTask.description}</Text>
           </View>
 
           <View style={taskDetail.detailsItem}>
@@ -89,7 +91,9 @@ const TaskDetailModal = ({ visible, setVisible, task, onPress, setTask }) => {
                 taskDetail.iconsMargin,
               ]}
             />
-            <Text style={fontsTheme.regular}>Priority: {task.priority}</Text>
+            <Text style={fontsTheme.regular}>
+              Priority: {selectedTask.priority}
+            </Text>
           </View>
           <View style={taskDetail.detailsItem}>
             <Ionicons

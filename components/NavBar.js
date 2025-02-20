@@ -12,7 +12,10 @@ const NavBar = ({ toggleSheet, setAction }) => {
 
   return (
     <View style={navBar.container}>
-      <TouchableOpacity onPress={() => router.push("./categories")}>
+      <TouchableOpacity
+        onPress={() => router.push("./categories")}
+        testID="categoriesIcon-touchable"
+      >
         <Ionicons
           name="layers-outline"
           size={30}
@@ -25,8 +28,12 @@ const NavBar = ({ toggleSheet, setAction }) => {
           setAction("add");
           toggleSheet();
         }}
+        testID="custom-button"
       />
-      <TouchableOpacity onPress={() => router.push("./profile")}>
+      <TouchableOpacity
+        onPress={() => router.push("./profile")}
+        testID="profileIcon-touchable"
+      >
         <FontAwesome name="user-o" size={27} color={colorsTheme.darkBlue} />
       </TouchableOpacity>
     </View>

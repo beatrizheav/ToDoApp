@@ -4,7 +4,15 @@ import { StyleSheet } from "react-native";
 import CustomButton from "../../components/CustomButton";
 import { customButton } from "../../styles/components/custom-button";
 import { fontsTheme } from "../../styles/fontsTheme";
-import { Feather } from "@expo/vector-icons";
+
+// Mock the correct Feather module
+// Reemplaza el icono por un View simple, lo que es adecuado para pruebas de renderizado.
+// Esto evita que el componente real del icono genere errores o comportamientos inesperados durante las pruebas.
+jest.mock("@expo/vector-icons/Feather", () => {
+  const React = require("react");
+  const { View } = require("react-native");
+  return (props) => <View {...props}>{props.children}</View>;
+});
 
 describe("CustomButton", () => {
   it("renders the correct text", () => {
@@ -83,5 +91,12 @@ describe("CustomButton", () => {
     );
     expect(getByText(textValue)).toBeTruthy();
     expect(queryByTestId("feather-icon")).toBeNull();
+  });
+
+  it("renderiza el icono cuando type es 'add'", () => {
+    const { getByTestId } = render(
+      <CustomButton type="add" text="Test Button" />
+    );
+    expect(getByTestId("feather-icon")).toBeTruthy();
   });
 });
