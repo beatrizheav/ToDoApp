@@ -78,39 +78,39 @@ This project is designed to be a useful tool for anyone looking to improve their
 
 Follow these steps to set up and run the project locally:
 
-- 1.  Start by cloning the repositorys to your local machine. Use the following command:
-      `git clone https://github.com/beatrizheav/ToDoApp.git`
-      `git clone https://github.com/beatrizheav/ToDoApp_Backend.git`
-- 2. Navigate to the project repositorys
-     `cd ToDoApp`
-     `cd ToDoApp_Backend`
-- 3. To install the required dependencies for both the frontend and backend, run the following command in the respective directories.
-     `npm install`
-- 4. Set Up MySQL Database:
+- Start by **cloning the repositorys** to your local machine. Use the following command:
+  - `git clone https://github.com/beatrizheav/ToDoApp.git`
+  - `git clone https://github.com/beatrizheav/ToDoApp_Backend.git`
+- **Navigate to the project repositorys**
+  - `cd ToDoApp`
+  - `cd ToDoApp_Backend`
+- To **install the required dependencies** for both the frontend and backend, run the following command in the respective directories.
+  `npm install`
+- **Set Up MySQL Database**:
   - Install MySQL if you haven't already. You can download it from https://dev.mysql.com/downloads/
   - Create a new database for the project and configure the connection in the backend:
     - Open MySQL Workbench and connect to your MySQL server.
     - Run the following command to create the database:
       `CREATE DATABASE todoApp`;
-- 5. Set Up Environment Variables:
-     Create a .env file in the root directory of the backend and add the necessary environment variables for your database and server:
-     `DB_HOST=localhost`
-     `DB_USER=your-username`
-     `DB_PASSWORD=your-password`
-     `DB_NAME=todoApp`
-     `PORT=5000`
-- 6. Run the Backend Server:
-     To starth the server run the following command on the backend repository.
-     `npm start`
-- 7. Run the frontend:
+- **Set Up Environment Variables**:
+  Create a .env file in the root directory of the backend and add the necessary environment variables for your database and server:
+  - `DB_HOST=localhost`
+  - `DB_USER=your-username`
+  - `DB_PASSWORD=your-password`
+  - `DB_NAME=todoApp`
+  - `PORT=5000`
+- **Run the Backend Server**:
+  To starth the server run the following command on the backend repository.
+  `npm start`
+- **Run the frontend**:
 
   - Make sure you have Expo installed globally on your machine. If not, install it via:
     `npm install -g expo-cli`
   - Then run this command in the frontend repository:
     `npx expo start`
 
-- 8. Test the Application:
-     Once the frontend and backend servers are running, you should be able to interact with the application by navigating to the appropriate endpoints and testing the functionalities such as user registration, task creation, and task management.
+- **Test the Application**:
+  Once the frontend and backend servers are running, you should be able to interact with the application by navigating to the appropriate endpoints and testing the functionalities such as user registration, task creation, and task management.
 
 ### Usage
 
