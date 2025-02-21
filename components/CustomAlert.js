@@ -12,15 +12,10 @@ const CustomAlert = ({ visible, setVisible, confirmAction, type }) => {
   }?`;
 
   return (
-    <Modal
-      transparent={true}
-      animationType="fade"
-      visible={visible}
-      onRequestClose={() => setVisible(false)}
-    >
+    <Modal transparent={true} animationType="fade" visible={visible}>
       <View style={customAlert.modalOverlay}>
         <View style={customAlert.modalContainer}>
-          <View style={customAlert.header}>
+          <View style={customAlert.header} testId="close-icon">
             <Text style={[fontsTheme.bold, customAlert.title]}>{title}</Text>
             <CloseIcon
               onPress={() => setVisible(false)}
@@ -35,6 +30,7 @@ const CustomAlert = ({ visible, setVisible, confirmAction, type }) => {
               onPress={() => [setVisible(false), confirmAction()]}
               text={"Yes"}
               type={"small"}
+              testID={"yes-button"}
             />
           </View>
         </View>
