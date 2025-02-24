@@ -77,40 +77,25 @@ ___
 
 Follow these steps to set up and run the project locally:
 
-- Start by **cloning the repositorys** to your local machine. Use the following command:
+- Start by **cloning the repository** to your local machine. Use the following command:
   - `git clone https://github.com/beatrizheav/ToDoApp.git`
-  - `git clone https://github.com/beatrizheav/ToDoApp_Backend.git`
-- **Navigate to the project repositorys**
+- **Navigate to the project repository**
   - `cd ToDoApp`
-  - `cd ToDoApp_Backend`
-- To **install the required dependencies** for both the frontend and backend, run the following command in the respective directories.
+- To **install the required dependencies**, run the following command in the respective directory.
   `npm install`
-- **Set Up MySQL Database**:
-  - Install MySQL if you haven't already. You can download it from https://dev.mysql.com/downloads/
-  - Create a new database for the project and configure the connection in the backend:
-    - Open MySQL Workbench and connect to your MySQL server.
-    - Run the following command to create the database:
-      `CREATE DATABASE todoApp`;
-- **Set Up Environment Variables**:
-  Create a .env file in the root directory of the backend and add the necessary environment variables for your database and server:
-  - `DB_HOST=localhost`
-  - `DB_USER=your-username`
-  - `DB_PASSWORD=your-password`
-  - `DB_NAME=todoApp`
-  - `PORT=5000`
-- **Run the Backend Server**:
-  To start the server run the following command on the backend repository.
-  `npm start`
 - **Run the frontend**:
 
   - Make sure you have Expo installed globally on your machine. If not, install it via:
     `npm install -g expo-cli`
   - Then run this command in the frontend repository:
     `npx expo start`
+    
+- Once these instructions are completed, go to the backend repository (https://github.com/beatrizheav/ToDoApp_Backend.git) and follow the instructions in the README to **set up the backend**
 
 - **Test the Application**:
-  Once the frontend and backend servers are running, you should be able to interact with the application by navigating to the appropriate endpoints and testing the functionalities such as user registration, task creation, and task management.
+  Once the frontend and backend servers are running, you should be able to interact with the application.
 ___
+
 ### Usage
 
 Once the app is installed and running, you can start using it to manage your tasks. Here's a quick guide on how to interact with the main features:
