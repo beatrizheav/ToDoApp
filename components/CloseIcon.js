@@ -5,7 +5,7 @@ import { colorsTheme } from "../styles/colorsTheme";
 
 const CloseIcon = ({ onPress }) => {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} testID="closeIcon-touchable">
       <AntDesign name="close" size={22} color={colorsTheme.darkBlue} />
     </TouchableOpacity>
   );
